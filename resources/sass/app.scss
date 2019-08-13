@@ -11,12 +11,14 @@
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
 
+@import 'devicon';
 @import 'avatar';
 @import 'navbar';
 @import 'comment';
 @import 'questions';
 @import 'users';
 @import 'createQuestion';
+@import 'tags';
 
 @keyframes ellipsis {
 	to {

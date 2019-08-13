@@ -1,0 +1,10 @@
+.tags-index {
+	.card-body {
+		a {
+			&:hover {
+				text-decoration: none;
+				color: $success;
+			}
+		}
+	}
+}
