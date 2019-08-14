@@ -112,7 +112,11 @@ export default {
 			['bold', 'italic', 'underline', 'strike'],
 			[{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
 			['image', 'code-block', 'blockquote']
-		]
+		],
+		toastErrorTexts: {
+			title: 'Ops!',
+			body: 'Tente novamente de uma forma diferente!'
+		}
 	}),
 	methods: {
 		...mapActions('questions', ['addQuestion']),
@@ -167,17 +171,21 @@ export default {
 						solid: true
 					});
 				})
-				.catch(() => {
+				.catch(({ response }) => {
 					this.loading = false;
 
-					this.$bvToast.toast(
-						'Tente novamente de uma forma diferente!',
-						{
-							title: 'Algo deu errado!',
-							variant: 'danger',
-							solid: true
+					if (response.status === 500) {
+						if (response.data.message.includes('SQLSTATE[23000]')) {
+							this.toastErrorTexts.body =
+								'Já existe uma pergunta com esta título!';
 						}
-					);
+					}
+
+					this.$bvToast.toast(this.toastErrorTexts.body, {
+						title: this.toastErrorTexts.title,
+						variant: 'danger',
+						solid: true
+					});
 				});
 		}
 	},

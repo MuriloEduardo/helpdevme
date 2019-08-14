@@ -30,6 +30,7 @@
 		@foreach($questions as $question)
 		<div class="card mb-4 question">
 			<div class="card-body">
+				<c-options></c-options>
 				<div class="row">
 					<div class="col flex-grow-0">
 						<votes-question :initi-votes="{{ count($question->votes) }}" :question="{{ $question }}">

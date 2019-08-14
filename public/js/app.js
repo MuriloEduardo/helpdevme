@@ -39868,6 +39868,8 @@ Vue.component('ListNewQuestions', __webpack_require__(307));
 
 Vue.component('CComments', __webpack_require__(313));
 
+Vue.component('COptions', __webpack_require__(345));
+
 var app = new Vue({
 	store: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */],
 	el: '#app'
@@ -102965,7 +102967,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 			loading: false,
 			tags: [],
 			options: [],
-			customToolbar: [['bold', 'italic', 'underline', 'strike'], [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }], ['image', 'code-block', 'blockquote']]
+			customToolbar: [['bold', 'italic', 'underline', 'strike'], [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }], ['image', 'code-block', 'blockquote']],
+			toastErrorTexts: {
+				title: 'Ops!',
+				body: 'Tente novamente de uma forma diferente!'
+			}
 		};
 	},
 	methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])('questions', ['addQuestion']), {
@@ -103024,11 +103030,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 					variant: 'success',
 					solid: true
 				});
-			}).catch(function () {
+			}).catch(function (_ref) {
+				var response = _ref.response;
+
 				_this3.loading = false;
 
-				_this3.$bvToast.toast('Tente novamente de uma forma diferente!', {
-					title: 'Algo deu errado!',
+				if (response.status === 500) {
+					if (response.data.message.includes('SQLSTATE[23000]')) {
+						_this3.toastErrorTexts.body = 'Já existe uma pergunta com esta título!';
+					}
+				}
+
+				_this3.$bvToast.toast(_this3.toastErrorTexts.body, {
+					title: _this3.toastErrorTexts.title,
 					variant: 'danger',
 					solid: true
 				});
@@ -103621,6 +103635,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['question']
@@ -103635,58 +103650,65 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card mb-4 question" }, [
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col flex-grow-0" },
-          [
-            _c("votes-question", {
-              attrs: { "initi-votes": 0, question: _vm.question }
-            })
-          ],
-          1
-        ),
+    _c(
+      "div",
+      { staticClass: "card-body" },
+      [
+        _c("c-options"),
         _vm._v(" "),
-        _c("div", { staticClass: "col" }, [
-          _c("h3", { staticClass: "h5" }, [
-            _c("a", { attrs: { href: "/questions/" + _vm.question.slug } }, [
-              _vm._v(_vm._s(_vm.question.title))
-            ])
-          ]),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col flex-grow-0" },
+            [
+              _c("votes-question", {
+                attrs: { "initi-votes": 0, question: _vm.question }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("div", { domProps: { innerHTML: _vm._s(_vm.question.body) } })
+          _c("div", { staticClass: "col" }, [
+            _c("h3", { staticClass: "h5" }, [
+              _c("a", { attrs: { href: "/questions/" + _vm.question.slug } }, [
+                _vm._v(_vm._s(_vm.question.title))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { domProps: { innerHTML: _vm._s(_vm.question.body) } })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col" },
+            _vm._l(_vm.question.tags, function(tag, index) {
+              return _c(
+                "a",
+                {
+                  key: index,
+                  staticClass: "badge badge-primary",
+                  attrs: { href: "/tags/" + tag.slug }
+                },
+                [_vm._v(_vm._s(tag.title))]
+              )
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col" },
+            [_c("c-comments", { attrs: { question: _vm.question } })],
+            1
+          )
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col" },
-          _vm._l(_vm.question.tags, function(tag, index) {
-            return _c(
-              "a",
-              {
-                key: index,
-                staticClass: "badge badge-primary",
-                attrs: { href: "/tags/" + tag.slug }
-              },
-              [_vm._v(_vm._s(tag.title))]
-            )
-          }),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col" },
-          [_c("c-comments", { attrs: { question: _vm.question } })],
-          1
-        )
-      ])
-    ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -104623,6 +104645,124 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(16)
+/* script */
+var __vue_script__ = __webpack_require__(346)
+/* template */
+var __vue_template__ = __webpack_require__(347)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/options/index.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4ffd6966", Component.options)
+  } else {
+    hotAPI.reload("data-v-4ffd6966", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 346 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+/* 347 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "b-dropdown",
+    { staticClass: "float-right", attrs: { right: "", variant: "link" } },
+    [
+      _c("template", { slot: "button-content" }, [
+        _c("i", { staticClass: "fas fa-ellipsis-v" })
+      ]),
+      _vm._v(" "),
+      _c("b-dropdown-item", { attrs: { href: "#" } }, [_vm._v("Editar")]),
+      _vm._v(" "),
+      _c("b-dropdown-item", { attrs: { href: "#" } }, [_vm._v("Excluir")])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4ffd6966", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
