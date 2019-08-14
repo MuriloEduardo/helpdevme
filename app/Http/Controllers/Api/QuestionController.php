@@ -29,7 +29,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::with(['talks', 'comments'])
+        $questions = Question::with(['talks', 'comments', 'tags'])
             ->get();
 
         return response(['questions' => $questions]);
@@ -63,11 +63,12 @@ class QuestionController extends Controller
         $question->slug = str_slug($request->title);
         $question->body = $request->body;
         $question->user_id = auth()->id();
-        $question->tags()->attach($request->tags);
 
         $question->save();
 
-        $question->load('comments');
+        $question->tags()->sync($request->tags);
+
+        $question->load('comments', 'tags');
 
         broadcast(new NewQuestionsEvent($question))->toOthers();
 
