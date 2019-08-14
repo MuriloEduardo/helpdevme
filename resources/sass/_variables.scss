@@ -6,8 +6,6 @@ $enable-responsive-font-sizes: true;
 $enable-shadows: true;
 $enable-caret: false;
 
-$dropdown-min-width: 20rem;
-
 $nav-height: 62px;
 
 $primary: #35495e;
@@ -16,5 +14,5 @@ $danger: #ff6a6a;
 
 $body-color: #4f5959;
 
-$b-toaster-offset-top: $nav-height + 15px;
+$b-toaster-offset-top: $nav-height+15px;
 $b-toaster-offset-right: 31px;

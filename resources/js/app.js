@@ -46,8 +46,6 @@ Vue.component('ListNewQuestions', require('./components/question/list'));
 
 Vue.component('CComments', require('./components/comments'));
 
-Vue.component('COptions', require('./components/options'));
-
 const app = new Vue({
 	store,
 	el: '#app'

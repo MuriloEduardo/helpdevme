@@ -94,13 +94,11 @@
 <script>
 import { mapActions } from 'vuex';
 import Multiselect from 'vue-multiselect';
-import { VueEditor } from 'vue2-editor';
 
 export default {
 	props: ['user'],
 	components: {
-		Multiselect,
-		VueEditor
+		Multiselect
 	},
 	data: () => ({
 		title: undefined,

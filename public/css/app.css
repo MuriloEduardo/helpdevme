@@ -3741,7 +3741,7 @@ input[type="button"].btn-block {
   z-index: 1000;
   display: none;
   float: left;
-  min-width: 20rem;
+  min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
   font-size: 0.9rem;
@@ -19537,11 +19537,15 @@ readers do not read off random characters that represent icons */
   height: 30px;
 }
 
-nav {
+#app > nav {
   fill: currentColor;
 }
 
-nav #navbarDropdownTalks .list-group .list-group-item a:hover small {
+#app > nav .dropdown-menu {
+  min-width: 20rem;
+}
+
+#app > nav #navbarDropdownTalks .list-group .list-group-item a:hover small {
   text-decoration: none;
 }
 

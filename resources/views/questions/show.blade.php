@@ -6,7 +6,6 @@
 		<article>
 			<header>
 				<h1 class="display-4">{{ $question->title }}</h1>
-				<c-options></c-options>
 			</header>
 			@include('shared.questions.status', ['status' => $question->status])
 			<p class="lead">{!! $question->body !!}</p>
