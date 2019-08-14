@@ -9,7 +9,7 @@
 					<h3 class="h5">
 						<a :href="'/questions/' + question.slug">{{ question.title }}</a>
 					</h3>
-					<p>{{ question.body }}</p>
+					<div v-html="question.body"></div>
 				</div>
 			</div>
 			<div class="row">

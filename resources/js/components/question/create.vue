@@ -56,7 +56,7 @@
 								/>
 							</div>
 							<div class="form-group">
-								<vue-editor v-model="body" />
+								<vue-editor v-model="body" :editor-toolbar="customToolbar" />
 							</div>
 							<div class="form-group">
 								<multiselect
@@ -102,16 +102,18 @@ export default {
 		Multiselect,
 		VueEditor
 	},
-	data() {
-		return {
-			focus: false,
-			title: undefined,
-			body: undefined,
-			loading: false,
-			tags: [],
-			options: []
-		};
-	},
+	data: () => ({
+		title: undefined,
+		body: undefined,
+		loading: false,
+		tags: [],
+		options: [],
+		customToolbar: [
+			['bold', 'italic', 'underline', 'strike'],
+			[{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
+			['image', 'code-block', 'blockquote']
+		]
+	}),
 	methods: {
 		...mapActions('questions', ['addQuestion']),
 		onTyping() {
@@ -124,7 +126,7 @@ export default {
 			}, 300);
 		},
 		resetForm() {
-			this.focus = false;
+			this.$bvModal.hide('modal-create-question');
 
 			this.title = undefined;
 			this.body = undefined;
@@ -164,8 +166,6 @@ export default {
 						variant: 'success',
 						solid: true
 					});
-
-					this.$bvModal.hide('modal-create-question');
 				})
 				.catch(() => {
 					this.loading = false;
