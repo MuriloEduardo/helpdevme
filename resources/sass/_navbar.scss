@@ -1,5 +1,5 @@
 #app {
-	&>nav {
+	& > nav {
 		fill: currentColor;
 
 		.dropdown-menu {
@@ -16,6 +16,10 @@
 					}
 				}
 			}
+		}
+		[aria-labelledby='navbarDropdownTalks'] {
+			max-height: 200px;
+			overflow-y: auto;
 		}
 	}
 }

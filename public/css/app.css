@@ -19549,6 +19549,11 @@ readers do not read off random characters that represent icons */
   text-decoration: none;
 }
 
+#app > nav [aria-labelledby='navbarDropdownTalks'] {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 .comment .avatar {
   width: 25px;
   height: 25px;
