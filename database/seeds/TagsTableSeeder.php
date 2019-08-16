@@ -40,9 +40,9 @@ class TagsTableSeeder extends Seeder
                     'slug' => 'angular'
                 ],
                 [
-                    'title' => 'JavaScrpt',
+                    'title' => 'JavaScript',
                     'image' => 'devicon-javascript-plain',
-                    'slug' => 'javascrpt'
+                    'slug' => 'javascript'
                 ],
                 [
                     'title' => 'Pyton',
