@@ -9,7 +9,6 @@
 	"type": "project",
 	"require": {
 		"php": "^7.1.3",
-		"clickalicious/memcached.php": "^1.0",
 		"fideloper/proxy": "^4.0",
 		"fzaninotto/faker": "^1.4",
 		"laravel/framework": "5.7.*",
