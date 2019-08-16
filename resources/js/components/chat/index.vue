@@ -79,7 +79,7 @@
 									<!-- Post -->
 									<div
 										v-if="post.type!=2 && !post.budget"
-										:class="user.id==post.user_id ? 'text-right' : ''"
+										:class="user.id==post.user_id ? 'justify-content-end' : ''"
 										class="d-flex align-items-center"
 									>
 										<span v-if="user.id!=post.user_id">
