@@ -7,7 +7,7 @@
 				</div>
 				<div class="col">
 					<h3 class="h5">
-						<a :href="'/questions/' + question.slug">{{ question.title }}</a>
+						<a :href="'/' + question.slug">{{ question.title }}</a>
 					</h3>
 					<div v-html="question.body"></div>
 				</div>
