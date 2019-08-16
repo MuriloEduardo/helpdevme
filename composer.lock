@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dadb240e66e27ed3901e3087d371e0ce",
+    "content-hash": "91ed51a569a69987123ac44fa758ac5e",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -88,6 +88,62 @@
                 "sdk"
             ],
             "time": "2019-08-14T18:14:46+00:00"
+        },
+        {
+            "name": "clickalicious/memcached.php",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/clickalicious/memcached-php.git",
+                "reference": "d79c9ff551e8f041c559cca6535fec30e8a0af9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/clickalicious/memcached-php/zipball/d79c9ff551e8f041c559cca6535fec30e8a0af9d",
+                "reference": "d79c9ff551e8f041c559cca6535fec30e8a0af9d",
+                "shasum": ""
+            },
+            "require": {
+                "gpupo/cache": "^1.2",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "satooshi/php-coveralls": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Clickalicious\\": "src/Clickalicious/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "src/"
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Carl",
+                    "email": "opensource@clickalicious.de",
+                    "homepage": "https://www.clickalicious.de",
+                    "role": "Lead"
+                }
+            ],
+            "description": "Memcached.php - Plain vanilla PHP Memcached client with full support of Memcached protocol.",
+            "homepage": "https://github.com/clickalicious/Memcached.php",
+            "keywords": [
+                "client",
+                "inmemory",
+                "memcache",
+                "memcached",
+                "memory",
+                "nosql",
+                "php"
+            ],
+            "time": "2016-04-15T22:59:16+00:00"
         },
         {
             "name": "defuse/php-encryption",
@@ -525,6 +581,61 @@
             "time": "2019-07-29T16:49:45+00:00"
         },
         {
+            "name": "fig/cache-util",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/cache-util.git",
+                "reference": "771adf39e9a09325b8c20f35f3d2bdafcb78ac8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/cache-util/zipball/771adf39e9a09325b8c20f35f3d2bdafcb78ac8c",
+                "reference": "771adf39e9a09325b8c20f35f3d2bdafcb78ac8c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "psr/cache": "^1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.1",
+                "squizlabs/php_codesniffer": "^2.3.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fig\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                },
+                {
+                    "name": "Larry Garfield",
+                    "homepage": "http://www.garfieldtech.com/"
+                }
+            ],
+            "description": "Useful utility classes and traits for implementing the PSR cache standard",
+            "keywords": [
+                "cache",
+                "psr",
+                "psr-6"
+            ],
+            "time": "2018-11-08T17:23:20+00:00"
+        },
+        {
             "name": "firebase/php-jwt",
             "version": "v5.0.0",
             "source": {
@@ -619,6 +730,105 @@
                 "fixtures"
             ],
             "time": "2018-07-12T10:23:15+00:00"
+        },
+        {
+            "name": "gpupo/cache",
+            "version": "1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gpupo/cache.git",
+                "reference": "08e8e8c18381e5db0cf7f1e08eb1af231cd10ab2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gpupo/cache/zipball/08e8e8c18381e5db0cf7f1e08eb1af231cd10ab2",
+                "reference": "08e8e8c18381e5db0cf7f1e08eb1af231cd10ab2",
+                "shasum": ""
+            },
+            "require": {
+                "fig/cache-util": "dev-master as 1.0.x-dev",
+                "gpupo/common": "*",
+                "php": "^5.6 || ^7.0",
+                "psr/cache": "^1.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "@dev",
+                "phpunit/phpunit": "~5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gpupo\\Cache\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gilmar Pupo",
+                    "email": "contact@gpupo.com"
+                }
+            ],
+            "description": "Caching library that implements PSR-6",
+            "homepage": "https://opensource.gpupo.com/cache/",
+            "keywords": [
+                "cache",
+                "psr-6"
+            ],
+            "abandoned": "https://github.com/symfony/cache",
+            "time": "2017-04-11T17:21:30+00:00"
+        },
+        {
+            "name": "gpupo/common",
+            "version": "2.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gpupo/common.git",
+                "reference": "ffb3c7d66caff1465f2112335391fa915476b0f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gpupo/common/zipball/ffb3c7d66caff1465f2112335391fa915476b0f3",
+                "reference": "ffb3c7d66caff1465f2112335391fa915476b0f3",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "^1.23",
+                "php": "^7.1.3",
+                "psr/simple-cache": "^1.0",
+                "symfony/cache": "^4.0",
+                "symfony/console": "^4.0",
+                "symfony/var-dumper": "^4.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gpupo\\Common\\": "src",
+                    "Gpupo\\Tests\\Common\\": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gilmar Pupo",
+                    "email": "contact@gpupo.com"
+                }
+            ],
+            "description": "Common Objects",
+            "homepage": "https://opensource.gpupo.com/common/",
+            "keywords": [
+                "common"
+            ],
+            "time": "2018-05-18T17:15:52+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -3136,6 +3346,142 @@
             "time": "2019-04-21T09:21:45+00:00"
         },
         {
+            "name": "symfony/cache",
+            "version": "v4.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/cache.git",
+                "reference": "d263af3cec33afa862310e58545fdc10d779806f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/d263af3cec33afa862310e58545fdc10d779806f",
+                "reference": "d263af3cec33afa862310e58545fdc10d779806f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "psr/cache": "~1.0",
+                "psr/log": "~1.0",
+                "symfony/cache-contracts": "^1.1",
+                "symfony/service-contracts": "^1.1",
+                "symfony/var-exporter": "^4.2"
+            },
+            "conflict": {
+                "doctrine/dbal": "<2.5",
+                "symfony/dependency-injection": "<3.4",
+                "symfony/var-dumper": "<3.4"
+            },
+            "provide": {
+                "psr/cache-implementation": "1.0",
+                "psr/simple-cache-implementation": "1.0",
+                "symfony/cache-implementation": "1.0"
+            },
+            "require-dev": {
+                "cache/integration-tests": "dev-master",
+                "doctrine/cache": "~1.6",
+                "doctrine/dbal": "~2.5",
+                "predis/predis": "~1.1",
+                "psr/simple-cache": "^1.0",
+                "symfony/config": "~4.2",
+                "symfony/dependency-injection": "~3.4|~4.1",
+                "symfony/var-dumper": "^4.1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Cache\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Cache component with PSR-6, PSR-16, and tags",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "caching",
+                "psr6"
+            ],
+            "time": "2019-06-28T13:16:30+00:00"
+        },
+        {
+            "name": "symfony/cache-contracts",
+            "version": "v1.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/cache-contracts.git",
+                "reference": "ec5524b669744b5f1dc9c66d3c2b091eb7e7f0db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/ec5524b669744b5f1dc9c66d3c2b091eb7e7f0db",
+                "reference": "ec5524b669744b5f1dc9c66d3c2b091eb7e7f0db",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "psr/cache": "^1.0"
+            },
+            "suggest": {
+                "symfony/cache-implementation": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Contracts\\Cache\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Generic abstractions related to caching",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "abstractions",
+                "contracts",
+                "decoupling",
+                "interfaces",
+                "interoperability",
+                "standards"
+            ],
+            "time": "2019-06-13T11:15:36+00:00"
+        },
+        {
             "name": "symfony/console",
             "version": "v4.3.3",
             "source": {
@@ -4509,6 +4855,66 @@
                 "dump"
             ],
             "time": "2019-07-27T06:42:46+00:00"
+        },
+        {
+            "name": "symfony/var-exporter",
+            "version": "v4.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-exporter.git",
+                "reference": "9dee83031dcf6dcb53bb7ec1c51de085329bf5cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/9dee83031dcf6dcb53bb7ec1c51de085329bf5cb",
+                "reference": "9dee83031dcf6dcb53bb7ec1c51de085329bf5cb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "require-dev": {
+                "symfony/var-dumper": "^4.1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\VarExporter\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "A blend of var_export() + serialize() to turn any serializable data structure to plain PHP code",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "clone",
+                "construct",
+                "export",
+                "hydrate",
+                "instantiate",
+                "serialize"
+            ],
+            "time": "2019-06-22T08:39:44+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
