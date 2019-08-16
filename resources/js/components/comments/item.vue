@@ -1,6 +1,6 @@
 <template>
   <section class="py-3 border-top comment">
-    <a :href="`/users/${comment.user_id}`">
+    <a :href="`/users/${comment.user.slug}`">
       <span class="mr-2">
         <img
           v-if="comment.user.avatar"
