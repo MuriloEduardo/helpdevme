@@ -2,7 +2,7 @@
 	<section v-if="talk">
 		<p class="lead">
 			<span>Conversa com</span>
-			<a :href="'/users/' + opposite.id" class="badge badge-secondary">
+			<a :href="'/users/' + opposite.slug" class="badge badge-secondary">
 				<span :class="(onlineFriends.find(user=>user.id===opposite.id))?'text-success':''">&bull;</span>
 				<span>{{ opposite.name }}</span>
 			</a>
