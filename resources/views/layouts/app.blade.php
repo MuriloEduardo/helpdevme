@@ -34,10 +34,10 @@
 	<title>{{ config('app.name', 'Help Dev') }}</title>
 
 	<!-- Scripts -->
-	<script src="{{ secure_asset('js/app.js') }}" defer></script>
+	<script src="{{ asset('js/app.js') }}" defer></script>
 
 	<!-- Styles -->
-	<link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 	<link rel="stylesheet"
 		href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
