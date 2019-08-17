@@ -129,18 +129,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
 	props: ['user', 'talkprop', 'opposite', 'posts'],
 
 	data() {
 		return {
 			talk: undefined,
-			channel: `privatechat.${this.talkprop.id}`,
+			channel: `posts.${this.$userId}`,
 			body: null,
 			timeOut: undefined,
 			formActive: true,
 			typing: false,
-			onlineFriends: [],
 			allPosts: []
 		};
 	},
@@ -155,7 +156,10 @@ export default {
 				(question.user_id != this.user.id &&
 					question.freelancer_ended == 1)
 			);
-		}
+		},
+		...mapState({
+			onlineFriends: state => state.users
+		})
 	},
 
 	methods: {
@@ -198,18 +202,23 @@ export default {
 	created() {
 		this.talk = this.talkprop;
 
+		console.log(this.$userId);
+
 		this.fetchMessages();
 
-		Echo.join(this.channel + '.join')
-			.here(users => {
-				this.onlineFriends = users;
-			})
-			.joining(user => {
-				this.onlineFriends.push(user);
-			})
-			.leaving(user => {
-				this.onlineFriends.splice(this.onlineFriends.indexOf(user), 1);
-			});
+		// Echo.join(this.channel + '.join')
+		// 	.here(users => {
+		// 		console.log('here', users);
+		// 		this.onlineFriends = users;
+		// 	})
+		// 	.joining(user => {
+		// 		console.log('joining', user);
+		// 		this.onlineFriends.push(user);
+		// 	})
+		// 	.leaving(user => {
+		// 		console.log('leaving', user);
+		// 		this.onlineFriends.splice(this.onlineFriends.indexOf(user), 1);
+		// 	});
 
 		Echo.private(`${this.channel}.private`)
 			.listen('PrivatePostSent', response => {

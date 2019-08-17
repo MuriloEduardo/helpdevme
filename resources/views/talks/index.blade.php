@@ -5,7 +5,7 @@
 @section('content')
 <h1 class="display-4 mb-5">Conversas</h1>
 <div class="list-group">
-	@foreach($talks as $talk)
+	@forelse($talks as $talk)
 	@php ($opposite = auth()->id() === $talk->user->id ? $talk->receiver : $talk->user)
 	<a href="{{ route('talks.show', $talk) }}"
 		class="list-group-item list-group-item-action flex-column align-items-start">
@@ -25,6 +25,8 @@
 			</div>
 		</div>
 	</a>
-	@endforeach
+	@empty
+	<p>Você não possui conversas</p>
+	@endforelse
 </div>
 @endsection

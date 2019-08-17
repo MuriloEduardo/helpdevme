@@ -27,7 +27,7 @@
 									v-bind:alt="question.user.name"
 									v-bind:title="question.user.name"
 								/>
-								<i v-else class="fas fa-user-circle fa-2X"></i>
+								<i v-else class="fas fa-user-circle fa-2x"></i>
 							</div>
 						</a>
 					</div>

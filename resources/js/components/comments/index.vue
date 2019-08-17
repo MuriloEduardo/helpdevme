@@ -1,9 +1,9 @@
 <template>
-  <section>
-    <p class="small">{{ comments.length }} resposta(s)</p>
-    <List :question="question" :comments="comments" />
-    <Create v-if="canComment" :question="question" />
-  </section>
+	<section>
+		<p class="small">{{ comments.length }} resposta(s)</p>
+		<List :question_id="question.id" :comments="comments" />
+		<Create v-if="canComment" :question="question" />
+	</section>
 </template>
 <script>
 import { mapGetters } from 'vuex';
@@ -20,7 +20,10 @@ export default {
 	computed: {
 		...mapGetters('questions', ['getComments']),
 		canComment: function() {
-			return this.$userId != this.question.user_id && this.question.status == 0;
+			return (
+				this.$userId != this.question.user_id &&
+				this.question.status == 0
+			);
 		},
 		comments: function() {
 			return this.getComments(this.question.id) || [];

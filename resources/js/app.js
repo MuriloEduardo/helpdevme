@@ -46,6 +46,8 @@ Vue.component('ListNewQuestions', require('./components/question/list'));
 
 Vue.component('CComments', require('./components/comments'));
 
+Vue.component('OnlineUsers', require('./components/online-users'));
+
 const app = new Vue({
 	store,
 	el: '#app'

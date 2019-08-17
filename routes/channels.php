@@ -14,21 +14,21 @@
 /**
  * Presence
  */
-Broadcast::channel('privatechat.{talk_id}.join', function ($user) {
-    return auth()->check() ? $user : false;
+Broadcast::channel('online', function ($user) {
+	return $user;
 });
 
 /**
  * Private
  */
-Broadcast::channel('comments.{question_id}.private', function () {
-    return true;
+Broadcast::channel('comments', function () {
+	return true;
 });
 
-Broadcast::channel('privatechat.{talk_id}.private', function () {
-    return auth()->check();
+Broadcast::channel('posts.{user_id}.private', function () {
+	return auth()->check();
 });
 
 Broadcast::channel('newquestions', function () {
-    return true;
+	return true;
 });

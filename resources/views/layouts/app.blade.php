@@ -149,7 +149,7 @@
 		</nav>
 		<main role="main">
 			<section class="py-5">
-				<div class="container">
+				<div class="container-fluid">
 					@yield('content')
 				</div>
 			</section>

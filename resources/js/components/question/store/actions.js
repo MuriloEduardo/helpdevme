@@ -15,7 +15,7 @@ const setQuestions = async ({ commit }) => {
 	commit('SET_QUESTIONS', list);
 };
 
-const setQuestion = async ({ commit }, obj) => {
+const setQuestion = ({ commit }, obj) => {
 	commit('SET_QUESTION', obj);
 };
 
@@ -28,8 +28,13 @@ const addComment = async ({ commit }, obj) => {
 	commit('ADD_COMMENT', comment);
 };
 
-const setComment = async ({ commit }, obj) => {
+const setComment = ({ commit }, obj) => {
 	commit('SET_COMMENT', obj);
+};
+
+const setTypingComment = ({ commit }, obj) => {
+	console.log('setTypingComment');
+	commit('SET_TYPING_COMMENT', obj);
 };
 
 export default {
@@ -37,5 +42,6 @@ export default {
 	setQuestions,
 	setQuestion,
 	addComment,
-	setComment
+	setComment,
+	setTypingComment
 };

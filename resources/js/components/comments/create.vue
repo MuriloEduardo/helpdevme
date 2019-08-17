@@ -1,44 +1,39 @@
 <template>
-  <form @submit.prevent="onSubmit">
-    <b-input-group>
-      <b-form-input
-        @keydown="onTyping"
-        placeholder="Escreva uma mensagem..."
-        v-model="body"
-        required
-      ></b-form-input>
+	<form @submit.prevent="onSubmit">
+		<b-input-group>
+			<b-form-input @keydown="onTyping" placeholder="Escreva uma mensagem..." v-model="body" required></b-form-input>
 
-      <b-input-group-append>
-        <b-dropdown
-          variant="outline-primary"
-          v-b-tooltip.hover
-          title="Adicionar Orçamento"
-          right
-          slot="append"
-        >
-          <template slot="button-content">
-            <i class="fas fa-hand-holding-usd"></i>
-          </template>
-          <b-dropdown-form>
-            <b-form-group label="Orçamento" label-for="dropdown-form-budget" @submit.stop.prevent>
-              <b-input-group prepend="R$">
-                <b-form-input
-                  id="dropdown-form-budget"
-                  v-model="budget"
-                  @keydown="onTyping"
-                  placeholder="2,50"
-                ></b-form-input>
-              </b-input-group>
-            </b-form-group>
-          </b-dropdown-form>
-        </b-dropdown>
-        <b-button variant="primary" type="submit" v-b-tooltip.hover title="Enviar">
-          <i v-if="!loading" class="fas fa-paper-plane"></i>
-          <span v-else class="ellipsis"></span>
-        </b-button>
-      </b-input-group-append>
-    </b-input-group>
-  </form>
+			<b-input-group-append>
+				<b-dropdown
+					variant="outline-primary"
+					v-b-tooltip.hover
+					title="Adicionar Orçamento"
+					right
+					slot="append"
+				>
+					<template slot="button-content">
+						<i class="fas fa-hand-holding-usd"></i>
+					</template>
+					<b-dropdown-form>
+						<b-form-group label="Orçamento" label-for="dropdown-form-budget" @submit.stop.prevent>
+							<b-input-group prepend="R$">
+								<b-form-input
+									id="dropdown-form-budget"
+									v-model="budget"
+									@keydown="onTyping"
+									placeholder="2,50"
+								></b-form-input>
+							</b-input-group>
+						</b-form-group>
+					</b-dropdown-form>
+				</b-dropdown>
+				<b-button variant="primary" type="submit" v-b-tooltip.hover title="Enviar">
+					<i v-if="!loading" class="fas fa-paper-plane"></i>
+					<span v-else class="ellipsis"></span>
+				</b-button>
+			</b-input-group-append>
+		</b-input-group>
+	</form>
 </template>
 <script>
 import { mapActions } from 'vuex';
@@ -53,17 +48,13 @@ export default {
 		};
 	},
 	methods: {
-		onTyping() {
-			const privateChannel = Echo.private(
-				`comments.${this.question.id}.private`
-			);
-
-			setTimeout(() => {
-				privateChannel.whisper('typing', {
-					typing: true
-				});
-			}, 300);
-		},
+		onTyping: _.debounce(function(e) {
+			console.log('debounce');
+			Echo.private('comments').whisper('typing', {
+				typing: true,
+				question: this.question
+			});
+		}, 500),
 		resetForm() {
 			this.body = undefined;
 			this.budget = undefined;
@@ -91,11 +82,14 @@ export default {
 				.catch(error => {
 					this.loading = false;
 
-					this.$bvToast.toast('Tente novamente de uma forma diferente!', {
-						title: 'Algo deu errado!',
-						variant: 'danger',
-						solid: true
-					});
+					this.$bvToast.toast(
+						'Tente novamente de uma forma diferente!',
+						{
+							title: 'Algo deu errado!',
+							variant: 'danger',
+							solid: true
+						}
+					);
 				});
 		},
 		...mapActions('questions', ['addComment'])

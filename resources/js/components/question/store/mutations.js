@@ -23,10 +23,26 @@ const ADD_COMMENT = (state, { data }) =>
 const SET_COMMENT = (state, comment) =>
 	question(state, comment.talk.question_id).comments.push(comment);
 
+const SET_TYPING_COMMENT = ({ list, news }, obj) => {
+	const byList = list.filter((question, index) => {
+		if (question.id == obj.question.id) {
+			return {
+				question,
+				index
+			};
+		}
+	});
+
+	console.log('byList', byList);
+
+	return Vue.set(byList[0], 4, { typing: obj.typing });
+};
+
 export default {
 	ADD_QUESTION,
 	SET_QUESTIONS,
 	SET_QUESTION,
 	ADD_COMMENT,
-	SET_COMMENT
+	SET_COMMENT,
+	SET_TYPING_COMMENT
 };
