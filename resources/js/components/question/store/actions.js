@@ -5,6 +5,8 @@ const addQuestion = async ({ commit }, obj) => {
 	const question = await axios.post('/api/questions', obj);
 
 	commit('ADD_QUESTION', question);
+
+	return question;
 };
 
 const setQuestions = async ({ commit }) => {

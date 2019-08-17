@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Perguntas - ')
+
 @section('content')
 <div class="row">
 	<div class="col">
@@ -39,14 +41,14 @@
 						<h3 class="h5">
 							<a href="{{ route('questions.show', $question) }}">{{ $question->title }}</a>
 						</h3>
-						@include('shared.questions.status', ['status' => $question->status])
+						@include('shared.questions.status', ['question' => $question])
 						<p>{!! $question->body !!}</p>
 					</div>
 				</div>
 				<div class="row align-items-center">
 					<div class="col text-right">
 						<div class="small mb-3">
-							<span>{{ $question->created_at->diffForHumans() }} por</span>
+							<span>{{ $question->published }} por</span>
 							<a href="{{ route('users.show', $question->user) }}">
 								<div class="d-flex align-items-center justify-content-end py-2">
 									<span class="mr-2">{{ $question->user->name }}</span>

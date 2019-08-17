@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $question->title . ' - ')
+
 @section('content')
 <div class="row">
 	<div class="col">
@@ -12,7 +14,7 @@
 			<div class="row">
 				<div class="col text-right">
 					<div class="small mb-3">
-						<span>{{ $question->created_at->diffForHumans() }} por</span>
+						<span>{{ $question->published }} por</span>
 						<a href="{{ route('users.show', $question->user) }}">{{ $question->user->name }}</a>
 					</div>
 				</div>

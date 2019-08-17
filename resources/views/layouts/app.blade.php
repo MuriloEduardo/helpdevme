@@ -31,7 +31,7 @@
 	<!-- User ID -->
 	<meta name="user-id" content="{{ Auth::id() }}">
 
-	<title>{{ config('app.name', 'Help Dev') }}</title>
+	<title>@yield('title'){{ config('app.name', 'Help Dev') }}</title>
 
 	<!-- Scripts -->
 	<script src="{{ asset('js/app.js') }}" defer></script>
@@ -86,6 +86,10 @@
 							@endif
 						</li>
 						@else
+						<li class="nav-item">
+							<b-button @click="$bvModal.show('modal-create-question')" variant="link"
+								class="btn text-white btn-success px-5 my-1 mx-3">Criar Pergunta</b-button>
+						</li>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle d-flex justify-content-center"
 								title="Minha Conta" href="#" role="button" v-b-tooltip.hover data-toggle="dropdown"

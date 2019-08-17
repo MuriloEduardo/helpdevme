@@ -159,7 +159,7 @@ export default {
 				body: this.body,
 				tags: this.tags.map(tag => tag.id)
 			})
-				.then(() => {
+				.then(response => {
 					this.loading = false;
 					this.resetForm();
 
@@ -169,7 +169,9 @@ export default {
 						solid: true
 					});
 				})
-				.catch(({ response }) => {
+				.catch(error => {
+					const { response } = error;
+
 					this.loading = false;
 
 					if (response.status === 500) {
@@ -192,5 +194,3 @@ export default {
 	}
 };
 </script>
-
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
