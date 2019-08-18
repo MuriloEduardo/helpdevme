@@ -94,15 +94,9 @@ export default {
 	}),
 	methods: {
 		...mapActions('questions', ['addQuestion']),
-		onTyping() {
-			const privateChannel = Echo.private('newquestions');
-
-			setTimeout(() => {
-				privateChannel.whisper('typing', {
-					typing: true
-				});
-			}, 300);
-		},
+		onTyping: _.debounce(function() {
+			Echo.private('newquestions').whisper('typing', this.user);
+		}, 1000),
 		resetForm() {
 			this.$bvModal.hide('modal-create-question');
 

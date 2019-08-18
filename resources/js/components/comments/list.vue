@@ -1,6 +1,9 @@
 <template>
 	<section v-if="question">
-		<p v-if="question.typing" class="text-muted ellipsis">Alguém está digitando um comentário</p>
+		<p
+			v-if="question.typings && question.typings.length"
+			class="text-muted ellipsis"
+		>Alguém está digitando um comentário</p>
 		<Item v-for="(comment, index) in comments" :comment="comment" :question="question" :key="index" />
 	</section>
 </template>

@@ -48,8 +48,11 @@ export default {
 		};
 	},
 	methods: {
-		onTyping: _.debounce(function(e) {
-			Echo.private('comments').whisper('typing', this.question);
+		onTyping: _.debounce(function() {
+			Echo.private('comments').whisper('typing', {
+				question: this.question,
+				user_id: this.$userId
+			});
 		}, 1000),
 		resetForm() {
 			this.body = undefined;

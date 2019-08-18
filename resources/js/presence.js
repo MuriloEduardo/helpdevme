@@ -15,6 +15,16 @@ window.Echo.private('comments')
 	.listen('PrivateCommentSent', response =>
 		store.dispatch('questions/setComment', response.post, { root: true })
 	)
-	.listenForWhisper('typing', question => {
-		store.dispatch('questions/setTypingComment', question, { root: true });
+	.listenForWhisper('typing', payload => {
+		store.dispatch('questions/setTypingComment', payload, { root: true });
+	});
+
+window.Echo.private('newquestions')
+	.listen('NewQuestionsEvent', response => {
+		store.dispatch('questions/setQuestion', response.question, {
+			root: true
+		});
+	})
+	.listenForWhisper('typing', user => {
+		store.dispatch('questions/setTypingQuestion', user, { root: true });
 	});
