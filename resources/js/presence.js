@@ -15,6 +15,6 @@ window.Echo.private('comments')
 	.listen('PrivateCommentSent', response =>
 		store.dispatch('questions/setComment', response.post, { root: true })
 	)
-	.listenForWhisper('typing', e => {
-		store.dispatch('questions/setTypingComment', e, { root: true });
+	.listenForWhisper('typing', question => {
+		store.dispatch('questions/setTypingComment', question, { root: true });
 	});

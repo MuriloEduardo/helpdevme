@@ -26,15 +26,16 @@ const addComment = async ({ commit }, obj) => {
 	const comment = await axios.post('/api/comments', obj);
 
 	commit('ADD_COMMENT', comment);
+
+	return comment;
 };
 
 const setComment = ({ commit }, obj) => {
 	commit('SET_COMMENT', obj);
 };
 
-const setTypingComment = ({ commit }, obj) => {
-	console.log('setTypingComment');
-	commit('SET_TYPING_COMMENT', obj);
+const setTypingComment = ({ commit }, question) => {
+	commit('SET_TYPING_COMMENT', question);
 };
 
 export default {

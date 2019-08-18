@@ -1,7 +1,9 @@
+import Vue from 'vue';
+
 /**
  * PRIVATE
  */
-const question = ({ list, news }, question_id) =>
+const getQuestion = ({ list, news }, question_id) =>
 	[...list, ...news].find(question => question.id == question_id);
 
 /**
@@ -18,24 +20,17 @@ const SET_QUESTION = ({ news }, question) => news.unshift(question);
  * Comments
  */
 const ADD_COMMENT = (state, { data }) =>
-	question(state, data.post.talk.question_id).comments.push(data.post);
+	getQuestion(state, data.post.talk.question_id).comments.push(data.post);
 
 const SET_COMMENT = (state, comment) =>
-	question(state, comment.talk.question_id).comments.push(comment);
+	getQuestion(state, comment.talk.question_id).comments.push(comment);
 
-const SET_TYPING_COMMENT = ({ list, news }, obj) => {
-	const byList = list.filter((question, index) => {
-		if (question.id == obj.question.id) {
-			return {
-				question,
-				index
-			};
-		}
-	});
-
-	console.log('byList', byList);
-
-	return Vue.set(byList[0], 4, { typing: obj.typing });
+const SET_TYPING_COMMENT = (state, question) => {
+	state.list = [
+		...state.list
+			.filter(_question => question.id === _question.id)
+			.map(_question => (_question = { ..._question, typing: true }))
+	];
 };
 
 export default {

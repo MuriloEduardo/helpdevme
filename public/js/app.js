@@ -82280,8 +82280,8 @@ window.Echo.join('online').here(function (users) {
 
 window.Echo.private('comments').listen('PrivateCommentSent', function (response) {
 	return __WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setComment', response.post, { root: true });
-}).listenForWhisper('typing', function (e) {
-	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setTypingComment', e, { root: true });
+}).listenForWhisper('typing', function (question) {
+	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setTypingComment', question, { root: true });
 });
 
 /***/ }),
@@ -94629,7 +94629,9 @@ var addComment = function () {
 
 						commit('ADD_COMMENT', comment);
 
-					case 4:
+						return _context3.abrupt('return', comment);
+
+					case 5:
 					case 'end':
 						return _context3.stop();
 				}
@@ -94648,11 +94650,10 @@ var setComment = function setComment(_ref8, obj) {
 	commit('SET_COMMENT', obj);
 };
 
-var setTypingComment = function setTypingComment(_ref9, obj) {
+var setTypingComment = function setTypingComment(_ref9, question) {
 	var commit = _ref9.commit;
 
-	console.log('setTypingComment');
-	commit('SET_TYPING_COMMENT', obj);
+	commit('SET_TYPING_COMMENT', question);
 };
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -95443,12 +95444,18 @@ if (hadRuntime) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+
 
 /**
  * PRIVATE
  */
-var question = function question(_ref, question_id) {
+var getQuestion = function getQuestion(_ref, question_id) {
 	var list = _ref.list,
 	    news = _ref.news;
 	return [].concat(_toConsumableArray(list), _toConsumableArray(news)).find(function (question) {
@@ -95478,29 +95485,19 @@ var SET_QUESTION = function SET_QUESTION(_ref3, question) {
  */
 var ADD_COMMENT = function ADD_COMMENT(state, _ref4) {
 	var data = _ref4.data;
-	return question(state, data.post.talk.question_id).comments.push(data.post);
+	return getQuestion(state, data.post.talk.question_id).comments.push(data.post);
 };
 
 var SET_COMMENT = function SET_COMMENT(state, comment) {
-	return question(state, comment.talk.question_id).comments.push(comment);
+	return getQuestion(state, comment.talk.question_id).comments.push(comment);
 };
 
-var SET_TYPING_COMMENT = function SET_TYPING_COMMENT(_ref5, obj) {
-	var list = _ref5.list,
-	    news = _ref5.news;
-
-	var byList = list.filter(function (question, index) {
-		if (question.id == obj.question.id) {
-			return {
-				question: question,
-				index: index
-			};
-		}
-	});
-
-	console.log('byList', byList);
-
-	return Vue.set(byList[0], 4, { typing: obj.typing });
+var SET_TYPING_COMMENT = function SET_TYPING_COMMENT(state, question) {
+	state.list = [].concat(_toConsumableArray(state.list.filter(function (_question) {
+		return question.id === _question.id;
+	}).map(function (_question) {
+		return _question = _extends({}, _question, { typing: true });
+	})));
 };
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -104596,12 +104593,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 	methods: _extends({
 		onTyping: _.debounce(function (e) {
-			console.log('debounce');
-			Echo.private('comments').whisper('typing', {
-				typing: true,
-				question: this.question
-			});
-		}, 500),
+			Echo.private('comments').whisper('typing', this.question);
+		}, 1000),
 		resetForm: function resetForm() {
 			this.body = undefined;
 			this.budget = undefined;

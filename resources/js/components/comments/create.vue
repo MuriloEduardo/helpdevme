@@ -49,12 +49,8 @@ export default {
 	},
 	methods: {
 		onTyping: _.debounce(function(e) {
-			console.log('debounce');
-			Echo.private('comments').whisper('typing', {
-				typing: true,
-				question: this.question
-			});
-		}, 500),
+			Echo.private('comments').whisper('typing', this.question);
+		}, 1000),
 		resetForm() {
 			this.body = undefined;
 			this.budget = undefined;
