@@ -24,8 +24,18 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
-				<create-question :user="{{ auth()->check() ? auth()->user() : '{}' }}"></create-question>
+			<div class="col create-question">
+				<b-button @click="$bvModal.show('modal-create-question')" variant="link"
+					class="btn-block card card-body card mb-5">
+					<div class="d-flex align-items-center">
+						<div class="pr-3">
+							@include('shared.avatar', ['user' => auth()->user()])
+						</div>
+						<div class="flex-grow-1">
+							<div class="placeholder text-muted py-3">Qual sua dúvida sobre programação?</div>
+						</div>
+					</div>
+				</b-button>
 			</div>
 		</div>
 		<div class="row">

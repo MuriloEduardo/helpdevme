@@ -75,6 +75,10 @@
 					</ul>
 					<!-- Right Side Of Navbar -->
 					<ul class="navbar-nav ml-auto text-center">
+						<li class="nav-item">
+							<b-button @click="$bvModal.show('modal-create-question')" variant="link"
+								class="btn text-white btn-success px-5 my-1 mx-3">Pedir Ajuda</b-button>
+						</li>
 						<!-- Authentication Links -->
 						@guest
 						<li class="nav-item">
@@ -86,10 +90,6 @@
 							@endif
 						</li>
 						@else
-						<li class="nav-item">
-							<b-button @click="$bvModal.show('modal-create-question')" variant="link"
-								class="btn text-white btn-success px-5 my-1 mx-3">Criar Pergunta</b-button>
-						</li>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle d-flex justify-content-center"
 								title="Minha Conta" href="#" role="button" v-b-tooltip.hover data-toggle="dropdown"
@@ -139,7 +139,6 @@
 							<div class="dropdown-menu dropdown-menu-right my-0 py-0"
 								aria-labelledby="navbarDropdownTalks">
 								<list-chat></list-chat>
-								<a class="btn btn-link btn-block" href="{{ route('talks.index') }}">Ver Tudo</a>
 							</div>
 						</li>
 						@endguest
@@ -162,6 +161,7 @@
 				</div>
 			</div>
 		</footer>
+		<create-question :user="{{ auth()->check() ? auth()->user() : '{}' }}"></create-question>
 	</div>
 </body>
 

@@ -4,10 +4,12 @@
 			width: 55px;
 			height: 55px;
 		}
+
 		&:hover,
 		&:focus {
 			text-decoration: none;
 		}
+
 		&:not(:disabled) {
 			cursor: text;
 		}
@@ -18,5 +20,9 @@
 	.avatar {
 		width: 65px;
 		height: 55px;
+	}
+
+	.modal-header {
+		border-bottom: none;
 	}
 }

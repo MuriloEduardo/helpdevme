@@ -1,10 +1,13 @@
 <template>
-	<section class="create-question">
-		<b-button
-			@click="$bvModal.show('modal-create-question')"
-			variant="link"
-			class="btn-block card card-body card mb-5"
-		>
+	<b-modal id="modal-create-question" size="lg">
+		<template slot="modal-header" slot-scope="{ close }">
+			<h5 class="m-0">Criar Pergunta</h5>
+			<a href="javascript:void(0)" class="close" @click="close()" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</a>
+		</template>
+
+		<template slot="default">
 			<div class="d-flex">
 				<div class="pr-3">
 					<img
@@ -17,78 +20,51 @@
 					<i v-else class="fas fa-user-circle fa-4x"></i>
 				</div>
 				<div class="flex-grow-1">
-					<div class="placeholder text-muted py-3">Qual sua dúvida sobre programação?</div>
+					<form @submit.prevent="onSubmit">
+						<div class="form-group">
+							<input
+								type="text"
+								class="form-control"
+								name="title"
+								v-model="title"
+								placeholder="Qual sua dúvida sobre programação?"
+								@keydown="onTyping"
+								required
+							/>
+						</div>
+						<div class="form-group">
+							<vue-editor v-model="body" :editor-toolbar="customToolbar" />
+						</div>
+						<div class="form-group">
+							<multiselect
+								v-model="tags"
+								tag-placeholder="Adicione isto como nova tag"
+								placeholder="Pesquise ou adicione uma tag"
+								label="title"
+								track-by="id"
+								:options="options"
+								:multiple="true"
+								:taggable="true"
+								@tag="addTag"
+							></multiselect>
+						</div>
+						<div class="form-row justify-content-end">
+							<div class="col-lg-3">
+								<button type="submit" class="d-none" id="submit-modal-create-question"></button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
-		</b-button>
+		</template>
 
-		<b-modal id="modal-create-question" size="lg">
-			<template slot="modal-header" slot-scope="{ close }">
-				<h5>Criar Pergunta</h5>
-				<a href="javascript:void(0)" class="close" @click="close()" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</a>
-			</template>
-
-			<template slot="default">
-				<div class="d-flex">
-					<div class="pr-3">
-						<img
-							v-if="user.avatar"
-							class="img-fluid avatar"
-							:src="'/storage/img/avatars/' + user.avatar"
-							v-bind:alt="user.name"
-							v-bind:title="user.name"
-						/>
-						<i v-else class="fas fa-user-circle fa-4x"></i>
-					</div>
-					<div class="flex-grow-1">
-						<form @submit.prevent="onSubmit">
-							<div class="form-group">
-								<input
-									type="text"
-									class="form-control"
-									name="title"
-									v-model="title"
-									placeholder="Qual sua dúvida sobre programação?"
-									@keydown="onTyping"
-									required
-								/>
-							</div>
-							<div class="form-group">
-								<vue-editor v-model="body" :editor-toolbar="customToolbar" />
-							</div>
-							<div class="form-group">
-								<multiselect
-									v-model="tags"
-									tag-placeholder="Adicione isto como nova tag"
-									placeholder="Pesquise ou adicione uma tag"
-									label="title"
-									track-by="id"
-									:options="options"
-									:multiple="true"
-									:taggable="true"
-									@tag="addTag"
-								></multiselect>
-							</div>
-							<div class="form-row justify-content-end">
-								<div class="col-lg-3">
-									<button type="submit" class="d-none" id="submit-modal-create-question"></button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</template>
-
-			<template slot="modal-footer">
-				<label for="submit-modal-create-question" class="btn btn-success px-5">
-					<span v-if="!loading">Enviar</span>
-					<span v-else class="ellipsis"></span>
-				</label>
-			</template>
-		</b-modal>
-	</section>
+		<template slot="modal-footer">
+			<label for="submit-modal-create-question" class="btn btn-success px-5">
+				<span v-if="!loading">Enviar</span>
+				<span v-else class="ellipsis"></span>
+			</label>
+		</template>
+	</b-modal>
 </template>
 
 <script>
