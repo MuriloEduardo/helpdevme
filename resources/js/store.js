@@ -2,11 +2,13 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import questions from './components/question/store';
+import talks from './components/chat/store';
 
 Vue.use(Vuex);
 
 const modules = {
-	questions
+	questions,
+	talks
 };
 
 export default new Vuex.Store({

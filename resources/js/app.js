@@ -32,9 +32,7 @@ Vue.use(VueCurrencyFilter, {
 	symbolSpacing: true
 });
 
-Vue.prototype.$userId = document
-	.querySelector("meta[name='user-id']")
-	.getAttribute('content');
+Vue.prototype.$userId = window.$userId;
 
 Vue.component('PrivateChat', require('./components/chat'));
 Vue.component('ListChat', require('./components/chat/list'));

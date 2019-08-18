@@ -25,7 +25,7 @@ Broadcast::channel('comments', function () {
 	return true;
 });
 
-Broadcast::channel('posts.{user_id}.private', function () {
+Broadcast::channel('posts.{talk_id}.private', function () {
 	return auth()->check();
 });
 

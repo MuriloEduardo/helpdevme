@@ -137,7 +137,7 @@ export default {
 	data() {
 		return {
 			talk: undefined,
-			channel: `posts.${this.$userId}`,
+			channel: `posts.${this.talkprop.id}`,
 			body: null,
 			timeOut: undefined,
 			formActive: true,
@@ -202,23 +202,7 @@ export default {
 	created() {
 		this.talk = this.talkprop;
 
-		console.log(this.$userId);
-
 		this.fetchMessages();
-
-		// Echo.join(this.channel + '.join')
-		// 	.here(users => {
-		// 		console.log('here', users);
-		// 		this.onlineFriends = users;
-		// 	})
-		// 	.joining(user => {
-		// 		console.log('joining', user);
-		// 		this.onlineFriends.push(user);
-		// 	})
-		// 	.leaving(user => {
-		// 		console.log('leaving', user);
-		// 		this.onlineFriends.splice(this.onlineFriends.indexOf(user), 1);
-		// 	});
 
 		Echo.private(`${this.channel}.private`)
 			.listen('PrivatePostSent', response => {

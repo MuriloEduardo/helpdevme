@@ -33,6 +33,6 @@ class PrivatePostSent implements ShouldBroadcast
 	 */
 	public function broadcastOn()
 	{
-		return new PrivateChannel('posts.' . auth()->id() . '.private');
+		return new PrivateChannel('posts.' . $this->post->talk_id . '.private');
 	}
 }

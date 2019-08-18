@@ -39,6 +39,10 @@ if (token) {
 	);
 }
 
+window.$userId = document
+	.querySelector("meta[name='user-id']")
+	.getAttribute('content');
+
 window.axios.interceptors.response.use(
 	response => response,
 	error => {
