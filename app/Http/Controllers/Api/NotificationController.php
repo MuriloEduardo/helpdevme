@@ -27,6 +27,6 @@ class NotificationController extends Controller
 	{
 		$notifications = $request->user()->notifications;
 
-		return response(['notifications' => $notifications]);
+		return response()->json(compact('notifications'));
 	}
 }

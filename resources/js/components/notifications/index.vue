@@ -24,7 +24,15 @@
 				:key="index"
 				class="dropdown-item text-center"
 				href="#"
-			>{{ notification.title }}</a>
+				:set="post = notification.data.post"
+			>
+				<div>
+					Novo comentário
+					<b>{{ post.body }}</b> em
+					<b>{{ post.talk.question.title }}</b>
+					<div v-if="post.budget" class="text-success">{{ post.budget | currency }}</div>
+				</div>
+			</a>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item text-center" href="#">Limpar Notificações</a>
 		</div>
@@ -33,20 +41,28 @@
 
 <script>
 export default {
+	data() {
+		return {
+			notificationsItems: []
+		};
+	},
 	computed: {
 		notifications() {
-			return [
-				{
-					title: 'Notificação 1'
-				},
-				{
-					title: 'Notificação 2'
-				},
-				{
-					title: 'Notificação 3'
-				}
-			];
+			return this.notificationsItems;
 		}
+	},
+	methods: {
+		loadNotifications() {
+			axios
+				.get('/api/notifications')
+				.then(
+					response =>
+						(this.notificationsItems = response.data.notifications)
+				);
+		}
+	},
+	created() {
+		this.loadNotifications();
 	}
 };
 </script>
