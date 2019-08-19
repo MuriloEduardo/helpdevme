@@ -9,7 +9,7 @@
 					<h3 class="h5">
 						<a :href="'/' + question.slug">{{ question.title }}</a>
 					</h3>
-					<h4 class="badge" :class="question.statused.class">{{ question.statused.text }}</h4>
+					<h4 class="badge" :class="question.status_transform.class">{{ question.status_transform.text }}</h4>
 					<div v-html="question.body"></div>
 				</div>
 			</div>
@@ -19,7 +19,7 @@
 						<span>{{ question.published }}</span>
 						<a :href="'/users/' + question.user.slug">
 							<div class="d-flex align-items-center justify-content-end py-2">
-								<span class="mr-2">{{ question.user.name }}</span>
+								<span class="mr-2">{{ question.user_id == $userId ? 'Eu' : question.user.name }}</span>
 								<img
 									v-if="question.user.avatar"
 									class="img-fluid avatar"
@@ -47,7 +47,7 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<c-comments :question="question" />
+					<c-comments :question_id="question.id" />
 				</div>
 			</div>
 		</div>

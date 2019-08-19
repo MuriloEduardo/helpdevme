@@ -3,7 +3,7 @@
 @section('content')
 <h1 class="display-4 text-center mb-5">@lang('layouts.navbar.login')</h1>
 <div class="row justify-content-center">
-	<div class="col col-lg-5">
+	<div class="col-11 col-lg-5 col-sm-7 col-xl-4">
 		<div class="card">
 			<div class="card-body">
 				<form method="POST" action="{{ route('login') }}">
@@ -13,7 +13,9 @@
 						<label for="email">{{ __('E-Mail Address') }}</label>
 
 						<div>
-							<input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+							<input id="email" type="email"
+								class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
+								value="{{ old('email') }}" required autofocus>
 
 							@if ($errors->has('email'))
 							<span class="invalid-feedback" role="alert">
@@ -27,7 +29,9 @@
 						<label for="password">{{ __('Password') }}</label>
 
 						<div>
-							<input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+							<input id="password" type="password"
+								class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
+								required>
 
 							@if ($errors->has('password'))
 							<span class="invalid-feedback" role="alert">
@@ -39,7 +43,8 @@
 
 					<div class="form-group">
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+							<input class="form-check-input" type="checkbox" name="remember" id="remember"
+								{{ old('remember') ? 'checked' : '' }}>
 
 							<label class="form-check-label" for="remember">
 								{{ __('Remember Me') }}

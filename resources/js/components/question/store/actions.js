@@ -15,13 +15,10 @@ const setQuestions = async ({ commit }) => {
 	commit('SET_QUESTIONS', list);
 };
 
-const setQuestion = ({ commit }, question) => {
-	commit('SET_QUESTION', question);
-};
+const setQuestion = ({ commit }, question) => commit('SET_QUESTION', question);
 
-const setTypingQuestion = ({ commit }, user) => {
+const setTypingQuestion = ({ commit }, user) =>
 	commit('SET_TYPING_QUESTION', user);
-};
 
 /**
  * Comments
@@ -34,13 +31,10 @@ const addComment = async ({ commit }, obj) => {
 	return comment;
 };
 
-const setComment = ({ commit }, obj) => {
-	commit('SET_COMMENT', obj);
-};
+const setComment = ({ commit }, obj) => commit('SET_COMMENT', obj);
 
-const setTypingComment = ({ commit }, payload) => {
+const setTypingComment = ({ commit }, payload) =>
 	commit('SET_TYPING_COMMENT', payload);
-};
 
 export default {
 	addQuestion,

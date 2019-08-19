@@ -1,27 +1,29 @@
 <template>
 	<section v-if="talk">
-		<p class="lead">
-			<span>Conversa com</span>
-			<a :href="'/users/' + opposite.slug" class="badge badge-secondary">
-				<span :class="(onlineFriends.find(user=>user.id===opposite.id))?'text-success':''">&bull;</span>
-				<span>{{ opposite.name }}</span>
-			</a>
-		</p>
-		<!-- Finalização da Questão -->
-		<div class="form-group" v-if="!finished && talk.question.status == 2">
-			<a :href="'/' + talk.question.slug + '/finalize'" class="btn btn-success">Finalizar Questão</a>
+		<div class="d-flex align-items-center py-3">
+			<p class="lead">
+				<span>Conversa com</span>
+				<a :href="'/users/' + opposite.slug" class="badge badge-secondary">
+					<span :class="(onlineFriends.find(user=>user.id===opposite.id))?'text-success':''">&bull;</span>
+					<span>{{ opposite.name }}</span>
+				</a>
+			</p>
+			<!-- Finalização da Questão -->
+			<div class="form-group px-4" v-if="!finished && talk.question.status == 2">
+				<a :href="'/' + talk.question.slug + '/finalize'" class="btn btn-success">Finalizar Questão</a>
+			</div>
 		</div>
-		<div v-if="finished">
+		<div v-if="alertFinished && !conclusion">
 			<div class="card text-white bg-warning mb-3">
 				<div class="card-body">
-					<h5 class="card-title">Você finalizou essa questão!</h5>
+					<h5 class="card-title">Alguém finalizou essa questão!</h5>
 					<p
 						class="card-text"
 					>Esperamos que tudo esteja bem e {{ opposite.name }} também finalize. Caso contrário ambos poderão solicitiar o processo de arbitragem.</p>
 				</div>
 				<div class="card-footer">
 					<button type="button" class="btn btn-sm btn-outline-light">Solicitar Arbitragem</button>
-					<button type="button" class="btn btn-sm btn-success">Continuar Trabalhando</button>
+					<!-- <button type="button" class="btn btn-sm btn-success">Continuar Trabalhando</button> -->
 				</div>
 			</div>
 		</div>
@@ -54,15 +56,19 @@
 										<div class="card-body">
 											<p class="card-text">
 												{{ post.body }}
-												<span class="text-success">R$ {{ formatPrice(post.budget) }}</span>
+												<span class="text-success">{{ post.budget | currency }}</span>
 											</p>
 										</div>
 										<!-- Não exibir se for quem enviou a proposta -->
 										<!-- Só mostrar se o usuario for quem recebeu a proposta, quem efetuou essa proposta não verá -->
-										<div class="card-footer" v-if="user.id==talk.receiver_id && post.status!=3">
+										<!-- Se for post de recusado esconde footer com ações do alerta de proposta -->
+										<div
+											class="card-footer"
+											v-if="user.id == talk.receiver_id && (post.status < 3 && post.status != 1)"
+										>
 											<!-- Proposta NÃO aceita ainda -->
 											<a
-												v-if="post.status==0 || post.status==1"
+												v-if="post.status==0"
 												:href="'/posts/accept/' + post.id"
 												class="btn btn-success"
 											>Aceitar</a>
@@ -147,6 +153,11 @@ export default {
 	},
 
 	computed: {
+		alertFinished: function() {
+			const { question } = this.talk;
+
+			return question.user_ended == 1 || question.freelancer_ended == 1;
+		},
 		finished: function() {
 			const { question } = this.talk;
 
@@ -157,16 +168,28 @@ export default {
 					question.freelancer_ended == 1)
 			);
 		},
+		conclusion: function() {
+			const { question } = this.talk;
+
+			return question.user_ended == 1 && question.freelancer_ended == 1;
+		},
+		userFinished: function() {
+			const { question } = this.talk;
+			return question.user_id == this.user.id && question.user_ended == 1;
+		},
+		otheruserFinished: function() {
+			const { question } = this.talk;
+			return (
+				question.user_id != this.user.id &&
+				question.freelancer_ended == 1
+			);
+		},
 		...mapState({
 			onlineFriends: state => state.users
 		})
 	},
 
 	methods: {
-		formatPrice(value) {
-			let val = (value / 1).toFixed(2).replace('.', ',');
-			return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-		},
 		onTyping() {
 			const privateChannel = Echo.private(this.channel + '.private');
 
@@ -195,7 +218,7 @@ export default {
 			this.talkStatus(this.talk);
 		},
 		talkStatus(talk) {
-			this.formActive = talk.talkprop == 1 ? false : true;
+			this.formActive = talk.status == 1 ? false : true;
 		}
 	},
 

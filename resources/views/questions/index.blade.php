@@ -64,7 +64,8 @@
 									<span>{{ $question->published }} por</span>
 									<a href="{{ route('users.show', $question->user) }}">
 										<div class="d-flex align-items-center justify-content-end py-2">
-											<span class="mr-2">{{ $question->user->name }}</span>
+											<span
+												class="mr-2">{{ $question->user_id == auth()->id() ? 'Eu' : $question->user->name }}</span>
 											@include('shared.avatar', ['user' => $question->user])
 										</div>
 									</a>
@@ -79,7 +80,7 @@
 								@endforeach
 							</div>
 						</div>
-						<c-comments :question="{{ $question }}"></c-comments>
+						<c-comments :question_id="{{ $question->id }}"></c-comments>
 					</div>
 				</div>
 				@endforeach

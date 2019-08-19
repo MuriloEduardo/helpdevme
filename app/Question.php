@@ -11,7 +11,7 @@ class Question extends Model
 {
 	protected $appends = [
 		'published',
-		'statused'
+		'status_transform'
 	];
 
 	protected $fillable = [
@@ -36,7 +36,7 @@ class Question extends Model
 		return 'slug';
 	}
 
-	public function getStatusedAttribute($status)
+	public function getStatusTransformAttribute($status)
 	{
 		if (is_null($status))
 			$status = 0;
