@@ -129,10 +129,19 @@ class QuestionController extends Controller
 		$question[$who] = 1;
 		$question->save();
 
+		// Trecho de código pega a proposta da pergunta
 		$post = $question->posts
 			->where('type', Post::types['comment'])
 			->where('status', Post::status['payment'])
 			->first();
+
+		// Cria um alerta para salvar no banco e mandar no chat
+		// Alertas de pergunta finalizada, ou usuario finalizou
+		$alert = new Post;
+		$alert->talk_id = $post->talk->id;
+		$alert->user_id = auth()->id();
+		$alert->type = Post::types['alert'];
+		$alert->status = Post::status['finalized'];
 
 		// Ambas as partes finalizaram
 		if ($question->user_ended == 1 && $question->freelancer_ended == 1) {
@@ -166,17 +175,19 @@ class QuestionController extends Controller
 			$talk->update();
 
 			// Notificar em tempo real
-			$alert = new Post;
-			$alert->talk_id = $post->talk->id;
-			$alert->user_id = auth()->id();
 			$alert->body = 'Finalizado';
-			$alert->type = Post::types['alert'];
-			$alert->status = Post::status['finalized'];
 			$alert->save();
 
 			broadcast(new PrivatePostSent($alert));
 
 			return redirect()->route('talks.show', $post->talk)->with('success', 'Questão Finalizada!');
+		} else {
+
+			// Notificar em tempo real
+			$alert->body = 'Alguém Finalizou';
+			$alert->save();
+
+			broadcast(new PrivatePostSent($alert));
 		}
 
 		return back();

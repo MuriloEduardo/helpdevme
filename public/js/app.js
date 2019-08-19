@@ -102384,6 +102384,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -102458,11 +102460,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		},
 		talkStatus: function talkStatus(talk) {
 			this.formActive = talk.status == 1 ? false : true;
-		},
-		finalizarQuestao: function finalizarQuestao() {
-			this.channel.whisper('finalizar_questao', {});
-
-			window.location.href = '/' + this.talk.question.slug + '/finalize';
 		}
 	},
 
@@ -102491,8 +102488,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 			_this2.timeOut = setTimeout(function () {
 				_this2.typing = false;
 			}, 900);
-		}).listenForWhisper('finalizar_questao', function (e) {
-			console.log('finalizar_questao');
 		});
 	}
 });
@@ -102565,7 +102560,7 @@ var render = function() {
                               var close = ref.close
                               return [
                                 _c("h5", { staticClass: "modal-title mr-3" }, [
-                                  _vm._v("Você tem certeza disso?")
+                                  _vm._v("Tem certeza disso?")
                                 ]),
                                 _vm._v(" "),
                                 _c(
@@ -102609,13 +102604,14 @@ var render = function() {
                                 ),
                                 _vm._v(" "),
                                 _c(
-                                  "b-button",
+                                  "a",
                                   {
-                                    attrs: { variant: "success" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.finalizarQuestao()
-                                      }
+                                    staticClass: "btn btn-success",
+                                    attrs: {
+                                      href:
+                                        "/" +
+                                        _vm.talk.question.slug +
+                                        "/finalize"
                                     }
                                   },
                                   [_vm._v("Aceitar")]
@@ -102626,15 +102622,19 @@ var render = function() {
                         ],
                         null,
                         false,
-                        1957004632
+                        1372756861
                       )
                     },
                     [
                       _vm._v(" "),
                       _c("template", { slot: "default" }, [
+                        _c("p", { staticClass: "font-weight-bold" }, [
+                          _vm._v("Você está prestes a finalizar uma questão!")
+                        ]),
+                        _vm._v(" "),
                         _c("span", [
                           _vm._v(
-                            "Você está prestes a finalizar a questão, não podendo voltar atrás, a não ser mediante arbitragem."
+                            "Após finalizada, ela não pode ser reaberta até que ambas as partes à finalizem. Ainda pode ser solicitado à arbitragem como medida de segurança."
                           )
                         ])
                       ])
@@ -102679,168 +102679,195 @@ var render = function() {
                     { staticClass: "d-flex flex-column p-3" },
                     _vm._l(_vm.allPosts, function(post, index) {
                       return _c("div", { key: index, staticClass: "h5" }, [
-                        post.type == 2 && post.status == 1
-                          ? _c("div", { staticClass: "text-center" }, [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "badge badge-pill py-2 px-5 badge-danger"
-                                },
-                                [_vm._v(_vm._s(post.body))]
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        post.type == 2 && post.status == 2
-                          ? _c("div", { staticClass: "text-center" }, [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "badge badge-pill py-2 px-5 badge-info"
-                                },
-                                [_vm._v(_vm._s(post.body))]
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        post.type == 2 && post.status == 3
-                          ? _c("div", { staticClass: "text-center" }, [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "badge badge-pill py-2 px-5 badge-success"
-                                },
-                                [_vm._v(_vm._s(post.body))]
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        post.type == 2 && post.status == 4
-                          ? _c("div", { staticClass: "text-center" }, [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "badge badge-pill py-2 px-5 badge-warning"
-                                },
-                                [_vm._v(_vm._s(post.body))]
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        post.type != 2 && post.budget
-                          ? _c("div", { staticClass: "card bg-light mb-5" }, [
-                              _c("div", { staticClass: "card-body" }, [
-                                _c("p", { staticClass: "card-text" }, [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                      _vm._s(post.body) +
-                                      "\n\t\t\t\t\t\t\t\t\t\t\t"
-                                  ),
-                                  _c("span", { staticClass: "text-success" }, [
-                                    _vm._v(
-                                      _vm._s(_vm._f("currency")(post.budget))
+                        post.body
+                          ? _c("div", [
+                              post.type == 2 && post.status == 1
+                                ? _c("div", { staticClass: "text-center" }, [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-pill py-2 px-5 badge-danger"
+                                      },
+                                      [_vm._v(_vm._s(post.body))]
                                     )
                                   ])
-                                ])
-                              ]),
+                                : _vm._e(),
                               _vm._v(" "),
-                              _vm.user.id == _vm.talk.receiver_id &&
-                              (post.status < 3 && post.status != 1)
-                                ? _c("div", { staticClass: "card-footer" }, [
-                                    post.status == 0
-                                      ? _c(
-                                          "a",
-                                          {
-                                            staticClass: "btn btn-success",
-                                            attrs: {
-                                              href: "/posts/accept/" + post.id
-                                            }
-                                          },
-                                          [_vm._v("Aceitar")]
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    post.status == 2
-                                      ? _c(
-                                          "a",
-                                          {
-                                            staticClass: "btn btn-success",
-                                            attrs: {
-                                              href: "/payments/" + post.id
-                                            }
-                                          },
-                                          [_vm._v("Pagar")]
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    post.status != 1
-                                      ? _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "btn btn-link btn-sm text-secondary",
-                                            attrs: {
-                                              href: "/posts/refused/" + post.id
-                                            }
-                                          },
-                                          [_vm._v("Recusar")]
-                                        )
-                                      : _vm._e()
+                              post.type == 2 && post.status == 2
+                                ? _c("div", { staticClass: "text-center" }, [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-pill py-2 px-5 badge-info"
+                                      },
+                                      [_vm._v(_vm._s(post.body))]
+                                    )
                                   ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              post.type == 2 && post.status == 3
+                                ? _c("div", { staticClass: "text-center" }, [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-pill py-2 px-5 badge-success"
+                                      },
+                                      [_vm._v(_vm._s(post.body))]
+                                    )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              post.type == 2 && post.status == 4
+                                ? _c("div", { staticClass: "text-center" }, [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-pill py-2 px-5 badge-warning"
+                                      },
+                                      [_vm._v(_vm._s(post.body))]
+                                    )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              post.type != 2 && post.budget
+                                ? _c(
+                                    "div",
+                                    { staticClass: "card bg-light mb-5" },
+                                    [
+                                      _c("div", { staticClass: "card-body" }, [
+                                        _c("p", { staticClass: "card-text" }, [
+                                          _vm._v(
+                                            "\n\t\t\t\t\t\t\t\t\t\t\t\t" +
+                                              _vm._s(post.body) +
+                                              "\n\t\t\t\t\t\t\t\t\t\t\t\t"
+                                          ),
+                                          _c(
+                                            "span",
+                                            { staticClass: "text-success" },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm._f("currency")(
+                                                    post.budget
+                                                  )
+                                                )
+                                              )
+                                            ]
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm.user.id == _vm.talk.receiver_id &&
+                                      (post.status < 3 && post.status != 1)
+                                        ? _c(
+                                            "div",
+                                            { staticClass: "card-footer" },
+                                            [
+                                              post.status == 0
+                                                ? _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "btn btn-success",
+                                                      attrs: {
+                                                        href:
+                                                          "/posts/accept/" +
+                                                          post.id
+                                                      }
+                                                    },
+                                                    [_vm._v("Aceitar")]
+                                                  )
+                                                : _vm._e(),
+                                              _vm._v(" "),
+                                              post.status == 2
+                                                ? _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "btn btn-success",
+                                                      attrs: {
+                                                        href:
+                                                          "/payments/" + post.id
+                                                      }
+                                                    },
+                                                    [_vm._v("Pagar")]
+                                                  )
+                                                : _vm._e(),
+                                              _vm._v(" "),
+                                              post.status != 1
+                                                ? _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "btn btn-link btn-sm text-secondary",
+                                                      attrs: {
+                                                        href:
+                                                          "/posts/refused/" +
+                                                          post.id
+                                                      }
+                                                    },
+                                                    [_vm._v("Recusar")]
+                                                  )
+                                                : _vm._e()
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              post.type != 2 && !post.budget
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "d-flex align-items-center",
+                                      class:
+                                        _vm.user.id == post.user_id
+                                          ? "justify-content-end"
+                                          : ""
+                                    },
+                                    [
+                                      _vm.user.id != post.user_id
+                                        ? _c("span", [
+                                            _vm.opposite.avatar
+                                              ? _c("img", {
+                                                  staticClass: "img-fluid",
+                                                  attrs: {
+                                                    width: "25",
+                                                    src:
+                                                      "/storage/img/avatars/" +
+                                                      _vm.opposite.avatar,
+                                                    alt: _vm.opposite.name,
+                                                    title: _vm.opposite.name
+                                                  }
+                                                })
+                                              : _c("i", {
+                                                  staticClass:
+                                                    "fas fa-user-circle fa-lg"
+                                                })
+                                          ])
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "badge badge-pill py-2 px-3 default ml-1 font-weight-normal",
+                                          class:
+                                            _vm.user.id !== post.user_id
+                                              ? "badge-secondary"
+                                              : "badge-primary"
+                                        },
+                                        [_vm._v(_vm._s(post.body))]
+                                      )
+                                    ]
+                                  )
                                 : _vm._e()
                             ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        post.type != 2 && !post.budget
-                          ? _c(
-                              "div",
-                              {
-                                staticClass: "d-flex align-items-center",
-                                class:
-                                  _vm.user.id == post.user_id
-                                    ? "justify-content-end"
-                                    : ""
-                              },
-                              [
-                                _vm.user.id != post.user_id
-                                  ? _c("span", [
-                                      _vm.opposite.avatar
-                                        ? _c("img", {
-                                            staticClass: "img-fluid",
-                                            attrs: {
-                                              width: "25",
-                                              src:
-                                                "/storage/img/avatars/" +
-                                                _vm.opposite.avatar,
-                                              alt: _vm.opposite.name,
-                                              title: _vm.opposite.name
-                                            }
-                                          })
-                                        : _c("i", {
-                                            staticClass:
-                                              "fas fa-user-circle fa-lg"
-                                          })
-                                    ])
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "badge badge-pill py-2 px-3 default ml-1 font-weight-normal",
-                                    class:
-                                      _vm.user.id !== post.user_id
-                                        ? "badge-secondary"
-                                        : "badge-primary"
-                                  },
-                                  [_vm._v(_vm._s(post.body))]
-                                )
-                              ]
-                            )
                           : _vm._e()
                       ])
                     }),
