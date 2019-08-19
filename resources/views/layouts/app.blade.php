@@ -90,6 +90,7 @@
 							@endif
 						</li>
 						@else
+						<notifications></notifications>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle d-flex justify-content-center"
 								title="Minha Conta" href="#" role="button" v-b-tooltip.hover data-toggle="dropdown"

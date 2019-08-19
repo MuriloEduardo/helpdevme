@@ -60,10 +60,10 @@ class CommentController extends Controller
 
 		$post->load('talk');
 
+		$post->talk->question->user->notify(new PostCommented($post));
+
 		broadcast(new PrivateCommentSent($post))->toOthers();
 		broadcast(new PrivatePostSent($post))->toOthers();
-
-		$post->talk->question->user->notify(new PostCommented($post));
 
 		return response(['post' => $post]);
 	}

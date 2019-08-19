@@ -45,8 +45,11 @@ class PostCommented extends Notification implements ShouldQueue
     {
 		return (new MailMessage)
 					->subject('Novo Comentário para Você')
+					->greeting('Oba! Novo Comentário na Sua Pergunta')
+                    ->line($this->post->talk->question->title)
+                    ->line('Comentário:')
                     ->line($this->post->body)
-                    ->line('Em: ' . $this->post->talk->question->title)
+                    ->line($this->post->budget ? $this->post->budget : 'Sem Proposta')
                     ->action('Ver Pergunta', url('/' . $this->post->talk->question->slug))
                     ->line('Obrigado por acreditar neste projeto!');
     }

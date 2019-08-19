@@ -46,6 +46,8 @@ Vue.component('CComments', require('./components/comments'));
 
 Vue.component('OnlineUsers', require('./components/online-users'));
 
+Vue.component('Notifications', require('./components/notifications'));
+
 const app = new Vue({
 	store,
 	el: '#app'

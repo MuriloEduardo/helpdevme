@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,3 +22,5 @@ Route::resource('questions', 'Api\QuestionController');
 Route::resource('talks', 'Api\TalkController');
 
 Route::get('user', 'Api\UserController@current');
+
+Route::get('notifications', 'Api\NotificationController@index');
