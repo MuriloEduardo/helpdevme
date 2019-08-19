@@ -10,7 +10,27 @@
 			</p>
 			<!-- Finalização da Questão -->
 			<div class="form-group px-4" v-if="!finished && talk.question.status == 2">
-				<a :href="'/' + talk.question.slug + '/finalize'" class="btn btn-success">Finalizar Questão</a>
+				<b-button @click="$bvModal.show(`modal-scoped${talk.id}`)" variant="success">Finalizar Questão</b-button>
+
+				<!-- Modal -->
+				<b-modal :id="`modal-scoped${talk.id}`">
+					<template slot="modal-header" slot-scope="{ close }">
+						<h5 class="modal-title mr-3">Você tem certeza disso?</h5>
+						<!-- Emulate built in modal header close button action -->
+						<b-button @click="close()" class="close" variant="link">
+							<span aria-hidden="true">&times;</span>
+						</b-button>
+					</template>
+
+					<template slot="default">
+						<span>Você está prestes a finalizar a questão, não podendo voltar atrás, a não ser mediante arbitragem.</span>
+					</template>
+
+					<template slot="modal-footer" slot-scope="{ cancel }">
+						<b-button variant="light" @click="cancel()">Cancelar</b-button>
+						<b-button variant="success" @click="finalizarQuestao()">Aceitar</b-button>
+					</template>
+				</b-modal>
 			</div>
 		</div>
 		<div v-if="alertFinished && !conclusion">
@@ -143,7 +163,7 @@ export default {
 	data() {
 		return {
 			talk: undefined,
-			channel: `posts.${this.talkprop.id}`,
+			channel: Echo.private(`posts.${this.talkprop.id}.private`),
 			body: null,
 			timeOut: undefined,
 			formActive: true,
@@ -172,17 +192,6 @@ export default {
 			const { question } = this.talk;
 
 			return question.user_ended == 1 && question.freelancer_ended == 1;
-		},
-		userFinished: function() {
-			const { question } = this.talk;
-			return question.user_id == this.user.id && question.user_ended == 1;
-		},
-		otheruserFinished: function() {
-			const { question } = this.talk;
-			return (
-				question.user_id != this.user.id &&
-				question.freelancer_ended == 1
-			);
 		},
 		...mapState({
 			onlineFriends: state => state.users
@@ -219,6 +228,11 @@ export default {
 		},
 		talkStatus(talk) {
 			this.formActive = talk.status == 1 ? false : true;
+		},
+		finalizarQuestao() {
+			this.channel.whisper('finalizar_questao', {});
+
+			window.location.href = '/' + this.talk.question.slug + '/finalize';
 		}
 	},
 
@@ -227,14 +241,16 @@ export default {
 
 		this.fetchMessages();
 
-		Echo.private(`${this.channel}.private`)
+		this.channel
 			.listen('PrivatePostSent', response => {
 				const { post } = response;
 
-				this.talkStatus(post.talk);
-				this.allPosts.push(post);
+				console.log('PrivatePostSent', post);
 
 				this.talk = post.talk;
+
+				this.talkStatus(post.talk);
+				this.allPosts.push(post);
 			})
 			.listenForWhisper('typing', e => {
 				this.typing = e.typing;
@@ -244,6 +260,9 @@ export default {
 				this.timeOut = setTimeout(() => {
 					this.typing = false;
 				}, 900);
+			})
+			.listenForWhisper('finalizar_questao', e => {
+				console.log('finalizar_questao');
 			});
 	}
 };

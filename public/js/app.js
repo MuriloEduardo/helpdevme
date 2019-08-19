@@ -102364,6 +102364,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -102373,7 +102393,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 	data: function data() {
 		return {
 			talk: undefined,
-			channel: 'posts.' + this.talkprop.id,
+			channel: Echo.private('posts.' + this.talkprop.id + '.private'),
 			body: null,
 			timeOut: undefined,
 			formActive: true,
@@ -102401,16 +102421,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 			return question.user_ended == 1 && question.freelancer_ended == 1;
-		},
-		userFinished: function userFinished() {
-			var question = this.talk.question;
-
-			return question.user_id == this.user.id && question.user_ended == 1;
-		},
-		otheruserFinished: function otheruserFinished() {
-			var question = this.talk.question;
-
-			return question.user_id != this.user.id && question.freelancer_ended == 1;
 		}
 	}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])({
 		onlineFriends: function onlineFriends(state) {
@@ -102448,6 +102458,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		},
 		talkStatus: function talkStatus(talk) {
 			this.formActive = talk.status == 1 ? false : true;
+		},
+		finalizarQuestao: function finalizarQuestao() {
+			this.channel.whisper('finalizar_questao', {});
+
+			window.location.href = '/' + this.talk.question.slug + '/finalize';
 		}
 	},
 
@@ -102458,14 +102473,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 		this.fetchMessages();
 
-		Echo.private(this.channel + '.private').listen('PrivatePostSent', function (response) {
+		this.channel.listen('PrivatePostSent', function (response) {
 			var post = response.post;
 
 
-			_this2.talkStatus(post.talk);
-			_this2.allPosts.push(post);
+			console.log('PrivatePostSent', post);
 
 			_this2.talk = post.talk;
+
+			_this2.talkStatus(post.talk);
+			_this2.allPosts.push(post);
 		}).listenForWhisper('typing', function (e) {
 			_this2.typing = e.typing;
 
@@ -102474,6 +102491,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 			_this2.timeOut = setTimeout(function () {
 				_this2.typing = false;
 			}, 900);
+		}).listenForWhisper('finalizar_questao', function (e) {
+			console.log('finalizar_questao');
 		});
 	}
 });
@@ -102517,16 +102536,114 @@ var render = function() {
           ]),
           _vm._v(" "),
           !_vm.finished && _vm.talk.question.status == 2
-            ? _c("div", { staticClass: "form-group px-4" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-success",
-                    attrs: { href: "/" + _vm.talk.question.slug + "/finalize" }
-                  },
-                  [_vm._v("Finalizar Questão")]
-                )
-              ])
+            ? _c(
+                "div",
+                { staticClass: "form-group px-4" },
+                [
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { variant: "success" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$bvModal.show("modal-scoped" + _vm.talk.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Finalizar Questão")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-modal",
+                    {
+                      attrs: { id: "modal-scoped" + _vm.talk.id },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "modal-header",
+                            fn: function(ref) {
+                              var close = ref.close
+                              return [
+                                _c("h5", { staticClass: "modal-title mr-3" }, [
+                                  _vm._v("Você tem certeza disso?")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "b-button",
+                                  {
+                                    staticClass: "close",
+                                    attrs: { variant: "link" },
+                                    on: {
+                                      click: function($event) {
+                                        return close()
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "span",
+                                      { attrs: { "aria-hidden": "true" } },
+                                      [_vm._v("×")]
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "modal-footer",
+                            fn: function(ref) {
+                              var cancel = ref.cancel
+                              return [
+                                _c(
+                                  "b-button",
+                                  {
+                                    attrs: { variant: "light" },
+                                    on: {
+                                      click: function($event) {
+                                        return cancel()
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Cancelar")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "b-button",
+                                  {
+                                    attrs: { variant: "success" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.finalizarQuestao()
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Aceitar")]
+                                )
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        false,
+                        1957004632
+                      )
+                    },
+                    [
+                      _vm._v(" "),
+                      _c("template", { slot: "default" }, [
+                        _c("span", [
+                          _vm._v(
+                            "Você está prestes a finalizar a questão, não podendo voltar atrás, a não ser mediante arbitragem."
+                          )
+                        ])
+                      ])
+                    ],
+                    2
+                  )
+                ],
+                1
+              )
             : _vm._e()
         ]),
         _vm._v(" "),
@@ -104395,9 +104512,7 @@ var render = function() {
                                               _c(
                                                 "b-button",
                                                 {
-                                                  attrs: {
-                                                    variant: "secondary"
-                                                  },
+                                                  attrs: { variant: "light" },
                                                   on: {
                                                     click: function($event) {
                                                       return cancel()
@@ -104426,7 +104541,7 @@ var render = function() {
                                       ],
                                       null,
                                       false,
-                                      2111990899
+                                      2838070103
                                     )
                                   },
                                   [

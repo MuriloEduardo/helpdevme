@@ -44,7 +44,7 @@
 							</template>
 
 							<template slot="modal-footer" slot-scope="{ cancel }">
-								<b-button variant="secondary" @click="cancel()">Cancelar</b-button>
+								<b-button variant="light" @click="cancel()">Cancelar</b-button>
 								<a :href="`/posts/accept/${comment.id}`" class="btn btn-success">Aceitar</a>
 							</template>
 						</b-modal>

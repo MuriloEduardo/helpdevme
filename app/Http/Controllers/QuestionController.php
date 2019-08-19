@@ -129,17 +129,17 @@ class QuestionController extends Controller
 		$question[$who] = 1;
 		$question->save();
 
+		$post = $question->posts
+			->where('type', Post::types['comment'])
+			->where('status', Post::status['payment'])
+			->first();
+
 		// Ambas as partes finalizaram
 		if ($question->user_ended == 1 && $question->freelancer_ended == 1) {
 
 			// Atualizar status da pergunta
 			$question->status = Question::status['finalized'];
 			$question->update();
-
-			$post = $question->posts
-				->where('type', Post::types['comment'])
-				->where('status', Post::status['payment'])
-				->first();
 
 			/**
 			 * Histórico de transação do recebedor
