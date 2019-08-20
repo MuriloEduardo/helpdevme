@@ -3,8 +3,8 @@
 @section('title', $question->title . ' - ')
 
 @section('content')
-<div class="row">
-	<div class="col">
+<div class="row justify-content-center">
+	<div class="col-lg-10">
 		<article>
 			<header class="row mb-4">
 				<div class="col flex-grow-0">

@@ -11,7 +11,10 @@
 			href="#"
 			title="Notificações"
 		>
-			<span class="badge badge-pill badge-danger position-absolute">{{ notifications.length }}</span>
+			<span
+				v-if="notifications.length"
+				class="badge badge-pill badge-danger position-absolute"
+			>{{ notifications.length }}</span>
 			<i class="fas fa-bell fa-2x"></i>
 			<span class="pl-3 d-md-none d-block">Notificações</span>
 		</a>
@@ -20,46 +23,36 @@
 			aria-labelledby="navbarDropdownNotifications"
 		>
 			<div v-if="notifications.length">
-				<div class="d-flex justify-content-between align-items-center py-2">
+				<div class="d-flex justify-content-between align-items-center py-1">
 					<a href="/talks" class="btn btn-sm btn-link">Ver Todas</a>
-					<a href="#" class="btn btn-sm btn-link">Limpar Notificações</a>
+					<button class="btn btn-sm btn-link" @click="markAllAsRead()">Limpar Notificações</button>
 				</div>
 				<Item :notifications="notifications"></Item>
 			</div>
-			<div v-else class="text-muted text-center p-3">Minhas Atividades</div>
+			<div v-else class="text-muted text-center p-3">Sem Notificações</div>
 		</div>
 	</li>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 import Item from './item';
 
 export default {
 	components: {
 		Item
 	},
-	data() {
-		return {
-			notificationsItems: []
-		};
-	},
 	computed: {
+		...mapState('notifications', ['items']),
 		notifications() {
-			return this.notificationsItems;
-		}
-	},
-	methods: {
-		loadNotifications() {
-			axios
-				.get('/api/notifications')
-				.then(
-					response =>
-						(this.notificationsItems = response.data.notifications)
-				);
+			return this.items;
 		}
 	},
 	created() {
 		this.loadNotifications();
+	},
+	methods: {
+		...mapActions('notifications', ['loadNotifications', 'markAllAsRead'])
 	}
 };
 </script>

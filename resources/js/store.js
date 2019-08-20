@@ -3,10 +3,12 @@ import Vuex from 'vuex';
 
 import questions from './components/question/store';
 import talks from './components/chat/store';
+import notifications from './components/notifications/store';
 
 Vue.use(Vuex);
 
 const modules = {
+	notifications,
 	questions,
 	talks
 };

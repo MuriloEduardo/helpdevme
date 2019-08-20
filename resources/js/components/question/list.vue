@@ -5,7 +5,7 @@
 	</section>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 
 import Item from './item';
 

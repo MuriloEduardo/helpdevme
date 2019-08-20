@@ -24,3 +24,5 @@ Route::resource('talks', 'Api\TalkController');
 Route::get('user', 'Api\UserController@current');
 
 Route::get('notifications', 'Api\NotificationController@index');
+Route::get('notifications/{id}', 'Api\NotificationController@show');
+Route::get('notifications-all-read', 'Api\NotificationController@markAllAsRead');

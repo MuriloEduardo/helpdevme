@@ -22,7 +22,9 @@
 						</picture>
 						<span class="ml-2">{{ $userId == user.id ? 'Eu' : user.name }}</span>
 					</div>
-					<span class="text-success">&bull;</span>
+					<span class="text-success">
+						<i class="fas fa-circle fa-xs"></i>
+					</span>
 				</div>
 			</a>
 		</ul>
