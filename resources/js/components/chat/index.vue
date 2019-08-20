@@ -261,9 +261,3 @@ export default {
 	}
 };
 </script>
-
-<style scoped>
-#privateMessageBox .badge.default {
-	white-space: initial;
-}
-</style>

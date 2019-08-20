@@ -21,5 +21,12 @@
 			max-height: 200px;
 			overflow-y: auto;
 		}
+
+		#navbarDropdownNotifications {
+			.badge-danger {
+				top: 0;
+				right: 0;
+			}
+		}
 	}
 }

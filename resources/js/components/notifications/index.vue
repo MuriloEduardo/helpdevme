@@ -19,9 +19,14 @@
 			class="dropdown-menu dropdown-menu-right my-0 py-0"
 			aria-labelledby="navbarDropdownNotifications"
 		>
-			<Item :notifications="notifications"></Item>
-			<div class="dropdown-divider"></div>
-			<a class="dropdown-item text-center" href="#">Limpar Notificações</a>
+			<div v-if="notifications.length">
+				<div class="d-flex justify-content-between align-items-center py-2">
+					<a href="/talks" class="btn btn-sm btn-link">Ver Todas</a>
+					<a href="#" class="btn btn-sm btn-link">Limpar Notificações</a>
+				</div>
+				<Item :notifications="notifications"></Item>
+			</div>
+			<div v-else class="text-muted text-center p-3">Minhas Atividades</div>
 		</div>
 	</li>
 </template>
@@ -58,10 +63,3 @@ export default {
 	}
 };
 </script>
-
-<style scoped>
-#navbarDropdownNotifications .badge-danger {
-	top: 0;
-	right: 0;
-}
-</style>

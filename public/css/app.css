@@ -19555,6 +19555,11 @@ readers do not read off random characters that represent icons */
   overflow-y: auto;
 }
 
+#app > nav #navbarDropdownNotifications .badge-danger {
+  top: 0;
+  right: 0;
+}
+
 .comment .avatar {
   width: 25px;
   height: 25px;
@@ -19615,6 +19620,10 @@ readers do not read off random characters that represent icons */
   color: #41b883;
 }
 
+#privateMessageBox .badge.default {
+  white-space: initial;
+}
+
 @keyframes ellipsis {
   to {
     width: 1.25em;
@@ -19625,6 +19634,16 @@ readers do not read off random characters that represent icons */
   to {
     width: 1.25em;
   }
+}
+
+.ellipsis:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
+  content: '\2026';
+  width: 0px;
 }
 
 body {
@@ -19642,16 +19661,5 @@ input[type='number'] {
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-}
-
-.ellipsis:after {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
-  animation: ellipsis steps(4, end) 900ms infinite;
-  content: '\2026';
-  /* ascii code for the ellipsis character */
-  width: 0px;
 }
 
