@@ -1,3 +1,6 @@
+const MARK_ALL_AS_READ = (state) =>
+	state.items = [];
+
 const MARK_AS_READ = (state, notification_id) => {
 	const index = state.items.filter(
 		notification => notification.id == notification_id
@@ -11,5 +14,6 @@ const LOAD_NOTIFICATIONS = (state, notifications) =>
 
 export default {
 	LOAD_NOTIFICATIONS,
-	MARK_AS_READ
+	MARK_AS_READ,
+	MARK_ALL_AS_READ
 };

@@ -13,11 +13,9 @@ const markAsRead = async ({ commit }, notification_id) => {
 };
 
 const markAllAsRead = async ({ commit }) => {
-	const response = (await axios.get('/api/notifications-all-read')).data;
+	await axios.get('/api/notifications-all-read');
 
-	console.log('markAllAsRead', response);
-
-	// commit('MARK_AS_READ', response.notification.id);
+	commit('MARK_ALL_AS_READ');
 };
 
 export default {
