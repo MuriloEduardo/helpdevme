@@ -11,7 +11,7 @@
 			href="#"
 			title="Notificações"
 		>
-			<span class="badge badge-pill badge-danger position-absolute text-white">1</span>
+			<span class="badge badge-pill badge-danger position-absolute">{{ notifications.length }}</span>
 			<i class="fas fa-bell fa-2x"></i>
 			<span class="pl-3 d-md-none d-block">Notificações</span>
 		</a>
@@ -19,20 +19,7 @@
 			class="dropdown-menu dropdown-menu-right my-0 py-0"
 			aria-labelledby="navbarDropdownNotifications"
 		>
-			<a
-				v-for="(notification, index) in notifications"
-				:key="index"
-				class="dropdown-item text-center"
-				href="#"
-				:set="post = notification.data.post"
-			>
-				<div>
-					Novo comentário
-					<b>{{ post.body }}</b> em
-					<b>{{ post.talk.question.title }}</b>
-					<div v-if="post.budget" class="text-success">{{ post.budget | currency }}</div>
-				</div>
-			</a>
+			<Item :notifications="notifications"></Item>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item text-center" href="#">Limpar Notificações</a>
 		</div>
@@ -40,7 +27,12 @@
 </template>
 
 <script>
+import Item from './item';
+
 export default {
+	components: {
+		Item
+	},
 	data() {
 		return {
 			notificationsItems: []

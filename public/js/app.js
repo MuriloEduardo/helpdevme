@@ -105249,19 +105249,8 @@ exports.push([module.i, "\n#navbarDropdownNotifications .badge-danger[data-v-64e
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__item__ = __webpack_require__(367);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__item___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__item__);
 //
 //
 //
@@ -105291,7 +105280,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+	components: {
+		Item: __WEBPACK_IMPORTED_MODULE_0__item___default.a
+	},
 	data: function data() {
 		return {
 			notificationsItems: []
@@ -105350,11 +105344,8 @@ var render = function() {
       [
         _c(
           "span",
-          {
-            staticClass:
-              "badge badge-pill badge-danger position-absolute text-white"
-          },
-          [_vm._v("1")]
+          { staticClass: "badge badge-pill badge-danger position-absolute" },
+          [_vm._v(_vm._s(_vm.notifications.length))]
         ),
         _vm._v(" "),
         _c("i", { staticClass: "fas fa-bell fa-2x" }),
@@ -105372,30 +105363,7 @@ var render = function() {
         attrs: { "aria-labelledby": "navbarDropdownNotifications" }
       },
       [
-        _vm._l(_vm.notifications, function(notification, index) {
-          return _c(
-            "a",
-            {
-              key: index,
-              staticClass: "dropdown-item text-center",
-              attrs: { href: "#", set: (_vm.post = notification.data.post) }
-            },
-            [
-              _c("div", [
-                _vm._v("\n\t\t\t\tNovo comentário\n\t\t\t\t"),
-                _c("b", [_vm._v(_vm._s(_vm.post.body))]),
-                _vm._v(" em\n\t\t\t\t"),
-                _c("b", [_vm._v(_vm._s(_vm.post.talk.question.title))]),
-                _vm._v(" "),
-                _vm.post.budget
-                  ? _c("div", { staticClass: "text-success" }, [
-                      _vm._v(_vm._s(_vm._f("currency")(_vm.post.budget)))
-                    ])
-                  : _vm._e()
-              ])
-            ]
-          )
-        }),
+        _c("Item", { attrs: { notifications: _vm.notifications } }),
         _vm._v(" "),
         _c("div", { staticClass: "dropdown-divider" }),
         _vm._v(" "),
@@ -105405,7 +105373,7 @@ var render = function() {
           [_vm._v("Limpar Notificações")]
         )
       ],
-      2
+      1
     )
   ])
 }
@@ -105479,6 +105447,130 @@ window.Echo.private('newquestions').listen('NewQuestionsEvent', function (respon
 }).listenForWhisper('typing', function (user) {
 	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setTypingQuestion', user);
 });
+
+/***/ }),
+/* 367 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(15)
+/* script */
+var __vue_script__ = __webpack_require__(368)
+/* template */
+var __vue_template__ = __webpack_require__(369)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/notifications/item.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5b71c865", Component.options)
+  } else {
+    hotAPI.reload("data-v-5b71c865", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 368 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['notifications']
+});
+
+/***/ }),
+/* 369 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    _vm._l(_vm.notifications, function(notification, index) {
+      return _c(
+        "a",
+        {
+          key: index,
+          staticClass: "dropdown-item text-center",
+          attrs: { href: "#", set: (_vm.post = notification.data.post) }
+        },
+        [
+          _c("div", [
+            _vm._v("\n\t\t\tNovo comentário\n\t\t\t"),
+            _c("b", [_vm._v(_vm._s(_vm.post.body))]),
+            _vm._v(" em\n\t\t\t"),
+            _c("b", [_vm._v(_vm._s(_vm.post.talk.question.title))]),
+            _vm._v(" "),
+            _vm.post.budget
+              ? _c("div", { staticClass: "text-success" }, [
+                  _vm._v(_vm._s(_vm._f("currency")(_vm.post.budget)))
+                ])
+              : _vm._e()
+          ])
+        ]
+      )
+    }),
+    0
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5b71c865", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
