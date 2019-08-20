@@ -6,8 +6,14 @@
 <div class="row">
 	<div class="col">
 		<article>
-			<header>
-				<h1 class="display-4">{{ $question->title }}</h1>
+			<header class="row mb-4">
+				<div class="col flex-grow-0">
+					<votes-question :initi-votes="{{ count($question->votes) }}" :question="{{ $question }}">
+					</votes-question>
+				</div>
+				<div class="col">
+					<h1 class="display-4 m-0">{{ $question->title }}</h1>
+				</div>
 			</header>
 			@include('shared.questions.status', ['status' => $question->status])
 			<p class="lead">{!! $question->body !!}</p>
@@ -26,7 +32,7 @@
 					@endforeach
 				</div>
 			</div>
-			<c-comments :question="{{ $question }}"></c-comments>
+			<c-comments :question_id="{{ $question->id }}"></c-comments>
 		</article>
 	</div>
 </div>

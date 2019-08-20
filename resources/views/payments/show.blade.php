@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Realizar Pagamento - ')
+
 @section('content')
 @if(session()->get('success'))
 <div class="alert alert-success">

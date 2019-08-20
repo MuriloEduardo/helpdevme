@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Entrar - ')
+
 @section('content')
 <h1 class="display-4 text-center mb-5">@lang('layouts.navbar.login')</h1>
 <div class="row justify-content-center">

@@ -54,6 +54,10 @@ input {
 	}
 }
 
+img {
+	@extend .img-fluid;
+}
+
 .ellipsis {
 	&:after {
 		overflow: hidden;

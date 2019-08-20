@@ -1103,7 +1103,7 @@ var hasIntersectionObserverSupport = isBrowser && 'IntersectionObserver' in wind
 
 var getEnv = function getEnv(key) {
   var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var env = typeof process !== 'undefined' && process ? Object({"MIX_PUSHER_APP_CLUSTER":"us2","MIX_PUSHER_APP_KEY":"72255455c38245a3a033","NODE_ENV":"development"}) || {} : {};
+  var env = typeof process !== 'undefined' && process ? Object({"MIX_PUSHER_APP_KEY":"72255455c38245a3a033","MIX_PUSHER_APP_CLUSTER":"us2","NODE_ENV":"development"}) || {} : {};
 
   if (!key) {
     /* istanbul ignore next */
@@ -39297,12 +39297,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue2_editor__["a" /* default */]);
 Vue.use(__WEBPACK_IMPORTED_MODULE_1_bootstrap_vue__["a" /* default */]);
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_currency_filter___default.a, {
-  symbol: 'R$',
-  thousandsSeparator: '.',
-  fractionCount: 2,
-  fractionSeparator: ',',
-  symbolPosition: 'front',
-  symbolSpacing: true
+	symbol: 'R$',
+	thousandsSeparator: '.',
+	fractionCount: 2,
+	fractionSeparator: ',',
+	symbolPosition: 'front',
+	symbolSpacing: true
 });
 
 Vue.prototype.$userId = window.$userId;
@@ -39322,8 +39322,11 @@ Vue.component('OnlineUsers', __webpack_require__(331));
 Vue.component('Notifications', __webpack_require__(334));
 
 var app = new Vue({
-  store: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */],
-  el: '#app'
+	store: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */],
+	el: '#app',
+	mounted: function mounted() {
+		__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setQuestions');
+	}
 });
 
 /***/ }),
@@ -39399,7 +39402,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */](
 	encrypted: true
 });
 
-__webpack_require__(249);
+__webpack_require__(366);
 
 /***/ }),
 /* 225 */
@@ -82574,37 +82577,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 249 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store__ = __webpack_require__(90);
-
-
-window.Echo.join('online').here(function (users) {
-	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('SET_PRESENCE', users);
-}).joining(function (user) {
-	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('JOINING_PRESENCE', user);
-}).leaving(function (user) {
-	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('LEAVING_PRESENCE', user);
-});
-
-window.Echo.private('comments').listen('PrivateCommentSent', function (response) {
-	return __WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setComment', response.post, { root: true });
-}).listenForWhisper('typing', function (payload) {
-	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setTypingComment', payload, { root: true });
-});
-
-window.Echo.private('newquestions').listen('NewQuestionsEvent', function (response) {
-	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setQuestion', response.question, {
-		root: true
-	});
-}).listenForWhisper('typing', function (user) {
-	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setTypingQuestion', user, { root: true });
-});
-
-/***/ }),
+/* 249 */,
 /* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -102159,7 +102132,7 @@ var content = __webpack_require__(299);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(221)("4e779fd2", content, false, {});
+var update = __webpack_require__(221)("59c87bf2", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -102183,7 +102156,7 @@ exports = module.exports = __webpack_require__(220)(false);
 
 
 // module
-exports.push([module.i, "\n#privateMessageBox .badge.default[data-v-10a55a66] {\r\n\twhite-space: initial;\n}\r\n", ""]);
+exports.push([module.i, "\n#privateMessageBox .badge.default[data-v-10a55a66] {\n\twhite-space: initial;\n}\n", ""]);
 
 // exports
 
@@ -103850,11 +103823,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 	components: {
 		Item: __WEBPACK_IMPORTED_MODULE_1__item___default.a
 	},
-	methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])('questions', ['setQuestions'])),
-	mounted: function mounted() {
-		this.setQuestions();
-	},
-
 	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])('questions', ['news', 'typings']))
 });
 
@@ -105246,7 +105214,7 @@ var content = __webpack_require__(336);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(221)("6dc5c9e2", content, false, {});
+var update = __webpack_require__(221)("0e364388", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -105456,6 +105424,61 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store__ = __webpack_require__(90);
+
+
+window.Echo.join('online').here(function (users) {
+	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('SET_PRESENCE', users);
+}).joining(function (user) {
+	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('JOINING_PRESENCE', user);
+}).leaving(function (user) {
+	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('LEAVING_PRESENCE', user);
+});
+
+window.Echo.private('comments').listen('PrivateCommentSent', function (response) {
+	return __WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setComment', response.post);
+}).listenForWhisper('typing', function (payload) {
+	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setTypingComment', payload);
+});
+
+window.Echo.private('newquestions').listen('NewQuestionsEvent', function (response) {
+	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setQuestion', response.question);
+}).listenForWhisper('typing', function (user) {
+	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setTypingQuestion', user);
+});
 
 /***/ })
 /******/ ]);

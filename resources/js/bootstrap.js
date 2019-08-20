@@ -69,4 +69,4 @@ window.Echo = new Echo({
 	encrypted: true
 });
 
-require('./presence');
+require('./echo');

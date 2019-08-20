@@ -13,12 +13,6 @@ export default {
 	components: {
 		Item
 	},
-	methods: {
-		...mapActions('questions', ['setQuestions'])
-	},
-	mounted() {
-		this.setQuestions();
-	},
 	computed: {
 		...mapState('questions', ['news', 'typings'])
 	}

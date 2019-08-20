@@ -95,7 +95,7 @@
 							<a id="navbarDropdown" class="nav-link dropdown-toggle d-flex justify-content-center"
 								title="Minha Conta" href="#" role="button" v-b-tooltip.hover data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">
-								@include('shared.avatar', ['user' => auth()->user()])
+								@include('shared.avatar', ['user' => auth()->user(), 'icon_class' => 'fa-2x'])
 								<span class="pl-3 d-md-none d-block">{{ Auth::user()->name }}</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

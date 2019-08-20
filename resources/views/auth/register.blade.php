@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Registre-se - ')
+
 @section('content')
 <h1 class="display-4 text-center mb-5">@lang('layouts.navbar.register')</h1>
 <div class="row justify-content-center">

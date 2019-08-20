@@ -3,30 +3,36 @@
 @section('title', $user->name . ' - ')
 
 @section('content')
-<div class="d-flex align-items-center users-show-user">
-	@include('shared.avatar', ['user' => $user])
-	<div class="px-3">
-		<h1 class="display-4">{{ $user->name }}</h1>
-		<p class="lead">{{ $user->email }}</p>
-	</div>
-</div>
 <div class="row">
-	<div class="col">
-		<h2 class="my-5">{{ $user->questions->count() }} atividade(s) como cliente</h2>
-		@foreach ($user->questions as $question)
-		<div class="card card-body">
-			<a href="#">
-				<h5 class="mb-4">
-					{{ $question->title }}
-				</h5>
-			</a>
-			<p>{{ $question->body }}</p>
-			<div class="d-flex justify-content-between py-3">
-				<small>{{ $question->comments->count() }} respostas</small>
-				<small>{{ $question->published }}</small>
+	<div class="col col-lg offset-lg-1">
+		<div class="row align-items-center">
+			<div class="col flex-grow-0">
+				@include('shared.avatar', ['user' => $user, 'icon_class' => 'fa-4x'])
+			</div>
+			<div class="col">
+				<h1 class="display-4">{{ $user->name }}</h1>
+				<p class="lead">{{ $user->email }}</p>
 			</div>
 		</div>
-		@endforeach
+		<div class="row">
+			<div class="col">
+				<h2 class="my-5">{{ $user->talks->count() . ' ' . str_plural('atividade', $user->talks->count()) }} como
+					freelancer</h2>
+				@foreach ($user->talks as $talk)
+				@include('shared.questions.item', ['question' => $talk->question])
+				@endforeach
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h2 class="my-5">
+					{{ $user->questions->count() . ' ' . str_plural('atividade', $user->questions->count()) }} como
+					cliente</h2>
+				@foreach ($user->questions as $question)
+				@include('shared.questions.item', ['question' => $question])
+				@endforeach
+			</div>
+		</div>
 	</div>
 </div>
 @endsection

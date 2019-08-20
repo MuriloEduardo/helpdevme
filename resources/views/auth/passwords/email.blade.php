@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Recuperar Senha - ')
+
 @section('content')
 <h1 class="display-4 text-center mb-5">Recuperar Senha</h1>
 <div class="row justify-content-center">
@@ -19,7 +21,9 @@
 						<label for="email">{{ __('E-Mail Address') }}</label>
 
 						<div>
-							<input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+							<input id="email" type="email"
+								class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
+								value="{{ old('email') }}" required>
 
 							@if ($errors->has('email'))
 							<span class="invalid-feedback" role="alert">

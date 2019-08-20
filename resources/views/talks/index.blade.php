@@ -13,7 +13,7 @@
 				class="list-group-item list-group-item-action flex-column align-items-start">
 				<div class="row align-items-center">
 					<div class="col-1">
-						@include('shared.avatar', ['user' => $opposite])
+						@include('shared.avatar', ['user' => $opposite, 'icon_class' => 'fa-4x'])
 					</div>
 					<div class="col">
 						<div class="d-flex w-100 justify-content-between">
