@@ -8,11 +8,11 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class PostCommented extends Notification implements ShouldQueue
+class QuestionCommented extends Notification implements ShouldQueue
 {
 	use Queueable;
 
-	private $post;
+	protected $post;
 
     /**
      * Create a new notification instance.
@@ -32,7 +32,7 @@ class PostCommented extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
@@ -78,5 +78,16 @@ class PostCommented extends Notification implements ShouldQueue
         return [
 			'post' => $this->post
         ];
-    }
+	}
+
+	/**
+	 * Get the broadcastable representation of the notification.
+	 *
+	 * @param  mixed  $notifiable
+	 * @return BroadcastMessage
+	 */
+	public function toBroadcast($notifiable)
+	{
+		return new BroadcastMessage($this->post);
+	}
 }

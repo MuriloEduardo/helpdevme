@@ -1,6 +1,6 @@
 import store from './store';
 
-window.Echo.join('online')
+Echo.join('online')
 	.here(users => {
 		store.dispatch('SET_PRESENCE', users);
 	})
@@ -11,7 +11,7 @@ window.Echo.join('online')
 		store.dispatch('LEAVING_PRESENCE', user);
 	});
 
-window.Echo.private('comments')
+Echo.private('comments')
 	.listen('PrivateCommentSent', response =>
 		store.dispatch('questions/setComment', response.post)
 	)
@@ -19,10 +19,15 @@ window.Echo.private('comments')
 		store.dispatch('questions/setTypingComment', payload);
 	});
 
-window.Echo.private('newquestions')
+Echo.private('newquestions')
 	.listen('NewQuestionsEvent', response => {
 		store.dispatch('questions/setQuestion', response.question);
 	})
 	.listenForWhisper('typing', user => {
 		store.dispatch('questions/setTypingQuestion', user);
+	});
+
+Echo.private(`App.User.${window.$userId}`)
+	.notification(notification => {
+		console.log('notification', notification);
 	});

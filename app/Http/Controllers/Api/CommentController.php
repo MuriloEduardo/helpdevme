@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 use App\Events\PrivateCommentSent;
 use App\Events\PrivatePostSent;
-use App\Notifications\PostCommented;
+use App\Notifications\QuestionCommented;
 
 class CommentController extends Controller
 {
@@ -60,7 +60,7 @@ class CommentController extends Controller
 
 		$post->load('talk');
 
-		$post->talk->question->user->notify(new PostCommented($post));
+		$post->talk->question->user->notify(new QuestionCommented($post));
 
 		broadcast(new PrivateCommentSent($post))->toOthers();
 		broadcast(new PrivatePostSent($post))->toOthers();
