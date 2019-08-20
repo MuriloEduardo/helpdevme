@@ -7,8 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     protected $fillable = [
-        'title'
+        'title',
+        'image',
+        'slug'
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function questions()
     {

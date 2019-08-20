@@ -39,6 +39,19 @@ if (token) {
 	);
 }
 
+window.$userId = document
+	.querySelector("meta[name='user-id']")
+	.getAttribute('content');
+
+window.axios.interceptors.response.use(
+	response => response,
+	error => {
+		if (error.response.status === 401) window.location.href = '/login';
+
+		return Promise.reject(error);
+	}
+);
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -55,3 +68,5 @@ window.Echo = new Echo({
 	cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 	encrypted: true
 });
+
+require('./echo');

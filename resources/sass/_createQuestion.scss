@@ -1,0 +1,28 @@
+.create-question {
+	button {
+		.avatar {
+			width: 55px;
+			height: 55px;
+		}
+
+		&:hover,
+		&:focus {
+			text-decoration: none;
+		}
+
+		&:not(:disabled) {
+			cursor: text;
+		}
+	}
+}
+
+#modal-create-question {
+	.avatar {
+		width: 65px;
+		height: 55px;
+	}
+
+	.modal-header {
+		border-bottom: none;
+	}
+}

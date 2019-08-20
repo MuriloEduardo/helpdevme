@@ -3,62 +3,99 @@
 namespace App;
 
 use App\Post;
+use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = [
-        'title',
-        'slug',
-        'body',
-        'user_id',
-        'status',
-        'user_ended',
-        'freelancer_ended'
-    ];
+	protected $appends = [
+		'published',
+		'status_transform'
+	];
 
-    const status = [
-        'analyzing' => 0,
-        'warranty' => 1,
-        'payment' => 2,
-        'finalized' => 3
-    ];
+	protected $fillable = [
+		'title',
+		'slug',
+		'body',
+		'user_id',
+		'status',
+		'user_ended',
+		'freelancer_ended'
+	];
 
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
+	const status = [
+		'analyzing' => 0,
+		'warranty' => 1,
+		'payment' => 2,
+		'finalized' => 3
+	];
 
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
+	public function getRouteKeyName()
+	{
+		return 'slug';
+	}
 
-    public function talks()
-    {
-        return $this->hasMany('App\Talk');
-    }
+	public function getStatusTransformAttribute($status)
+	{
+		if (is_null($status))
+			$status = 0;
 
-    public function tags()
-    {
-        return $this->belongsToMany('App\Tag')->withTimestamps();
-    }
+		switch ($status) {
+			case 1:
+				$class = 'badge-primary';
+				break;
+			case 2:
+				$class = 'badge-info';
+				break;
+			case 3:
+				$class = 'badge-success';
+				break;
+			default:
+				$class = 'badge-secondary';
+				break;
+		}
 
-    public function posts()
-    {
-        return $this->hasManyThrough('App\Post', 'App\Talk');
-    }
+		return [
+			'class' => $class,
+			'text' => __('questions.status.' . $status)
+		];
+	}
 
-    public function comments()
-    {
-        return $this->hasManyThrough('App\Post', 'App\Talk')
-            ->with(['user', 'talk'])
-            ->where('type', Post::types['comment']);
-    }
+	public function getPublishedAttribute()
+	{
+		return Carbon::createFromTimeStamp(strtotime($this->created_at))->diffForHumans();
+	}
 
-    public function votes()
-    {
-        return $this->hasMany('App\Vote');
-    }
+	public function user()
+	{
+		return $this->belongsTo('App\User');
+	}
+
+	public function talks()
+	{
+		return $this->hasMany('App\Talk');
+	}
+
+	public function tags()
+	{
+		return $this->belongsToMany('App\Tag')->withTimestamps();
+	}
+
+	public function posts()
+	{
+		return $this->hasManyThrough('App\Post', 'App\Talk');
+	}
+
+	public function comments()
+	{
+		return $this->hasManyThrough('App\Post', 'App\Talk')
+			->with(['user', 'talk'])
+			->where('type', Post::types['comment']);
+	}
+
+	public function votes()
+	{
+		return $this->hasMany('App\Vote');
+	}
 }

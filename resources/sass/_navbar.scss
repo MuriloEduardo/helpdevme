@@ -1,14 +1,32 @@
-nav {
-    fill: currentColor;
-    #navbarDropdownTalks {
-        .list-group {
-            .list-group-item {
-                a:hover {
-                    small {
-                        text-decoration: none;
-                    }
-                }
-            }
-        }
-    }
+#app {
+	& > nav {
+		fill: currentColor;
+
+		.dropdown-menu {
+			min-width: 20rem;
+		}
+
+		#navbarDropdownTalks {
+			.list-group {
+				.list-group-item {
+					a:hover {
+						small {
+							text-decoration: none;
+						}
+					}
+				}
+			}
+		}
+		[aria-labelledby='navbarDropdownTalks'] {
+			max-height: 200px;
+			overflow-y: auto;
+		}
+
+		#navbarDropdownNotifications {
+			.badge-danger {
+				top: 0;
+				right: 0;
+			}
+		}
+	}
 }

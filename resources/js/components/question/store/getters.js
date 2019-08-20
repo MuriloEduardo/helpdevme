@@ -1,12 +1,15 @@
-const getQuestion = state => id =>
-	state.news.find(question => question.id == id);
+/**
+ * PRIVATE
+ */
+const question = ({ list, news }, question_id) =>
+	[...list, ...news].find(question => question.id == question_id);
+
+const getQuestion = state => question_id => question(state, question_id);
 
 const getComments = state => question_id => {
-	const question = [...state.list, ...state.news].find(
-		question => question.id == question_id
-	);
+	const returnQuestion = question(state, question_id);
 
-	if (question) return question.comments;
+	if (returnQuestion) return returnQuestion.comments;
 };
 
 export default {

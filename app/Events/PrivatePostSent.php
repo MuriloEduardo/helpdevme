@@ -12,27 +12,27 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class PrivatePostSent implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+	use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $post;
+	public $post;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct(Post $post)
-    {
-        $this->post = $post->load('talk');
-    }
+	/**
+	 * Create a new event instance.
+	 *
+	 * @return void
+	 */
+	public function __construct(Post $post)
+	{
+		$this->post = $post->load('talk');
+	}
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('privatechat.' . $this->post->talk_id . '.private');
-    }
+	/**
+	 * Get the channels the event should broadcast on.
+	 *
+	 * @return \Illuminate\Broadcasting\Channel|array
+	 */
+	public function broadcastOn()
+	{
+		return new PrivateChannel('posts.' . $this->post->talk_id . '.private');
+	}
 }

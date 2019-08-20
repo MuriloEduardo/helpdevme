@@ -1,6 +1,18 @@
 .question {
-    .avatar {
-        width: 25px;
-        height: 25px;
-    }
+	.avatar {
+		width: 25px;
+		height: 25px;
+	}
+
+	p:empty {
+		display: none;
+	}
+
+	.tags {
+		margin: 0 -0.13rem;
+
+		&>a {
+			margin: auto 0.13rem;
+		}
+	}
 }

@@ -32,9 +32,7 @@ Vue.use(VueCurrencyFilter, {
 	symbolSpacing: true
 });
 
-Vue.prototype.$userId = document
-	.querySelector("meta[name='user-id']")
-	.getAttribute('content');
+Vue.prototype.$userId = window.$userId;
 
 Vue.component('PrivateChat', require('./components/chat'));
 Vue.component('ListChat', require('./components/chat/list'));
@@ -46,7 +44,14 @@ Vue.component('ListNewQuestions', require('./components/question/list'));
 
 Vue.component('CComments', require('./components/comments'));
 
+Vue.component('OnlineUsers', require('./components/online-users'));
+
+Vue.component('Notifications', require('./components/notifications'));
+
 const app = new Vue({
 	store,
-	el: '#app'
+	el: '#app',
+	mounted() {
+		store.dispatch('questions/setQuestions');
+	}
 });
