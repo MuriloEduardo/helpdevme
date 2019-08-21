@@ -7,7 +7,7 @@
 	<div class="col col-lg-10 offset-lg-1">
 		<h1 class="display-4 mb-4">Usuários</h1>
 		<div class="row">
-			@foreach($users as $user)
+			@forelse($users as $user)
 			<div class="col-lg-4">
 				<div class="card my-3 users-index-user">
 					<div class="card-body">
@@ -34,7 +34,12 @@
 					</div>
 				</div>
 			</div>
-			@endforeach
+			@empty
+			<div class="d-flex flex-column align-items-center w-100">
+				<span>Não existem usuários cadastrados</span>
+				<a class="mt-4 btn text-white btn-success px-5 my-1 mx-3" href="{{ route('register') }}">@lang('layouts.navbar.register')</a>
+			</div>
+			@endforelse
 		</div>
 	</div>
 </div>

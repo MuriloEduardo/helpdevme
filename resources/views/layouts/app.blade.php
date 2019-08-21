@@ -75,10 +75,6 @@
 					</ul>
 					<!-- Right Side Of Navbar -->
 					<ul class="navbar-nav ml-auto text-center">
-						<li class="nav-item">
-							<b-button @click="$bvModal.show('modal-create-question')" variant="link"
-								class="btn text-white btn-success px-5 my-1 mx-3">Pedir Ajuda</b-button>
-						</li>
 						<!-- Authentication Links -->
 						@guest
 						<li class="nav-item">
@@ -86,10 +82,14 @@
 						</li>
 						<li class="nav-item">
 							@if (Route::has('register'))
-							<a class="nav-link" href="{{ route('register') }}">@lang('layouts.navbar.register')</a>
+							<a class="btn text-white btn-success px-5 my-1 mx-3" href="{{ route('register') }}">@lang('layouts.navbar.register')</a>
 							@endif
 						</li>
 						@else
+						<li class="nav-item">
+							<b-button @click="$bvModal.show('modal-create-question')" variant="link"
+								class="btn text-white btn-success px-5 my-1 mx-3">Pedir Ajuda</b-button>
+						</li>
 						<notifications></notifications>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown" class="nav-link dropdown-toggle d-flex justify-content-center"

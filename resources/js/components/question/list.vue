@@ -1,6 +1,7 @@
 <template>
 	<section>
-		<div v-if="typings.length" class="text-muted d-flex">
+		<h6>{{ list.length + news.length }} pergunta(s)</h6>
+		<div v-if="typings.length" class="text-muted d-flex my-3">
 			Alguém está digitando uma pergunta
 			<span class="ellipsis"></span>
 		</div>
@@ -17,7 +18,7 @@ export default {
 		Item
 	},
 	computed: {
-		...mapState('questions', ['news', 'typings'])
+		...mapState('questions', ['list', 'news', 'typings'])
 	}
 };
 </script>
