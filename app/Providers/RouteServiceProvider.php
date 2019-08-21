@@ -84,34 +84,34 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->namespace)
-            ->group(base_path('routes/profile.php'));
+            ->group(base_path('routes/web/profile.php'));
     }
 
     protected function mapPostRoutes()
     {
         Route::middleware('web')
             ->namespace($this->namespace)
-            ->group(base_path('routes/post.php'));
+            ->group(base_path('routes/web/post.php'));
     }
 
     protected function mapFinancesRoutes()
     {
         Route::middleware('web')
             ->namespace($this->namespace)
-            ->group(base_path('routes/finances.php'));
+            ->group(base_path('routes/web/finances.php'));
     }
 
     protected function mapQuestionsRoutes()
     {
         Route::middleware('web')
             ->namespace($this->namespace)
-            ->group(base_path('routes/questions.php'));
+            ->group(base_path('routes/web/questions.php'));
     }
 
     protected function mapPaymentsRoutes()
     {
         Route::middleware('web')
             ->namespace($this->namespace)
-            ->group(base_path('routes/payments.php'));
+            ->group(base_path('routes/web/payments.php'));
     }
 }
