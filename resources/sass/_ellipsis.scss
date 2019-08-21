@@ -11,6 +11,8 @@
 }
 
 .ellipsis {
+	display: block;
+	width: 1rem;
 	&:after {
 		overflow: hidden;
 		display: inline-block;

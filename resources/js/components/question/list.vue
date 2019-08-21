@@ -1,6 +1,9 @@
 <template>
 	<section>
-		<p v-if="typings.length" class="text-muted ellipsis">Alguém está digitando uma pergunta</p>
+		<div v-if="typings.length" class="text-muted d-flex">
+			Alguém está digitando uma pergunta
+			<span class="ellipsis"></span>
+		</div>
 		<Item v-for="(question, index) in news" :question="question" :key="index" />
 	</section>
 </template>

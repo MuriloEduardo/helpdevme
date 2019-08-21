@@ -18,8 +18,12 @@ const markAllAsRead = async ({ commit }) => {
 	commit('MARK_ALL_AS_READ');
 };
 
+const addNotification = ({ commit }, notification) =>
+	commit('ADD_NOTIFICATION', notification);
+
 export default {
 	loadNotifications,
 	markAsRead,
-	markAllAsRead
+	markAllAsRead,
+	addNotification
 };
