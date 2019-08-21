@@ -27,7 +27,8 @@ Echo.private('newquestions')
 		store.dispatch('questions/setTypingQuestion', user);
 	});
 
-Echo.private(`App.User.${window.$userId}`)
-	.notification(notification => {
-		console.log('notification', notification);
-	});
+Echo.private(`App.User.${window.$userId}`).notification(notification => {
+	if (notification.type == 'App\\Notifications\\QuestionCommented') {
+		store.dispatch('notifications/addNotification', notification);
+	}
+});

@@ -47,16 +47,17 @@ class CommentController extends Controller
 
 		$this->authorize('store-comment', $talk);
 
-		$post = new Post;
-		$post->talk_id = $talk->id;
-		$post->user_id = auth()->id();
-		$post->body = $request->body;
-		$post->type = $request->type;
-		$post->budget = $request->budget;
-
-		$this->authorize('message', $post);
-
-		$post->save();
+		$post = Post::updateOrCreate(
+			[
+				'talk_id' => $talk->id,
+				'user_id' => auth()->id(),
+				'type' => $request->type
+			],
+			[
+				'body' => $request->body,
+				'budget' => $request->budget
+			]
+		);
 
 		$post->load('talk');
 

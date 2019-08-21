@@ -23,12 +23,18 @@ const setTypingQuestion = ({ commit }, user) =>
 /**
  * Comments
  */
-const addComment = async ({ commit }, obj) => {
-	const comment = await axios.post('/api/comments', obj);
-
-	commit('ADD_COMMENT', comment);
-
-	return comment;
+const addComment = ({ commit }, obj) => {
+	return new Promise((resolve, reject) => {
+		axios.post('/api/comments', obj).then(
+			response => {
+				commit('ADD_COMMENT', response.data.post);
+				resolve(response);
+			},
+			error => {
+				reject(error);
+			}
+		);
+	});
 };
 
 const setComment = ({ commit }, obj) => commit('SET_COMMENT', obj);
