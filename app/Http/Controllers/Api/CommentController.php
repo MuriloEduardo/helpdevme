@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 
 use App\Events\PrivateCommentSent;
 use App\Events\PrivatePostSent;
+use App\Events\PrivateCreatedTalks;
 use App\Notifications\QuestionCommented;
 
 class CommentController extends Controller
@@ -60,6 +61,12 @@ class CommentController extends Controller
 		);
 
 		$post->load('talk');
+
+		/**
+		 * Dispara para o echo (resources/js/echo.js)
+		 * Canal de websocket somente para o usuário logado
+		 */
+		broadcast(new PrivateCreatedTalks($talk))->toOthers();
 
 		$post->talk->question->user->notify(new QuestionCommented($post));
 

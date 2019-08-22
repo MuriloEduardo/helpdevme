@@ -33,7 +33,20 @@
 							/>
 						</div>
 						<div class="form-group">
-							<vue-editor v-model="body" :editor-toolbar="customToolbar" />
+							<b-card no-body>
+								<b-tabs card>
+									<b-tab title="Escrever" active>
+										<b-card-text>
+											<vue-editor v-model="body" :editor-toolbar="customToolbar" />
+										</b-card-text>
+									</b-tab>
+									<b-tab title="Visualizar">
+										<b-card-text>
+											<div v-html="body"></div>
+										</b-card-text>
+									</b-tab>
+								</b-tabs>
+							</b-card>
 						</div>
 						<div class="form-group">
 							<multiselect

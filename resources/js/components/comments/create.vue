@@ -12,7 +12,8 @@
 					slot="append"
 				>
 					<template slot="button-content">
-						<i class="fas fa-hand-holding-usd"></i>
+						<i v-if="!budget" class="fas fa-hand-holding-usd"></i>
+						<span v-else>{{ budget | currency }}</span>
 					</template>
 					<b-dropdown-form>
 						<b-form-group label="Orçamento" label-for="dropdown-form-budget" @submit.stop.prevent>

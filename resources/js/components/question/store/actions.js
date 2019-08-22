@@ -28,11 +28,10 @@ const addComment = ({ commit }, obj) => {
 		axios.post('/api/comments', obj).then(
 			response => {
 				commit('ADD_COMMENT', response.data.post);
+
 				resolve(response);
 			},
-			error => {
-				reject(error);
-			}
+			error => reject(error)
 		);
 	});
 };

@@ -5,6 +5,7 @@ const getQuestion = ({ list, news }, question_id) =>
 	[...list, ...news].find(question => question.id == question_id);
 
 const updateOrCreateComment = (state, comment) => {
+	console.log('updateOrCreateComment', comment);
 	const question = getQuestion(state, comment.talk.question_id);
 
 	const find = question.comments.find(_comment => _comment.id == comment.id);

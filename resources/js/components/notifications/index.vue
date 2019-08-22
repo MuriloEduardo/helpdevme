@@ -13,7 +13,7 @@
 		>
 			<span
 				v-if="notifications.length"
-				class="badge badge-pill badge-danger position-absolute"
+				class="badge badge-pill badge-danger position-absolute text-white"
 			>{{ notifications.length }}</span>
 			<i class="fas fa-bell fa-2x"></i>
 			<span class="pl-3 d-md-none d-block">Notificações</span>
@@ -24,10 +24,10 @@
 		>
 			<div v-if="notifications.length">
 				<div class="d-flex justify-content-between align-items-center py-1">
-					<a href="/talks" class="btn btn-sm btn-link">Ver Todas</a>
-					<button class="btn btn-sm btn-link" @click="markAllAsRead()">Limpar Notificações</button>
+					<a href="/talks" class="btn btn-link">Ver Todas</a>
+					<button class="btn btn-link" @click="markAllAsRead()">Limpar Notificações</button>
 				</div>
-				<Item :notifications="notifications"></Item>
+				<Items :notifications="notifications"></Items>
 			</div>
 			<div v-else class="text-muted text-center p-3">Sem Notificações</div>
 		</div>
@@ -36,11 +36,11 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import Item from './item';
+import Items from './items';
 
 export default {
 	components: {
-		Item
+		Items
 	},
 	computed: {
 		...mapState('notifications', ['items']),

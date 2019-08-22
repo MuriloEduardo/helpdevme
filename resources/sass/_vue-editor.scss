@@ -1,0 +1,17 @@
+.quillWrapper {
+	.ql-toolbar {
+		&.ql-snow {
+			border: none;
+		}
+	}
+	.ql-container {
+		&.ql-snow {
+			border: none;
+		}
+		.ql-editor {
+			* {
+				max-width: 100%;
+			}
+		}
+	}
+}

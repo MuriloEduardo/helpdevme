@@ -1,5 +1,6 @@
 <template>
 	<section v-if="talk">
+		<output-posts :talk="talk" @whisper="onWhisper" @receivedPost="onReceivedPost"></output-posts>
 		<div class="d-flex align-items-center py-3">
 			<p class="lead">
 				<span>Conversa com</span>
@@ -128,7 +129,10 @@
 									</div>
 								</div>
 							</div>
-							<small v-if="typing" class="text-muted ellipsis">{{ opposite.name }} está digitando</small>
+							<div v-if="typing" class="text-muted d-flex">
+								{{ opposite.name }} está digitando
+								<span class="ellipsis"></span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -157,15 +161,19 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import OutputPosts from './output-posts';
+import { mapState, mapActions } from 'vuex';
 
 export default {
+	components: {
+		OutputPosts
+	},
+
 	props: ['user', 'talkprop', 'opposite', 'posts'],
 
 	data() {
 		return {
 			talk: undefined,
-			channel: Echo.private(`posts.${this.talkprop.id}.private`),
 			body: null,
 			timeOut: undefined,
 			formActive: true,
@@ -201,28 +209,37 @@ export default {
 	},
 
 	methods: {
-		onTyping() {
-			const privateChannel = Echo.private(this.channel + '.private');
+		onWhisper(typing) {
+			this.typing = typing;
 
-			setTimeout(() => {
-				privateChannel.whisper('typing', {
-					typing: true
-				});
-			}, 300);
+			clearTimeout(this.timeOut);
+
+			this.timeOut = setTimeout(() => {
+				this.typing = false;
+			}, 900);
+		},
+		onReceivedPost(post) {
+			this.talk = post.talk;
+
+			this.talkStatus(post.talk);
+
+			this.allPosts.push(post);
+		},
+		...mapActions('talks', ['addPost']),
+		onTyping() {
+			this.$emit('typing');
 		},
 		sendMessage() {
-			axios
-				.post('/api/posts', {
-					type: 0, // message
-					body: this.body,
-					talk_id: this.talk.id,
-					question_id: this.talk.question.id,
-					receiver_id: this.talk.question.user_id
-				})
-				.then(response => {
-					this.body = null;
-					this.allPosts.push(response.data.post);
-				});
+			this.addPost({
+				type: 0, // message
+				body: this.body,
+				talk_id: this.talk.id,
+				question_id: this.talk.question.id,
+				receiver_id: this.talk.question.user_id
+			}).then(response => {
+				this.body = null;
+				this.allPosts.push(response.data.post);
+			});
 		},
 		fetchMessages() {
 			this.allPosts = this.posts;
@@ -237,27 +254,6 @@ export default {
 		this.talk = this.talkprop;
 
 		this.fetchMessages();
-
-		this.channel
-			.listen('PrivatePostSent', response => {
-				const { post } = response;
-
-				console.log('PrivatePostSent', post);
-
-				this.talk = post.talk;
-
-				this.talkStatus(post.talk);
-				this.allPosts.push(post);
-			})
-			.listenForWhisper('typing', e => {
-				this.typing = e.typing;
-
-				clearTimeout(this.timeOut);
-
-				this.timeOut = setTimeout(() => {
-					this.typing = false;
-				}, 900);
-			});
 	}
 };
 </script>

@@ -4,6 +4,23 @@ const setTalks = async ({ commit }) => {
 	commit('SET_TALKS', talks);
 };
 
+const addPost = async ({ commit }, post) => {
+	return new Promise((resolve, reject) => {
+		axios.post('/api/posts', post).then(
+			response => {
+				commit('ADD_POST', response.data.post);
+
+				resolve(response);
+			},
+			error => reject(error)
+		);
+	});
+};
+
+const setPost = ({ commit }, post) => commit('SET_POST', post);
+
 export default {
-	setTalks
+	setTalks,
+	addPost,
+	setPost
 };

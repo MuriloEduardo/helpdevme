@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+	protected $appends = ['published'];
+
 	protected $fillable = [
 		'body',
 		'budget',
@@ -28,6 +31,11 @@ class Post extends Model
 		'comment' => 1,
 		'alert' => 2
 	];
+
+	public function getPublishedAttribute()
+	{
+		return Carbon::createFromTimeStamp(strtotime($this->attributes['created_at']))->diffForHumans();
+	}
 
 	public function talk()
 	{

@@ -82293,6 +82293,7 @@ Echo.private('comments').listen('PrivateCommentSent', function (response) {
 });
 
 Echo.private('newquestions').listen('NewQuestionsEvent', function (response) {
+	console.log('NewQuestionsEvent');
 	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setQuestion', response.question);
 }).listenForWhisper('typing', function (user) {
 	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setTypingQuestion', user);
@@ -82300,8 +82301,14 @@ Echo.private('newquestions').listen('NewQuestionsEvent', function (response) {
 
 Echo.private('App.User.' + window.$userId).notification(function (notification) {
 	if (notification.type == 'App\\Notifications\\QuestionCommented') {
-		__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('notifications/addNotification', notification);
+		__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('notifications/addNotification', notification, {
+			root: true
+		});
 	}
+});
+
+Echo.private('talks.user.' + window.$userId).listen('PrivateCreatedTalks', function (response) {
+	console.log('PrivateCreatedTalks', response);
 });
 
 /***/ }),
@@ -94643,9 +94650,10 @@ var addComment = function addComment(_ref7, obj) {
 	return new Promise(function (resolve, reject) {
 		axios.post('/api/comments', obj).then(function (response) {
 			commit('ADD_COMMENT', response.data.post);
+
 			resolve(response);
 		}, function (error) {
-			reject(error);
+			return reject(error);
 		});
 	});
 };
@@ -95465,6 +95473,7 @@ var getQuestion = function getQuestion(_ref, question_id) {
 };
 
 var updateOrCreateComment = function updateOrCreateComment(state, comment) {
+	console.log('updateOrCreateComment', comment);
 	var question = getQuestion(state, comment.talk.question_id);
 
 	var find = question.comments.find(function (_comment) {
@@ -95653,8 +95662,45 @@ var setTalks = function () {
 	};
 }();
 
+var addPost = function () {
+	var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(_ref3, post) {
+		var commit = _ref3.commit;
+		return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+			while (1) {
+				switch (_context2.prev = _context2.next) {
+					case 0:
+						return _context2.abrupt('return', new Promise(function (resolve, reject) {
+							axios.post('/api/posts', post).then(function (response) {
+								commit('ADD_POST', response.data.post);
+
+								resolve(response);
+							}, function (error) {
+								return reject(error);
+							});
+						}));
+
+					case 1:
+					case 'end':
+						return _context2.stop();
+				}
+			}
+		}, _callee2, _this);
+	}));
+
+	return function addPost(_x2, _x3) {
+		return _ref4.apply(this, arguments);
+	};
+}();
+
+var setPost = function setPost(_ref5, post) {
+	var commit = _ref5.commit;
+	return commit('SET_POST', post);
+};
+
 /* harmony default export */ __webpack_exports__["a"] = ({
-	setTalks: setTalks
+	setTalks: setTalks,
+	addPost: addPost,
+	setPost: setPost
 });
 
 /***/ }),
@@ -95662,12 +95708,47 @@ var setTalks = function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+/**
+ * PRIVATE
+ */
+var updateOrCreateTalk = function updateOrCreateTalk(state, post) {
+	console.log('updateOrCreateTalk');
+	state.talks = state.talks.map(function (talk) {
+		console.log('possivelmente aqui vem a NOVA talk quando é criada', talk);
+		var _talk = talk;
+
+		if (talk.id == post.talk.id) {
+			if (talk.posts) {
+				_talk = _extends({}, talk, { posts: [].concat(_toConsumableArray(talk.posts), [post]) });
+			} else {
+				_talk = _extends({}, talk, { posts: [post] });
+			}
+		}
+
+		return _talk;
+	});
+};
+
 var SET_TALKS = function SET_TALKS(state, talks) {
 	return state.talks = talks;
 };
 
+var ADD_POST = function ADD_POST(state, post) {
+	return updateOrCreateTalk(state, post);
+};
+
+var SET_POST = function SET_POST(state, post) {
+	return updateOrCreateTalk(state, post);
+};
+
 /* harmony default export */ __webpack_exports__["a"] = ({
-	SET_TALKS: SET_TALKS
+	SET_TALKS: SET_TALKS,
+	ADD_POST: ADD_POST,
+	SET_POST: SET_POST
 });
 
 /***/ }),
@@ -95675,7 +95756,13 @@ var SET_TALKS = function SET_TALKS(state, talks) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({});
+var getUnreadsPosts = function getUnreadsPosts(state) {
+	console.log('getUnreadsPosts', state);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+	getUnreadsPosts: getUnreadsPosts
+});
 
 /***/ }),
 /* 263 */
@@ -102028,7 +102115,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__output_posts__ = __webpack_require__(368);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__output_posts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__output_posts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(16);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -102189,16 +102278,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+	components: {
+		OutputPosts: __WEBPACK_IMPORTED_MODULE_0__output_posts___default.a
+	},
+
 	props: ['user', 'talkprop', 'opposite', 'posts'],
 
 	data: function data() {
 		return {
 			talk: undefined,
-			channel: Echo.private('posts.' + this.talkprop.id + '.private'),
 			body: null,
 			timeOut: undefined,
 			formActive: true,
@@ -102227,34 +102324,47 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 			return question.user_ended == 1 && question.freelancer_ended == 1;
 		}
-	}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])({
+	}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["d" /* mapState */])({
 		onlineFriends: function onlineFriends(state) {
 			return state.users;
 		}
 	})),
 
-	methods: {
-		onTyping: function onTyping() {
-			var privateChannel = Echo.private(this.channel + '.private');
-
-			setTimeout(function () {
-				privateChannel.whisper('typing', {
-					typing: true
-				});
-			}, 300);
-		},
-		sendMessage: function sendMessage() {
+	methods: _extends({
+		onWhisper: function onWhisper(typing) {
 			var _this = this;
 
-			axios.post('/api/posts', {
+			this.typing = typing;
+
+			clearTimeout(this.timeOut);
+
+			this.timeOut = setTimeout(function () {
+				_this.typing = false;
+			}, 900);
+		},
+		onReceivedPost: function onReceivedPost(post) {
+			this.talk = post.talk;
+
+			this.talkStatus(post.talk);
+
+			this.allPosts.push(post);
+		}
+	}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('talks', ['addPost']), {
+		onTyping: function onTyping() {
+			this.$emit('typing');
+		},
+		sendMessage: function sendMessage() {
+			var _this2 = this;
+
+			this.addPost({
 				type: 0, // message
 				body: this.body,
 				talk_id: this.talk.id,
 				question_id: this.talk.question.id,
 				receiver_id: this.talk.question.user_id
 			}).then(function (response) {
-				_this.body = null;
-				_this.allPosts.push(response.data.post);
+				_this2.body = null;
+				_this2.allPosts.push(response.data.post);
 			});
 		},
 		fetchMessages: function fetchMessages() {
@@ -102264,34 +102374,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		talkStatus: function talkStatus(talk) {
 			this.formActive = talk.status == 1 ? false : true;
 		}
-	},
+	}),
 
 	created: function created() {
-		var _this2 = this;
-
 		this.talk = this.talkprop;
 
 		this.fetchMessages();
-
-		this.channel.listen('PrivatePostSent', function (response) {
-			var post = response.post;
-
-
-			console.log('PrivatePostSent', post);
-
-			_this2.talk = post.talk;
-
-			_this2.talkStatus(post.talk);
-			_this2.allPosts.push(post);
-		}).listenForWhisper('typing', function (e) {
-			_this2.typing = e.typing;
-
-			clearTimeout(_this2.timeOut);
-
-			_this2.timeOut = setTimeout(function () {
-				_this2.typing = false;
-			}, 900);
-		});
 	}
 });
 
@@ -102304,454 +102392,484 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.talk
-    ? _c("section", [
-        _c("div", { staticClass: "d-flex align-items-center py-3" }, [
-          _c("p", { staticClass: "lead" }, [
-            _c("span", [_vm._v("Conversa com")]),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "badge badge-secondary",
-                attrs: { href: "/users/" + _vm.opposite.slug }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    class: _vm.onlineFriends.find(function(user) {
-                      return user.id === _vm.opposite.id
-                    })
-                      ? "text-success"
-                      : ""
-                  },
-                  [_vm._v("•")]
-                ),
-                _vm._v(" "),
-                _c("span", [_vm._v(_vm._s(_vm.opposite.name))])
-              ]
-            )
-          ]),
+    ? _c(
+        "section",
+        [
+          _c("output-posts", {
+            attrs: { talk: _vm.talk },
+            on: { whisper: _vm.onWhisper, receivedPost: _vm.onReceivedPost }
+          }),
           _vm._v(" "),
-          !_vm.finished && _vm.talk.question.status == 2
-            ? _c(
-                "div",
-                { staticClass: "form-group px-4" },
+          _c("div", { staticClass: "d-flex align-items-center py-3" }, [
+            _c("p", { staticClass: "lead" }, [
+              _c("span", [_vm._v("Conversa com")]),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "badge badge-secondary",
+                  attrs: { href: "/users/" + _vm.opposite.slug }
+                },
                 [
                   _c(
-                    "b-button",
+                    "span",
                     {
-                      attrs: { variant: "success" },
-                      on: {
-                        click: function($event) {
-                          return _vm.$bvModal.show("modal-scoped" + _vm.talk.id)
-                        }
-                      }
+                      class: _vm.onlineFriends.find(function(user) {
+                        return user.id === _vm.opposite.id
+                      })
+                        ? "text-success"
+                        : ""
                     },
-                    [_vm._v("Finalizar Questão")]
+                    [_vm._v("•")]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "b-modal",
-                    {
-                      attrs: { id: "modal-scoped" + _vm.talk.id },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "modal-header",
-                            fn: function(ref) {
-                              var close = ref.close
-                              return [
-                                _c("h5", { staticClass: "modal-title mr-3" }, [
-                                  _vm._v("Tem certeza disso?")
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "b-button",
-                                  {
-                                    staticClass: "close",
-                                    attrs: { variant: "link" },
-                                    on: {
-                                      click: function($event) {
-                                        return close()
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "span",
-                                      { attrs: { "aria-hidden": "true" } },
-                                      [_vm._v("×")]
-                                    )
-                                  ]
-                                )
-                              ]
-                            }
-                          },
-                          {
-                            key: "modal-footer",
-                            fn: function(ref) {
-                              var cancel = ref.cancel
-                              return [
-                                _c(
-                                  "b-button",
-                                  {
-                                    attrs: { variant: "light" },
-                                    on: {
-                                      click: function($event) {
-                                        return cancel()
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Cancelar")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "btn btn-success",
-                                    attrs: {
-                                      href:
-                                        "/" +
-                                        _vm.talk.question.slug +
-                                        "/finalize"
-                                    }
-                                  },
-                                  [_vm._v("Aceitar")]
-                                )
-                              ]
-                            }
-                          }
-                        ],
-                        null,
-                        false,
-                        1372756861
-                      )
-                    },
-                    [
-                      _vm._v(" "),
-                      _c("template", { slot: "default" }, [
-                        _c("p", { staticClass: "font-weight-bold" }, [
-                          _vm._v("Você está prestes a finalizar uma questão!")
-                        ]),
-                        _vm._v(" "),
-                        _c("span", [
-                          _vm._v(
-                            "Após finalizada, ela não pode ser reaberta até que ambas as partes à finalizem. Ainda pode ser solicitado à arbitragem como medida de segurança."
-                          )
-                        ])
-                      ])
-                    ],
-                    2
-                  )
-                ],
-                1
+                  _c("span", [_vm._v(_vm._s(_vm.opposite.name))])
+                ]
               )
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _vm.alertFinished && !_vm.conclusion
-          ? _c("div", [
-              _c("div", { staticClass: "card text-white bg-warning mb-3" }, [
-                _c("div", { staticClass: "card-body" }, [
-                  _c("h5", { staticClass: "card-title" }, [
-                    _vm._v("Alguém finalizou essa questão!")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "card-text" }, [
-                    _vm._v(
-                      "Esperamos que tudo esteja bem e " +
-                        _vm._s(_vm.opposite.name) +
-                        " também finalize. Caso contrário ambos poderão solicitiar o processo de arbitragem."
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(0)
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col" }, [
-                _c("div", { attrs: { id: "privateMessageBox" } }, [
-                  _c(
-                    "div",
-                    { staticClass: "d-flex flex-column p-3" },
-                    _vm._l(_vm.allPosts, function(post, index) {
-                      return _c("div", { key: index, staticClass: "h5" }, [
-                        post.body
-                          ? _c("div", [
-                              post.type == 2 && post.status == 1
-                                ? _c("div", { staticClass: "text-center" }, [
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "badge badge-pill py-2 px-5 badge-danger"
-                                      },
-                                      [_vm._v(_vm._s(post.body))]
-                                    )
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              post.type == 2 && post.status == 2
-                                ? _c("div", { staticClass: "text-center" }, [
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "badge badge-pill py-2 px-5 badge-info"
-                                      },
-                                      [_vm._v(_vm._s(post.body))]
-                                    )
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              post.type == 2 && post.status == 3
-                                ? _c("div", { staticClass: "text-center" }, [
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "badge badge-pill py-2 px-5 badge-success"
-                                      },
-                                      [_vm._v(_vm._s(post.body))]
-                                    )
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              post.type == 2 && post.status == 4
-                                ? _c("div", { staticClass: "text-center" }, [
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "badge badge-pill py-2 px-5 badge-warning"
-                                      },
-                                      [_vm._v(_vm._s(post.body))]
-                                    )
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              post.type != 2 && post.budget
-                                ? _c(
-                                    "div",
-                                    { staticClass: "card bg-light mb-5" },
-                                    [
-                                      _c("div", { staticClass: "card-body" }, [
-                                        _c("p", { staticClass: "card-text" }, [
-                                          _vm._v(
-                                            "\n\t\t\t\t\t\t\t\t\t\t\t\t" +
-                                              _vm._s(post.body) +
-                                              "\n\t\t\t\t\t\t\t\t\t\t\t\t"
-                                          ),
-                                          _c(
-                                            "span",
-                                            { staticClass: "text-success" },
-                                            [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm._f("currency")(
-                                                    post.budget
-                                                  )
-                                                )
-                                              )
-                                            ]
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _vm.user.id == _vm.talk.receiver_id &&
-                                      (post.status < 3 && post.status != 1)
-                                        ? _c(
-                                            "div",
-                                            { staticClass: "card-footer" },
-                                            [
-                                              post.status == 0
-                                                ? _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-success",
-                                                      attrs: {
-                                                        href:
-                                                          "/posts/accept/" +
-                                                          post.id
-                                                      }
-                                                    },
-                                                    [_vm._v("Aceitar")]
-                                                  )
-                                                : _vm._e(),
-                                              _vm._v(" "),
-                                              post.status == 2
-                                                ? _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-success",
-                                                      attrs: {
-                                                        href:
-                                                          "/payments/" + post.id
-                                                      }
-                                                    },
-                                                    [_vm._v("Pagar")]
-                                                  )
-                                                : _vm._e(),
-                                              _vm._v(" "),
-                                              post.status != 1
-                                                ? _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-link btn-sm text-secondary",
-                                                      attrs: {
-                                                        href:
-                                                          "/posts/refused/" +
-                                                          post.id
-                                                      }
-                                                    },
-                                                    [_vm._v("Recusar")]
-                                                  )
-                                                : _vm._e()
-                                            ]
-                                          )
-                                        : _vm._e()
-                                    ]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              post.type != 2 && !post.budget
-                                ? _c(
-                                    "div",
+            ]),
+            _vm._v(" "),
+            !_vm.finished && _vm.talk.question.status == 2
+              ? _c(
+                  "div",
+                  { staticClass: "form-group px-4" },
+                  [
+                    _c(
+                      "b-button",
+                      {
+                        attrs: { variant: "success" },
+                        on: {
+                          click: function($event) {
+                            return _vm.$bvModal.show(
+                              "modal-scoped" + _vm.talk.id
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v("Finalizar Questão")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-modal",
+                      {
+                        attrs: { id: "modal-scoped" + _vm.talk.id },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "modal-header",
+                              fn: function(ref) {
+                                var close = ref.close
+                                return [
+                                  _c(
+                                    "h5",
+                                    { staticClass: "modal-title mr-3" },
+                                    [_vm._v("Tem certeza disso?")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "b-button",
                                     {
-                                      staticClass: "d-flex align-items-center",
-                                      class:
-                                        _vm.user.id == post.user_id
-                                          ? "justify-content-end"
-                                          : ""
+                                      staticClass: "close",
+                                      attrs: { variant: "link" },
+                                      on: {
+                                        click: function($event) {
+                                          return close()
+                                        }
+                                      }
                                     },
                                     [
-                                      _vm.user.id != post.user_id
-                                        ? _c("span", [
-                                            _vm.opposite.avatar
-                                              ? _c("img", {
-                                                  staticClass: "img-fluid",
-                                                  attrs: {
-                                                    width: "25",
-                                                    src:
-                                                      "/storage/img/avatars/" +
-                                                      _vm.opposite.avatar,
-                                                    alt: _vm.opposite.name,
-                                                    title: _vm.opposite.name
-                                                  }
-                                                })
-                                              : _c("i", {
-                                                  staticClass:
-                                                    "fas fa-user-circle fa-lg"
-                                                })
-                                          ])
-                                        : _vm._e(),
-                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("×")]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              }
+                            },
+                            {
+                              key: "modal-footer",
+                              fn: function(ref) {
+                                var cancel = ref.cancel
+                                return [
+                                  _c(
+                                    "b-button",
+                                    {
+                                      attrs: { variant: "light" },
+                                      on: {
+                                        click: function($event) {
+                                          return cancel()
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Cancelar")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "btn btn-success",
+                                      attrs: {
+                                        href:
+                                          "/" +
+                                          _vm.talk.question.slug +
+                                          "/finalize"
+                                      }
+                                    },
+                                    [_vm._v("Aceitar")]
+                                  )
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          false,
+                          1372756861
+                        )
+                      },
+                      [
+                        _vm._v(" "),
+                        _c("template", { slot: "default" }, [
+                          _c("p", { staticClass: "font-weight-bold" }, [
+                            _vm._v("Você está prestes a finalizar uma questão!")
+                          ]),
+                          _vm._v(" "),
+                          _c("span", [
+                            _vm._v(
+                              "Após finalizada, ela não pode ser reaberta até que ambas as partes à finalizem. Ainda pode ser solicitado à arbitragem como medida de segurança."
+                            )
+                          ])
+                        ])
+                      ],
+                      2
+                    )
+                  ],
+                  1
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _vm.alertFinished && !_vm.conclusion
+            ? _c("div", [
+                _c("div", { staticClass: "card text-white bg-warning mb-3" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h5", { staticClass: "card-title" }, [
+                      _vm._v("Alguém finalizou essa questão!")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "card-text" }, [
+                      _vm._v(
+                        "Esperamos que tudo esteja bem e " +
+                          _vm._s(_vm.opposite.name) +
+                          " também finalize. Caso contrário ambos poderão solicitiar o processo de arbitragem."
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col" }, [
+                  _c("div", { attrs: { id: "privateMessageBox" } }, [
+                    _c(
+                      "div",
+                      { staticClass: "d-flex flex-column p-3" },
+                      _vm._l(_vm.allPosts, function(post, index) {
+                        return _c("div", { key: index, staticClass: "h5" }, [
+                          post.body
+                            ? _c("div", [
+                                post.type == 2 && post.status == 1
+                                  ? _c("div", { staticClass: "text-center" }, [
                                       _c(
                                         "span",
                                         {
                                           staticClass:
-                                            "badge badge-pill py-2 px-3 default ml-1 font-weight-normal",
-                                          class:
-                                            _vm.user.id !== post.user_id
-                                              ? "badge-secondary"
-                                              : "badge-primary"
+                                            "badge badge-pill py-2 px-5 badge-danger"
                                         },
                                         [_vm._v(_vm._s(post.body))]
                                       )
-                                    ]
-                                  )
-                                : _vm._e()
-                            ])
-                          : _vm._e()
-                      ])
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _vm.typing
-                    ? _c("small", { staticClass: "text-muted ellipsis" }, [
-                        _vm._v(_vm._s(_vm.opposite.name) + " está digitando")
-                      ])
-                    : _vm._e()
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                post.type == 2 && post.status == 2
+                                  ? _c("div", { staticClass: "text-center" }, [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "badge badge-pill py-2 px-5 badge-info"
+                                        },
+                                        [_vm._v(_vm._s(post.body))]
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                post.type == 2 && post.status == 3
+                                  ? _c("div", { staticClass: "text-center" }, [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "badge badge-pill py-2 px-5 badge-success"
+                                        },
+                                        [_vm._v(_vm._s(post.body))]
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                post.type == 2 && post.status == 4
+                                  ? _c("div", { staticClass: "text-center" }, [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "badge badge-pill py-2 px-5 badge-warning"
+                                        },
+                                        [_vm._v(_vm._s(post.body))]
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                post.type != 2 && post.budget
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "card bg-light mb-5" },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "card-body" },
+                                          [
+                                            _c(
+                                              "p",
+                                              { staticClass: "card-text" },
+                                              [
+                                                _vm._v(
+                                                  "\n\t\t\t\t\t\t\t\t\t\t\t\t" +
+                                                    _vm._s(post.body) +
+                                                    "\n\t\t\t\t\t\t\t\t\t\t\t\t"
+                                                ),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "text-success"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm._f("currency")(
+                                                          post.budget
+                                                        )
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _vm.user.id == _vm.talk.receiver_id &&
+                                        (post.status < 3 && post.status != 1)
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "card-footer" },
+                                              [
+                                                post.status == 0
+                                                  ? _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "btn btn-success",
+                                                        attrs: {
+                                                          href:
+                                                            "/posts/accept/" +
+                                                            post.id
+                                                        }
+                                                      },
+                                                      [_vm._v("Aceitar")]
+                                                    )
+                                                  : _vm._e(),
+                                                _vm._v(" "),
+                                                post.status == 2
+                                                  ? _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "btn btn-success",
+                                                        attrs: {
+                                                          href:
+                                                            "/payments/" +
+                                                            post.id
+                                                        }
+                                                      },
+                                                      [_vm._v("Pagar")]
+                                                    )
+                                                  : _vm._e(),
+                                                _vm._v(" "),
+                                                post.status != 1
+                                                  ? _c(
+                                                      "a",
+                                                      {
+                                                        staticClass:
+                                                          "btn btn-link btn-sm text-secondary",
+                                                        attrs: {
+                                                          href:
+                                                            "/posts/refused/" +
+                                                            post.id
+                                                        }
+                                                      },
+                                                      [_vm._v("Recusar")]
+                                                    )
+                                                  : _vm._e()
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                post.type != 2 && !post.budget
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "d-flex align-items-center",
+                                        class:
+                                          _vm.user.id == post.user_id
+                                            ? "justify-content-end"
+                                            : ""
+                                      },
+                                      [
+                                        _vm.user.id != post.user_id
+                                          ? _c("span", [
+                                              _vm.opposite.avatar
+                                                ? _c("img", {
+                                                    staticClass: "img-fluid",
+                                                    attrs: {
+                                                      width: "25",
+                                                      src:
+                                                        "/storage/img/avatars/" +
+                                                        _vm.opposite.avatar,
+                                                      alt: _vm.opposite.name,
+                                                      title: _vm.opposite.name
+                                                    }
+                                                  })
+                                                : _c("i", {
+                                                    staticClass:
+                                                      "fas fa-user-circle fa-lg"
+                                                  })
+                                            ])
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "badge badge-pill py-2 px-3 default ml-1 font-weight-normal",
+                                            class:
+                                              _vm.user.id !== post.user_id
+                                                ? "badge-secondary"
+                                                : "badge-primary"
+                                          },
+                                          [_vm._v(_vm._s(post.body))]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ])
+                            : _vm._e()
+                        ])
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _vm.typing
+                      ? _c("div", { staticClass: "text-muted d-flex" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t" +
+                              _vm._s(_vm.opposite.name) +
+                              " está digitando\n\t\t\t\t\t\t\t"
+                          ),
+                          _c("span", { staticClass: "ellipsis" })
+                        ])
+                      : _vm._e()
+                  ])
                 ])
               ])
-            ])
-          ]),
-          _vm._v(" "),
-          _vm.formActive
-            ? _c("div", { staticClass: "card-footer" }, [
-                _c(
-                  "form",
-                  {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.sendMessage($event)
+            ]),
+            _vm._v(" "),
+            _vm.formActive
+              ? _c("div", { staticClass: "card-footer" }, [
+                  _c(
+                    "form",
+                    {
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.sendMessage($event)
+                        }
                       }
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "input-group" }, [
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.body,
-                            expression: "body"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          placeholder: "Digite uma mensagem...",
-                          required: ""
-                        },
-                        domProps: { value: _vm.body },
-                        on: {
-                          keydown: [
-                            _vm.onTyping,
-                            function($event) {
-                              if (
-                                !$event.type.indexOf("key") &&
-                                _vm._k(
-                                  $event.keyCode,
-                                  "enter",
-                                  13,
-                                  $event.key,
-                                  "Enter"
-                                )
-                              ) {
-                                return null
-                              }
-                              return _vm.sendMessage($event)
+                    },
+                    [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.body,
+                              expression: "body"
                             }
                           ],
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                          staticClass: "form-control",
+                          attrs: {
+                            placeholder: "Digite uma mensagem...",
+                            required: ""
+                          },
+                          domProps: { value: _vm.body },
+                          on: {
+                            keydown: [
+                              _vm.onTyping,
+                              function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.sendMessage($event)
+                              }
+                            ],
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.body = $event.target.value
                             }
-                            _vm.body = $event.target.value
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(1)
-                    ])
-                  ]
-                )
-              ])
-            : _vm._e()
-        ])
-      ])
+                        }),
+                        _vm._v(" "),
+                        _vm._m(1)
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e()
+          ])
+        ],
+        1
+      )
     : _vm._e()
 }
 var staticRenderFns = [
@@ -102845,7 +102963,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__output_posts__ = __webpack_require__(368);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__output_posts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__output_posts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(16);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -102891,20 +103011,32 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+	components: {
+		OutputPosts: __WEBPACK_IMPORTED_MODULE_0__output_posts___default.a
+	},
 	mounted: function mounted() {
 		this.setTalks();
 	},
 
-	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])({
+	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["d" /* mapState */])({
 		talks: function talks(state) {
 			return state.talks.talks;
 		}
 	})),
-	methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])('talks', ['setTalks']))
+	methods: _extends({
+		onReceivedPost: function onReceivedPost(post) {
+			this.setPost(post);
+		}
+	}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('talks', ['setTalks', 'setPost']))
 });
 
 /***/ }),
@@ -102916,79 +103048,87 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.talks.length
-      ? _c("div", [
-          _c(
-            "div",
-            { staticClass: "list-group" },
-            _vm._l(_vm.talks, function(talk) {
-              return _c(
-                "a",
-                {
-                  key: talk.id,
-                  staticClass:
-                    "list-group-item list-group-item-action flex-column align-items-start",
-                  attrs: {
-                    href: "/talks/" + talk.id,
-                    set: (_vm.opposite =
-                      this.$userId == talk.user.id ? talk.receiver : talk.user)
-                  }
-                },
-                [
-                  _c("div", { staticClass: "d-flex align-items-center" }, [
-                    _vm.opposite.avatar
-                      ? _c("img", {
-                          staticClass: "img-fluid avatar",
-                          staticStyle: { height: "25px" },
-                          attrs: {
-                            width: "25",
-                            src: "/storage/img/avatars/" + _vm.opposite.avatar,
-                            alt: _vm.opposite.name,
-                            title: _vm.opposite.name
-                          }
-                        })
-                      : _c("i", { staticClass: "fas fa-user-circle fa-2x" }),
-                    _vm._v(" "),
-                    _c(
+    _c(
+      "div",
+      { staticClass: "list-group list-group-flush" },
+      _vm._l(_vm.talks, function(talk) {
+        return _c(
+          "a",
+          {
+            key: talk.id,
+            staticClass:
+              "list-group-item list-group-item-action flex-column align-items-start",
+            attrs: {
+              href: "/talks/" + talk.id,
+              set: (_vm.opposite =
+                this.$userId == talk.user.id ? talk.receiver : talk.user)
+            }
+          },
+          [
+            _c("output-posts", {
+              attrs: { talk: talk },
+              on: { receivedPost: _vm.onReceivedPost }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex" }, [
+              _vm.opposite.avatar
+                ? _c("img", {
+                    staticClass: "img-fluid avatar",
+                    staticStyle: { height: "25px" },
+                    attrs: {
+                      width: "25",
+                      src: "/storage/img/avatars/" + _vm.opposite.avatar,
+                      alt: _vm.opposite.name,
+                      title: _vm.opposite.name
+                    }
+                  })
+                : _c("i", { staticClass: "fas fa-user-circle fa-2x" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "ml-3 text-truncate flex-grow-1" }, [
+                _c("h6", { staticClass: "mb-1" }, [
+                  _vm._v("Conversa com " + _vm._s(_vm.opposite.name))
+                ]),
+                _vm._v(" "),
+                _c("small", [
+                  _vm._v("\n\t\t\t\t\t\tEm:\n\t\t\t\t\t\t"),
+                  _c("b", [_vm._v(_vm._s(talk.question.title))])
+                ]),
+                _vm._v(" "),
+                talk.posts
+                  ? _c(
                       "div",
-                      { staticClass: "ml-3 text-truncate flex-grow-1" },
+                      {
+                        staticClass: "d-flex justify-content-between",
+                        attrs: {
+                          set: (_vm.post = talk.posts[talk.posts.length - 1])
+                        }
+                      },
                       [
-                        _c("h5", { staticClass: "mb-1" }, [
-                          _vm._v("Conversa com " + _vm._s(_vm.opposite.name))
+                        _c("small", { staticClass: "text-muted" }, [
+                          _vm._v(_vm._s(_vm.post.body))
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "d-flex justify-content-between" },
-                          [
-                            _c("small", [
-                              _vm._v("\n\t\t\t\t\t\t\t\tEm:\n\t\t\t\t\t\t\t\t"),
-                              _c("b", [_vm._v(_vm._s(talk.question.title))])
-                            ]),
-                            _vm._v(" "),
-                            _c("small", { staticClass: "text-muted pl-3" }, [
-                              _vm._v(_vm._s(talk.created_at))
-                            ])
-                          ]
-                        )
+                        _c("small", { staticClass: "text-muted pl-3" }, [
+                          _vm._v(_vm._s(_vm.post.published))
+                        ])
                       ]
                     )
-                  ])
-                ]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-link btn-block",
-              attrs: { href: "/talks" }
-            },
-            [_vm._v("Ver Tudo")]
-          )
-        ])
+                  : _vm._e()
+              ])
+            ])
+          ],
+          1
+        )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _vm.talks.length
+      ? _c(
+          "a",
+          { staticClass: "btn btn-link btn-block", attrs: { href: "/talks" } },
+          [_vm._v("Ver Tudo")]
+        )
       : _c("div", { staticClass: "card card-body" }, [
           _c("h6", { staticClass: "text-muted text-center m-0" }, [
             _vm._v("Você não possui conversas.")
@@ -103064,6 +103204,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_multiselect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_multiselect__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -103342,16 +103495,58 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("vue-editor", {
-                      attrs: { "editor-toolbar": _vm.customToolbar },
-                      model: {
-                        value: _vm.body,
-                        callback: function($$v) {
-                          _vm.body = $$v
-                        },
-                        expression: "body"
-                      }
-                    })
+                    _c(
+                      "b-card",
+                      { attrs: { "no-body": "" } },
+                      [
+                        _c(
+                          "b-tabs",
+                          { attrs: { card: "" } },
+                          [
+                            _c(
+                              "b-tab",
+                              { attrs: { title: "Escrever", active: "" } },
+                              [
+                                _c(
+                                  "b-card-text",
+                                  [
+                                    _c("vue-editor", {
+                                      attrs: {
+                                        "editor-toolbar": _vm.customToolbar
+                                      },
+                                      model: {
+                                        value: _vm.body,
+                                        callback: function($$v) {
+                                          _vm.body = $$v
+                                        },
+                                        expression: "body"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "b-tab",
+                              { attrs: { title: "Visualizar" } },
+                              [
+                                _c("b-card-text", [
+                                  _c("div", {
+                                    domProps: { innerHTML: _vm._s(_vm.body) }
+                                  })
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
                   ],
                   1
                 ),
@@ -104573,6 +104768,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -104687,7 +104883,11 @@ var render = function() {
                 },
                 [
                   _c("template", { slot: "button-content" }, [
-                    _c("i", { staticClass: "fas fa-hand-holding-usd" })
+                    !_vm.budget
+                      ? _c("i", { staticClass: "fas fa-hand-holding-usd" })
+                      : _c("span", [
+                          _vm._v(_vm._s(_vm._f("currency")(_vm.budget)))
+                        ])
                   ]),
                   _vm._v(" "),
                   _c(
@@ -105055,8 +105255,8 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__item__ = __webpack_require__(336);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__item___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__item__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__items__ = __webpack_require__(371);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__items___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__items__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -105101,7 +105301,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	components: {
-		Item: __WEBPACK_IMPORTED_MODULE_1__item___default.a
+		Items: __WEBPACK_IMPORTED_MODULE_1__items___default.a
 	},
 	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])('notifications', ['items']), {
 		notifications: function notifications() {
@@ -105116,15 +105316,164 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 336 */
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("li", { staticClass: "nav-item dropdown" }, [
+    _c(
+      "a",
+      {
+        directives: [
+          {
+            name: "b-tooltip",
+            rawName: "v-b-tooltip.hover",
+            modifiers: { hover: true }
+          }
+        ],
+        staticClass: "nav-link dropdown-toggle d-flex justify-content-center",
+        attrs: {
+          id: "navbarDropdownNotifications",
+          role: "button",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+          href: "#",
+          title: "Notificações"
+        }
+      },
+      [
+        _vm.notifications.length
+          ? _c(
+              "span",
+              {
+                staticClass:
+                  "badge badge-pill badge-danger position-absolute text-white"
+              },
+              [_vm._v(_vm._s(_vm.notifications.length))]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c("i", { staticClass: "fas fa-bell fa-2x" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "pl-3 d-md-none d-block" }, [
+          _vm._v("Notificações")
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "dropdown-menu dropdown-menu-right my-0 py-0",
+        attrs: { "aria-labelledby": "navbarDropdownNotifications" }
+      },
+      [
+        _vm.notifications.length
+          ? _c(
+              "div",
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-flex justify-content-between align-items-center py-1"
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-link",
+                        attrs: { href: "/talks" }
+                      },
+                      [_vm._v("Ver Todas")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-link",
+                        on: {
+                          click: function($event) {
+                            return _vm.markAllAsRead()
+                          }
+                        }
+                      },
+                      [_vm._v("Limpar Notificações")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("Items", { attrs: { notifications: _vm.notifications } })
+              ],
+              1
+            )
+          : _c("div", { staticClass: "text-muted text-center p-3" }, [
+              _vm._v("Sem Notificações")
+            ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-64e54d70", module.exports)
+  }
+}
+
+/***/ }),
+/* 340 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(14)
 /* script */
-var __vue_script__ = __webpack_require__(337)
+var __vue_script__ = __webpack_require__(369)
 /* template */
-var __vue_template__ = __webpack_require__(338)
+var __vue_template__ = __webpack_require__(370)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -105141,7 +105490,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/components/notifications/item.vue"
+Component.options.__file = "resources/js/components/chat/output-posts.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -105150,9 +105499,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5b71c865", Component.options)
+    hotAPI.createRecord("data-v-34e48fa3", Component.options)
   } else {
-    hotAPI.reload("data-v-5b71c865", Component.options)
+    hotAPI.reload("data-v-34e48fa3", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -105163,7 +105512,117 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 337 */
+/* 369 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['talk'],
+
+	data: function data() {
+		return {
+			channel: Echo.private('posts.' + this.talk.id + '.private')
+		};
+	},
+	created: function created() {
+		var _this = this;
+
+		this.$parent.$on('typing', this.typing);
+		console.log('output-posts');
+
+		this.channel.listen('PrivatePostSent', function (response) {
+			_this.$emit('receivedPost', response.post);
+		}).listenForWhisper('typing', function (e) {
+			_this.$emit('whisper', e.typing);
+		});
+	},
+
+
+	methods: {
+		typing: function typing() {
+			var _this2 = this;
+
+			setTimeout(function () {
+				_this2.channel.whisper('typing', {
+					typing: true
+				});
+			}, 300);
+		}
+	}
+});
+
+/***/ }),
+/* 370 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-34e48fa3", module.exports)
+  }
+}
+
+/***/ }),
+/* 371 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(14)
+/* script */
+var __vue_script__ = __webpack_require__(372)
+/* template */
+var __vue_template__ = __webpack_require__(373)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/notifications/items.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1672e55e", Component.options)
+  } else {
+    hotAPI.reload("data-v-1672e55e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 372 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105209,7 +105668,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 338 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -105218,7 +105677,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "list-group" },
+    { staticClass: "list-group list-group-flush" },
     _vm._l(_vm.notifications, function(notification, index) {
       return _c(
         "a",
@@ -105269,7 +105728,7 @@ var render = function() {
                     }
                   }
                 },
-                [_c("i", { staticClass: "fas fa-check-double text-muted" })]
+                [_c("i", { staticClass: "fas fa-check text-muted" })]
               )
             ],
             1
@@ -105286,127 +105745,9 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5b71c865", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-1672e55e", module.exports)
   }
 }
-
-/***/ }),
-/* 339 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("li", { staticClass: "nav-item dropdown" }, [
-    _c(
-      "a",
-      {
-        directives: [
-          {
-            name: "b-tooltip",
-            rawName: "v-b-tooltip.hover",
-            modifiers: { hover: true }
-          }
-        ],
-        staticClass: "nav-link dropdown-toggle d-flex justify-content-center",
-        attrs: {
-          id: "navbarDropdownNotifications",
-          role: "button",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false",
-          href: "#",
-          title: "Notificações"
-        }
-      },
-      [
-        _vm.notifications.length
-          ? _c(
-              "span",
-              {
-                staticClass: "badge badge-pill badge-danger position-absolute"
-              },
-              [_vm._v(_vm._s(_vm.notifications.length))]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("i", { staticClass: "fas fa-bell fa-2x" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "pl-3 d-md-none d-block" }, [
-          _vm._v("Notificações")
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "dropdown-menu dropdown-menu-right my-0 py-0",
-        attrs: { "aria-labelledby": "navbarDropdownNotifications" }
-      },
-      [
-        _vm.notifications.length
-          ? _c(
-              "div",
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "d-flex justify-content-between align-items-center py-1"
-                  },
-                  [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-sm btn-link",
-                        attrs: { href: "/talks" }
-                      },
-                      [_vm._v("Ver Todas")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-link",
-                        on: {
-                          click: function($event) {
-                            return _vm.markAllAsRead()
-                          }
-                        }
-                      },
-                      [_vm._v("Limpar Notificações")]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("Item", { attrs: { notifications: _vm.notifications } })
-              ],
-              1
-            )
-          : _c("div", { staticClass: "text-muted text-center p-3" }, [
-              _vm._v("Sem Notificações")
-            ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-64e54d70", module.exports)
-  }
-}
-
-/***/ }),
-/* 340 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

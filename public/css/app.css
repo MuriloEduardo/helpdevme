@@ -2333,8 +2333,8 @@ pre code {
 .form-control {
   display: block;
   width: 100%;
-  height: calc(1.6em + 0.75rem + 2px);
-  padding: 0.375rem 0.75rem;
+  height: calc(1.6em + 1rem + 2px);
+  padding: 0.5rem 0.75rem;
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
@@ -2343,8 +2343,8 @@ pre code {
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: initial;
+          box-shadow: initial;
   -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -2368,8 +2368,8 @@ pre code {
   background-color: #fff;
   border-color: #6888aa;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
+  -webkit-box-shadow: initial, 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
+          box-shadow: initial, 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
 }
 
 .form-control::-webkit-input-placeholder {
@@ -2410,8 +2410,8 @@ select.form-control:focus::-ms-value {
 }
 
 .col-form-label {
-  padding-top: calc(0.375rem + 1px);
-  padding-bottom: calc(0.375rem + 1px);
+  padding-top: calc(0.5rem + 1px);
+  padding-bottom: calc(0.5rem + 1px);
   margin-bottom: 0;
   font-size: inherit;
   line-height: 1.6;
@@ -2434,8 +2434,8 @@ select.form-control:focus::-ms-value {
 .form-control-plaintext {
   display: block;
   width: 100%;
-  padding-top: 0.375rem;
-  padding-bottom: 0.375rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   margin-bottom: 0;
   line-height: 1.6;
   color: #4f5959;
@@ -2564,11 +2564,11 @@ textarea.form-control {
 .was-validated .form-control:valid,
 .form-control.is-valid {
   border-color: #41b883;
-  padding-right: calc(1.6em + 0.75rem);
+  padding-right: calc(1.6em + 1rem);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2341b883' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: center right calc(0.4em + 0.1875rem);
-  background-size: calc(0.8em + 0.375rem) calc(0.8em + 0.375rem);
+  background-position: center right calc(0.4em + 0.25rem);
+  background-size: calc(0.8em + 0.5rem) calc(0.8em + 0.5rem);
 }
 
 .was-validated .form-control:valid:focus,
@@ -2587,15 +2587,15 @@ textarea.form-control {
 
 .was-validated textarea.form-control:valid,
 textarea.form-control.is-valid {
-  padding-right: calc(1.6em + 0.75rem);
-  background-position: top calc(0.4em + 0.1875rem) right calc(0.4em + 0.1875rem);
+  padding-right: calc(1.6em + 1rem);
+  background-position: top calc(0.4em + 0.25rem) right calc(0.4em + 0.25rem);
 }
 
 .was-validated .custom-select:valid,
 .custom-select.is-valid {
   border-color: #41b883;
-  padding-right: calc((1em + 0.75rem) * 3 / 4 + 1.75rem);
-  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2341b883' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") #fff no-repeat center right 1.75rem/calc(0.8em + 0.375rem) calc(0.8em + 0.375rem);
+  padding-right: calc((1em + 1rem) * 3 / 4 + 1.75rem);
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2341b883' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") #fff no-repeat center right 1.75rem/calc(0.8em + 0.5rem) calc(0.8em + 0.5rem);
 }
 
 .was-validated .custom-select:valid:focus,
@@ -2710,11 +2710,11 @@ textarea.form-control.is-valid {
 .was-validated .form-control:invalid,
 .form-control.is-invalid {
   border-color: #ff6a6a;
-  padding-right: calc(1.6em + 0.75rem);
+  padding-right: calc(1.6em + 1rem);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff6a6a' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23ff6a6a' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
   background-repeat: no-repeat;
-  background-position: center right calc(0.4em + 0.1875rem);
-  background-size: calc(0.8em + 0.375rem) calc(0.8em + 0.375rem);
+  background-position: center right calc(0.4em + 0.25rem);
+  background-size: calc(0.8em + 0.5rem) calc(0.8em + 0.5rem);
 }
 
 .was-validated .form-control:invalid:focus,
@@ -2733,15 +2733,15 @@ textarea.form-control.is-valid {
 
 .was-validated textarea.form-control:invalid,
 textarea.form-control.is-invalid {
-  padding-right: calc(1.6em + 0.75rem);
-  background-position: top calc(0.4em + 0.1875rem) right calc(0.4em + 0.1875rem);
+  padding-right: calc(1.6em + 1rem);
+  background-position: top calc(0.4em + 0.25rem) right calc(0.4em + 0.25rem);
 }
 
 .was-validated .custom-select:invalid,
 .custom-select.is-invalid {
   border-color: #ff6a6a;
-  padding-right: calc((1em + 0.75rem) * 3 / 4 + 1.75rem);
-  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff6a6a' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23ff6a6a' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E") #fff no-repeat center right 1.75rem/calc(0.8em + 0.375rem) calc(0.8em + 0.375rem);
+  padding-right: calc((1em + 1rem) * 3 / 4 + 1.75rem);
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff6a6a' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23ff6a6a' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E") #fff no-repeat center right 1.75rem/calc(0.8em + 0.5rem) calc(0.8em + 0.5rem);
 }
 
 .was-validated .custom-select:invalid:focus,
@@ -4190,7 +4190,7 @@ input[type="button"].btn-block {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 0.375rem 0.75rem;
+  padding: 0.5rem 0.75rem;
   margin-bottom: 0;
   font-size: 0.9rem;
   font-weight: 400;
@@ -4296,8 +4296,8 @@ input[type="button"].btn-block {
 }
 
 .custom-control-input:focus ~ .custom-control-label::before {
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
+  -webkit-box-shadow: initial, 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
+          box-shadow: initial, 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
 }
 
 .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
@@ -4337,8 +4337,8 @@ input[type="button"].btn-block {
   content: "";
   background-color: #fff;
   border: #adb5bd solid 1px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: initial;
+          box-shadow: initial;
 }
 
 .custom-control-label::after {
@@ -4435,8 +4435,8 @@ input[type="button"].btn-block {
 .custom-select {
   display: inline-block;
   width: 100%;
-  height: calc(1.6em + 0.75rem + 2px);
-  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  height: calc(1.6em + 1rem + 2px);
+  padding: 0.5rem 1.75rem 0.5rem 0.75rem;
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
@@ -4501,7 +4501,7 @@ input[type="button"].btn-block {
   position: relative;
   display: inline-block;
   width: 100%;
-  height: calc(1.6em + 0.75rem + 2px);
+  height: calc(1.6em + 1rem + 2px);
   margin-bottom: 0;
 }
 
@@ -4509,7 +4509,7 @@ input[type="button"].btn-block {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: calc(1.6em + 0.75rem + 2px);
+  height: calc(1.6em + 1rem + 2px);
   margin: 0;
   opacity: 0;
 }
@@ -4538,16 +4538,16 @@ input[type="button"].btn-block {
   right: 0;
   left: 0;
   z-index: 1;
-  height: calc(1.6em + 0.75rem + 2px);
-  padding: 0.375rem 0.75rem;
+  height: calc(1.6em + 1rem + 2px);
+  padding: 0.5rem 0.75rem;
   font-weight: 400;
   line-height: 1.6;
   color: #495057;
   background-color: #fff;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: initial;
+          box-shadow: initial;
 }
 
 .custom-file-label::after {
@@ -4557,8 +4557,8 @@ input[type="button"].btn-block {
   bottom: 0;
   z-index: 3;
   display: block;
-  height: calc(1.6em + 0.75rem);
-  padding: 0.375rem 0.75rem;
+  height: calc(1.6em + 1rem);
+  padding: 0.5rem 0.75rem;
   line-height: 1.6;
   color: #495057;
   content: "Browse";
@@ -11946,11 +11946,11 @@ a.text-dark:focus {
 .was-validated .form-control:valid,
 .form-control.is-invalid,
 .form-control.is-valid {
-  background-position: right calc(0.4em + 0.1875rem) center;
+  background-position: right calc(0.4em + 0.25rem) center;
 }
 
 input[type="color"].form-control {
-  height: calc(1.6em + 0.75rem + 2px);
+  height: calc(1.6em + 1rem + 2px);
   padding: 0.125rem 0.25rem;
 }
 
@@ -12011,15 +12011,15 @@ input[type="color"].form-control:disabled {
 }
 
 .input-group > .custom-range {
-  height: calc(1.6em + 0.75rem + 2px);
+  height: calc(1.6em + 1rem + 2px);
   padding: 0 0.75rem;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  height: calc(1.6em + 0.75rem + 2px);
+  height: calc(1.6em + 1rem + 2px);
   border-radius: 0.25rem;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: initial;
+          box-shadow: initial;
   -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -12038,8 +12038,8 @@ input[type="color"].form-control:disabled {
   background-color: #fff;
   border-color: #6888aa;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
+  -webkit-box-shadow: initial, 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
+          box-shadow: initial, 0 0 0 0.2rem rgba(53, 73, 94, 0.25);
 }
 
 .input-group > .custom-range:disabled,
@@ -19650,6 +19650,18 @@ readers do not read off random characters that represent icons */
   animation: ellipsis steps(4, end) 900ms infinite;
   content: '\2026';
   width: 0px;
+}
+
+.quillWrapper .ql-toolbar.ql-snow {
+  border: none;
+}
+
+.quillWrapper .ql-container.ql-snow {
+  border: none;
+}
+
+.quillWrapper .ql-container .ql-editor * {
+  max-width: 100%;
 }
 
 body {

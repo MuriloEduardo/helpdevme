@@ -32,10 +32,14 @@ Broadcast::channel('comments', function () {
 	return true;
 });
 
+Broadcast::channel('talks.user.{user_id}', function () {
+	return auth()->check();
+});
+
 Broadcast::channel('posts.{talk_id}.private', function () {
 	return auth()->check();
 });
 
 Broadcast::channel('newquestions', function () {
-	return true;
+	return auth()->check();
 });

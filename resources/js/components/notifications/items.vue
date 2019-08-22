@@ -1,5 +1,5 @@
 <template>
-	<div class="list-group">
+	<div class="list-group list-group-flush">
 		<a
 			v-for="(notification, index) in notifications"
 			:key="index"
@@ -20,7 +20,7 @@
 					v-b-tooltip.hover
 					title="Marcar como lido"
 				>
-					<i class="fas fa-check-double text-muted"></i>
+					<i class="fas fa-check text-muted"></i>
 				</b-button>
 			</div>
 		</a>
