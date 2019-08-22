@@ -6,7 +6,10 @@
 @section('title', 'Conversa com ' . $opposite . ' - ')
 
 @section('content')
-<section class="bg-white p-3 rounded">
-	<private-chat :user="{{ auth()->user() }}" :question="{{ $question }}" :opposite="{{ $opposite }}"></private-chat>
-</section>
+<div class="py-5">
+	<section class="bg-white p-3 rounded">
+		<private-chat :user="{{ auth()->user() }}" :question="{{ $question }}" :opposite="{{ $opposite }}">
+		</private-chat>
+	</section>
+</div>
 @endsection

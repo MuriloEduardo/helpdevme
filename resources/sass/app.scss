@@ -45,6 +45,7 @@ input {
 	}
 }
 
-img {
+img,
+svg {
 	@extend .img-fluid;
 }

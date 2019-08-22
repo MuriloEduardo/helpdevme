@@ -82,7 +82,8 @@
 						</li>
 						<li class="nav-item">
 							@if (Route::has('register'))
-							<a class="btn text-white btn-success px-5 my-1 mx-3" href="{{ route('register') }}">@lang('layouts.navbar.register')</a>
+							<a class="btn text-white btn-success shadow px-5 my-1 mx-3"
+								href="{{ route('register') }}">@lang('layouts.navbar.register')</a>
 							@endif
 						</li>
 						@else
@@ -148,7 +149,7 @@
 			</div>
 		</nav>
 		<main role="main">
-			<section class="py-5">
+			<section>
 				<div class="container-fluid">
 					@yield('content')
 				</div>
