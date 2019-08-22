@@ -29,6 +29,8 @@ Echo.private('newquestions')
 
 Echo.private(`App.User.${window.$userId}`).notification(notification => {
 	if (notification.type == 'App\\Notifications\\QuestionCommented') {
-		store.dispatch('notifications/addNotification', notification);
+		store.dispatch('notifications/addNotification', notification, {
+			root: true
+		});
 	}
 });
