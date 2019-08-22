@@ -23,7 +23,7 @@ class PrivateCreatedTalks implements ShouldBroadcast
 	 */
 	public function __construct(Talk $talk)
 	{
-		$this->talk = $talk;
+		$this->talk = $talk->load('posts', 'user');
 	}
 
 	/**
@@ -33,8 +33,6 @@ class PrivateCreatedTalks implements ShouldBroadcast
 	 */
 	public function broadcastOn()
 	{
-		$opposite = auth()->id() === $this->talk->user->id ? $this->talk->receiver : $this->talk->user;
-
-		return new PrivateChannel('talks.user' . $opposite->id);
+		return new PrivateChannel('talks.user');
 	}
 }

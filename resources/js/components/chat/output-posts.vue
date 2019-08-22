@@ -11,7 +11,6 @@ export default {
 
 	created() {
 		this.$parent.$on('typing', this.typing);
-		console.log('output-posts');
 
 		this.channel
 			.listen('PrivatePostSent', response => {

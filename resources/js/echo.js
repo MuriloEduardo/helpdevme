@@ -21,7 +21,6 @@ Echo.private('comments')
 
 Echo.private('newquestions')
 	.listen('NewQuestionsEvent', response => {
-		console.log('NewQuestionsEvent');
 		store.dispatch('questions/setQuestion', response.question);
 	})
 	.listenForWhisper('typing', user => {
@@ -36,9 +35,6 @@ Echo.private(`App.User.${window.$userId}`).notification(notification => {
 	}
 });
 
-Echo.private(`talks.user.${window.$userId}`).listen(
-	'PrivateCreatedTalks',
-	response => {
-		console.log('PrivateCreatedTalks', response);
-	}
-);
+Echo.private('talks.user').listen('PrivateCreatedTalks', response => {
+	store.dispatch('talks/setTalk', response.talk);
+});

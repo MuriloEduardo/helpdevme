@@ -32,7 +32,7 @@ Broadcast::channel('comments', function () {
 	return true;
 });
 
-Broadcast::channel('talks.user.{user_id}', function () {
+Broadcast::channel('talks.user', function () {
 	return auth()->check();
 });
 

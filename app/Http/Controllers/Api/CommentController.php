@@ -67,11 +67,10 @@ class CommentController extends Controller
 		 * Canal de websocket somente para o usuário logado
 		 */
 		broadcast(new PrivateCreatedTalks($talk))->toOthers();
-
-		$post->talk->question->user->notify(new QuestionCommented($post));
-
 		broadcast(new PrivateCommentSent($post))->toOthers();
 		broadcast(new PrivatePostSent($post))->toOthers();
+
+		$post->talk->question->user->notify(new QuestionCommented($post));
 
 		return response(['post' => $post]);
 	}

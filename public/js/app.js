@@ -1103,7 +1103,7 @@ var hasIntersectionObserverSupport = isBrowser && 'IntersectionObserver' in wind
 
 var getEnv = function getEnv(key) {
   var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var env = typeof process !== 'undefined' && process ? Object({"MIX_PUSHER_APP_CLUSTER":"us2","MIX_PUSHER_APP_KEY":"72255455c38245a3a033","NODE_ENV":"development"}) || {} : {};
+  var env = typeof process !== 'undefined' && process ? Object({"MIX_PUSHER_APP_KEY":"72255455c38245a3a033","MIX_PUSHER_APP_CLUSTER":"us2","NODE_ENV":"development"}) || {} : {};
 
   if (!key) {
     /* istanbul ignore next */
@@ -82340,7 +82340,6 @@ Echo.private('comments').listen('PrivateCommentSent', function (response) {
 });
 
 Echo.private('newquestions').listen('NewQuestionsEvent', function (response) {
-	console.log('NewQuestionsEvent');
 	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setQuestion', response.question);
 }).listenForWhisper('typing', function (user) {
 	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('questions/setTypingQuestion', user);
@@ -82354,8 +82353,8 @@ Echo.private('App.User.' + window.$userId).notification(function (notification) 
 	}
 });
 
-Echo.private('talks.user.' + window.$userId).listen('PrivateCreatedTalks', function (response) {
-	console.log('PrivateCreatedTalks', response);
+Echo.private('talks.user').listen('PrivateCreatedTalks', function (response) {
+	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('talks/setTalk', response.talk);
 });
 
 /***/ }),
@@ -94696,7 +94695,6 @@ var addComment = function addComment(_ref7, obj) {
 
 	return new Promise(function (resolve, reject) {
 		axios.post('/api/comments', obj).then(function (response) {
-			console.log('addComment', response);
 			commit('ADD_COMMENT', response.data.post);
 
 			resolve(response);
@@ -95520,8 +95518,7 @@ var getQuestion = function getQuestion(_ref, question_id) {
 	});
 };
 
-var updateOrCreateComment = function updateOrCreateComment(state, comment, teste) {
-	console.log('updateOrCreateComment', comment, teste);
+var updateOrCreateComment = function updateOrCreateComment(state, comment) {
 	var question = getQuestion(state, comment.talk.question_id);
 
 	var find = question.comments.find(function (_comment) {
@@ -95562,11 +95559,11 @@ var SET_TYPING_QUESTION = function SET_TYPING_QUESTION(state, user) {
  * Comments
  */
 var ADD_COMMENT = function ADD_COMMENT(state, comment) {
-	return updateOrCreateComment(state, comment, 'ADD_COMMENT');
+	return updateOrCreateComment(state, comment);
 };
 
 var SET_COMMENT = function SET_COMMENT(state, comment) {
-	return updateOrCreateComment(state, comment, 'SET_COMMENT');
+	return updateOrCreateComment(state, comment);
 };
 
 var SET_TYPING_COMMENT = function SET_TYPING_COMMENT(state, _ref4) {
@@ -95680,9 +95677,14 @@ var _this = this;
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+var setTalk = function setTalk(_ref, talk) {
+	var commit = _ref.commit;
+	return commit('SET_TALK', talk);
+};
+
 var setTalks = function () {
-	var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(_ref) {
-		var commit = _ref.commit;
+	var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(_ref2) {
+		var commit = _ref2.commit;
 		var talks;
 		return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
 			while (1) {
@@ -95706,13 +95708,13 @@ var setTalks = function () {
 	}));
 
 	return function setTalks(_x) {
-		return _ref2.apply(this, arguments);
+		return _ref3.apply(this, arguments);
 	};
 }();
 
 var addPost = function () {
-	var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(_ref3, post) {
-		var commit = _ref3.commit;
+	var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(_ref4, post) {
+		var commit = _ref4.commit;
 		return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
 			while (1) {
 				switch (_context2.prev = _context2.next) {
@@ -95736,19 +95738,20 @@ var addPost = function () {
 	}));
 
 	return function addPost(_x2, _x3) {
-		return _ref4.apply(this, arguments);
+		return _ref5.apply(this, arguments);
 	};
 }();
 
-var setPost = function setPost(_ref5, post) {
-	var commit = _ref5.commit;
+var setPost = function setPost(_ref6, post) {
+	var commit = _ref6.commit;
 	return commit('SET_POST', post);
 };
 
 /* harmony default export */ __webpack_exports__["a"] = ({
 	setTalks: setTalks,
 	addPost: addPost,
-	setPost: setPost
+	setPost: setPost,
+	setTalk: setTalk
 });
 
 /***/ }),
@@ -95764,9 +95767,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * PRIVATE
  */
 var updateOrCreateTalk = function updateOrCreateTalk(state, post) {
-	console.log('updateOrCreateTalk');
 	state.talks = state.talks.map(function (talk) {
-		console.log('possivelmente aqui vem a NOVA talk quando é criada', talk);
 		var _talk = talk;
 
 		if (talk.id == post.talk.id) {
@@ -95785,6 +95786,10 @@ var SET_TALKS = function SET_TALKS(state, talks) {
 	return state.talks = talks;
 };
 
+var SET_TALK = function SET_TALK(state, talk) {
+	return state.talks = [].concat(_toConsumableArray(state.talks), [talk]);
+};
+
 var ADD_POST = function ADD_POST(state, post) {
 	return updateOrCreateTalk(state, post);
 };
@@ -95795,6 +95800,7 @@ var SET_POST = function SET_POST(state, post) {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
 	SET_TALKS: SET_TALKS,
+	SET_TALK: SET_TALK,
 	ADD_POST: ADD_POST,
 	SET_POST: SET_POST
 });
@@ -95807,7 +95813,9 @@ var SET_POST = function SET_POST(state, post) {
 var getUnreadsPosts = function getUnreadsPosts(state) {
 	return state.talks.map(function (talk) {
 		return talk.posts.filter(function (post) {
-			return !post.read_at;
+			if (!post.read_at && post.user_id != window.$userId) {
+				return post;
+			}
 		});
 	});
 };
@@ -102455,7 +102463,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		var _this = this;
 
 		this.$parent.$on('typing', this.typing);
-		console.log('output-posts');
 
 		this.channel.listen('PrivatePostSent', function (response) {
 			_this.$emit('receivedPost', response.post);

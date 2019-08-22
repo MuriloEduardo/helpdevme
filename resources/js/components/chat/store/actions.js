@@ -1,3 +1,5 @@
+const setTalk = ({ commit }, talk) => commit('SET_TALK', talk);
+
 const setTalks = async ({ commit }) => {
 	const talks = (await axios.get('/api/talks')).data.talks;
 
@@ -22,5 +24,6 @@ const setPost = ({ commit }, post) => commit('SET_POST', post);
 export default {
 	setTalks,
 	addPost,
-	setPost
+	setPost,
+	setTalk
 };
