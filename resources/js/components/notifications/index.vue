@@ -13,7 +13,7 @@
 		>
 			<span
 				v-if="notifications.length"
-				class="badge badge-pill badge-danger position-absolute text-white"
+				class="badge badge-count badge-pill badge-danger position-absolute text-white"
 			>{{ notifications.length }}</span>
 			<i class="fas fa-bell fa-2x"></i>
 			<span class="pl-3 d-md-none d-block">Notificações</span>

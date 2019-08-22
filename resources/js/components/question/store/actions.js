@@ -27,6 +27,7 @@ const addComment = ({ commit }, obj) => {
 	return new Promise((resolve, reject) => {
 		axios.post('/api/comments', obj).then(
 			response => {
+				console.log('addComment', response)
 				commit('ADD_COMMENT', response.data.post);
 
 				resolve(response);

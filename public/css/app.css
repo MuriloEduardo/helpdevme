@@ -19545,6 +19545,7 @@ readers do not read off random characters that represent icons */
 
 #app > nav .dropdown-menu {
   min-width: 20rem;
+  max-width: 100%;
 }
 
 #app > nav #navbarDropdownTalks .list-group .list-group-item a:hover small {
@@ -19556,7 +19557,7 @@ readers do not read off random characters that represent icons */
   overflow-y: auto;
 }
 
-#app > nav #navbarDropdownNotifications .badge-danger {
+#app > nav .dropdown-toggle .badge-count {
   top: 0;
   right: 0;
 }
@@ -19650,6 +19651,11 @@ readers do not read off random characters that represent icons */
   animation: ellipsis steps(4, end) 900ms infinite;
   content: '\2026';
   width: 0px;
+}
+
+.header-site {
+  background-image: url(/images/circuit-board.svg?c2d9f1672a53c0b287e0619591a54f5c);
+  background-attachment: fixed;
 }
 
 .quillWrapper .ql-toolbar.ql-snow {

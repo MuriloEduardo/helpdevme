@@ -93,15 +93,13 @@
 						</li>
 						<notifications></notifications>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle d-flex justify-content-center"
+							<a id="navbarDropdown" class="nav-link dropdown-toggle d-flex flex-md-row-reverse justify-content-center align-items-center"
 								title="Minha Conta" href="#" role="button" v-b-tooltip.hover data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">
 								@include('shared.avatar', ['user' => auth()->user(), 'icon_class' => 'fa-2x'])
-								<span class="pl-3 d-md-none d-block">{{ Auth::user()->name }}</span>
+								<small class="pr-md-2 pr-0 pl-2 pl-md-0">{{ Auth::user()->name }}</small>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-								<p class="text-muted px-4 d-md-block d-none">Olá, <b>{{ Auth::user()->name }}</b>!</p>
 
 								<a class="dropdown-item" href="{{ route('profile.infos') }}">
 									@lang('layouts.navbar.profile')
@@ -130,19 +128,7 @@
 								</form>
 							</div>
 						</li>
-						<li class="nav-item dropdown">
-							<a id="navbarDropdownTalks" role="button" data-toggle="dropdown" v-b-tooltip.hover
-								aria-haspopup="true" aria-expanded="false"
-								class="nav-link dropdown-toggle d-flex justify-content-center" href="#"
-								title="@lang('layouts.navbar.posts')">
-								<i class="fas fa-comments fa-2x"></i>
-								<span class="pl-3 d-md-none d-block">Conversas</span>
-							</a>
-							<div class="dropdown-menu dropdown-menu-right my-0 py-0"
-								aria-labelledby="navbarDropdownTalks">
-								<list-chat></list-chat>
-							</div>
-						</li>
+						<list-chat></list-chat>
 						@endguest
 					</ul>
 				</div>

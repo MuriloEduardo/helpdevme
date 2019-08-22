@@ -4,8 +4,8 @@
 const getQuestion = ({ list, news }, question_id) =>
 	[...list, ...news].find(question => question.id == question_id);
 
-const updateOrCreateComment = (state, comment) => {
-	console.log('updateOrCreateComment', comment);
+const updateOrCreateComment = (state, comment, teste) => {
+	console.log('updateOrCreateComment', comment, teste);
 	const question = getQuestion(state, comment.talk.question_id);
 
 	const find = question.comments.find(_comment => _comment.id == comment.id);
@@ -35,9 +35,9 @@ const SET_TYPING_QUESTION = (state, user) =>
 /**
  * Comments
  */
-const ADD_COMMENT = (state, comment) => updateOrCreateComment(state, comment);
+const ADD_COMMENT = (state, comment) => updateOrCreateComment(state, comment, 'ADD_COMMENT');
 
-const SET_COMMENT = (state, comment) => updateOrCreateComment(state, comment);
+const SET_COMMENT = (state, comment) => updateOrCreateComment(state, comment, 'SET_COMMENT');
 
 const SET_TYPING_COMMENT = (state, { question, user_id }) => {
 	['list', 'news'].forEach(type => {

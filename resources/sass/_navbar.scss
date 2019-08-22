@@ -4,6 +4,7 @@
 
 		.dropdown-menu {
 			min-width: 20rem;
+			max-width: 100%;
 		}
 
 		#navbarDropdownTalks {
@@ -22,8 +23,8 @@
 			overflow-y: auto;
 		}
 
-		#navbarDropdownNotifications {
-			.badge-danger {
+		.dropdown-toggle {
+			.badge-count {
 				top: 0;
 				right: 0;
 			}
