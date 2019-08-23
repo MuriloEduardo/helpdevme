@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+use App\User;
+use App\Question;
+
 class UsersTableSeeder extends Seeder
 {
 	/**
@@ -11,15 +14,17 @@ class UsersTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		factory(App\User::class, 5)->create()->each(function ($user) {
-			$user->questions()->save(factory(App\Question::class)->make());
+		factory(User::class, 5)->create()->each(function ($user) {
+			$user->questions()->saveMany(factory(Question::class, 2)->make());
 		});
 
-		DB::table('users')->insert([
+		$murilo = User::create([
 			'name' => 'Murilo Eduardo dos Santos',
 			'slug' => 'murilo-eduardo-dos-santos',
 			'email' => 'muriloeduardoooooo@gmail.com',
 			'password' => bcrypt('liloeduardo0202'),
 		]);
+
+		$murilo->questions()->saveMany(factory(Question::class, 2)->make());
 	}
 }
