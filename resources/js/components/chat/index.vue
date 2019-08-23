@@ -225,12 +225,12 @@ export default {
 
 			this.allPosts.push(post);
 		},
-		...mapActions('talks', ['setPost']),
+		...mapActions('talks', ['sendPost']),
 		onTyping() {
 			this.$emit('typing');
 		},
 		sendMessage() {
-			this.setPost({
+			this.sendPost({
 				type: 0, // message
 				body: this.body,
 				talk_id: this.talk.id,
