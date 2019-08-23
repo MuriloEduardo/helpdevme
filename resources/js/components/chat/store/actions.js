@@ -7,7 +7,6 @@ const setTalks = async ({ commit }) => {
 };
 
 const sendPost = async ({ commit }, post) => {
-	console.log('addPost');
 	return new Promise((resolve, reject) => {
 		axios.post('/api/posts', post).then(
 			response => {

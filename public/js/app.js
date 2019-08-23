@@ -1103,7 +1103,7 @@ var hasIntersectionObserverSupport = isBrowser && 'IntersectionObserver' in wind
 
 var getEnv = function getEnv(key) {
   var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var env = typeof process !== 'undefined' && process ? Object({"MIX_PUSHER_APP_KEY":"72255455c38245a3a033","MIX_PUSHER_APP_CLUSTER":"us2","NODE_ENV":"development"}) || {} : {};
+  var env = typeof process !== 'undefined' && process ? Object({"MIX_PUSHER_APP_CLUSTER":"us2","MIX_PUSHER_APP_KEY":"72255455c38245a3a033","NODE_ENV":"development"}) || {} : {};
 
   if (!key) {
     /* istanbul ignore next */
@@ -94695,11 +94695,11 @@ var addComment = function addComment(_ref7, obj) {
 
 	return new Promise(function (resolve, reject) {
 		axios.post('/api/comments', obj).then(function (response) {
-			commit('talks/SET_TALK', response.data.post.talk, {
+			commit('ADD_COMMENT', response.data.post);
+
+			commit('talks/SET_POST', response.data.post, {
 				root: true
 			});
-
-			commit('ADD_COMMENT', response.data.post);
 
 			resolve(response);
 		}, function (error) {
@@ -95525,11 +95525,11 @@ var getQuestion = function getQuestion(_ref, question_id) {
 var updateOrCreateComment = function updateOrCreateComment(state, comment) {
 	var question = getQuestion(state, comment.talk.question_id);
 
-	var find = question.comments.find(function (_comment) {
+	var comments = question.comments.find(function (_comment) {
 		return _comment.id == comment.id;
 	});
 
-	if (find) {
+	if (comments) {
 		question.comments = question.comments.map(function (_comment) {
 			return _comment.id == comment.id ? comment : _comment;
 		});
@@ -95723,7 +95723,6 @@ var sendPost = function () {
 			while (1) {
 				switch (_context2.prev = _context2.next) {
 					case 0:
-						console.log('addPost');
 						return _context2.abrupt('return', new Promise(function (resolve, reject) {
 							axios.post('/api/posts', post).then(function (response) {
 								commit('SET_POST', response.data.post);
@@ -95734,7 +95733,7 @@ var sendPost = function () {
 							});
 						}));
 
-					case 2:
+					case 1:
 					case 'end':
 						return _context2.stop();
 				}
@@ -95764,33 +95763,25 @@ var setPost = function setPost(_ref6, post) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
  * PRIVATE
  */
+var createTalk = function createTalk(state, talk) {
+	return state.talks = [talk].concat(_toConsumableArray(state.talks));
+};
+
 var updateOrCreateTalk = function updateOrCreateTalk(state, post) {
-	console.log('updateOrCreateTalk', post);
-	if (state.talks.length) {
-		console.log('if');
-		state.talks = state.talks.map(function (talk) {
-			var _talk = talk;
+	var talkIndex = state.talks.findIndex(function (talk) {
+		return talk.id == post.talk.id;
+	});
 
-			if (talk.id == post.talk.id) {
-				if (talk.posts) {
-					_talk = _extends({}, talk, { posts: [].concat(_toConsumableArray(talk.posts), [post]) });
-				} else {
-					_talk = _extends({}, talk, { posts: [post] });
-				}
-			}
-
-			return _talk;
-		});
-	} else {
-		console.log('else');
+	if (talkIndex != -1) {
+		state.talks.splice(talkIndex, 1);
 	}
+
+	createTalk(state, post.talk);
 };
 
 var SET_TALKS = function SET_TALKS(state, talks) {
@@ -95798,7 +95789,6 @@ var SET_TALKS = function SET_TALKS(state, talks) {
 };
 
 var SET_TALK = function SET_TALK(state, talk) {
-	console.log('SET_TALK', talk);
 	return state.talks = [].concat(_toConsumableArray(state.talks), [talk]);
 };
 
@@ -95818,12 +95808,12 @@ var SET_POST = function SET_POST(state, post) {
 
 "use strict";
 var getUnreadsPosts = function getUnreadsPosts(state) {
-	return state.talks.map(function (talk) {
-		return talk.posts.filter(function (post) {
-			if (!post.read_at && post.user_id != window.$userId) {
-				return post;
-			}
-		});
+	return state.talks.filter(function (talk) {
+		if (talk.posts) {
+			talk.posts.filter(function (post) {
+				return !post.read_at && post.user_id != window.$userId;
+			});
+		}
 	});
 };
 
@@ -103092,44 +103082,11 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__output_posts__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__output_posts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__output_posts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__item__ = __webpack_require__(377);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__item___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__item__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(16);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -103172,7 +103129,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	components: {
-		OutputPosts: __WEBPACK_IMPORTED_MODULE_0__output_posts___default.a
+		Item: __WEBPACK_IMPORTED_MODULE_0__item___default.a
 	},
 	mounted: function mounted() {
 		this.setTalks();
@@ -103184,7 +103141,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		}
 	}), Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('talks', ['getUnreadsPosts'])),
 	methods: _extends({
-		onReceivedPost: function onReceivedPost(post) {
+		onItemReceivedPost: function onItemReceivedPost(post) {
 			this.setPost(post);
 		}
 	}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('talks', ['setTalks', 'setPost']))
@@ -103254,84 +103211,13 @@ var render = function() {
                 { staticClass: "list-group list-group-flush" },
                 _vm._l(_vm.talks, function(talk) {
                   return _c(
-                    "a",
-                    {
-                      key: talk.id,
-                      staticClass:
-                        "list-group-item list-group-item-action flex-column align-items-start",
-                      attrs: {
-                        href: "/talks/" + talk.id,
-                        set: (_vm.opposite =
-                          this.$userId == talk.user.id
-                            ? talk.receiver
-                            : talk.user)
-                      }
-                    },
+                    "div",
+                    { key: talk.id },
                     [
-                      _c("output-posts", {
+                      _c("item", {
                         attrs: { talk: talk },
-                        on: { receivedPost: _vm.onReceivedPost }
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "d-flex" }, [
-                        _vm.opposite.avatar
-                          ? _c("img", {
-                              staticClass: "img-fluid avatar",
-                              staticStyle: { height: "25px" },
-                              attrs: {
-                                width: "25",
-                                src:
-                                  "/storage/img/avatars/" + _vm.opposite.avatar,
-                                alt: _vm.opposite.name,
-                                title: _vm.opposite.name
-                              }
-                            })
-                          : _c("i", {
-                              staticClass: "fas fa-user-circle fa-2x"
-                            }),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "ml-3 text-truncate flex-grow-1" },
-                          [
-                            _c("h6", { staticClass: "mb-1" }, [
-                              _vm._v(
-                                "Conversa com " + _vm._s(_vm.opposite.name)
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("small", [
-                              _vm._v("\n\t\t\t\t\t\t\t\tEm:\n\t\t\t\t\t\t\t\t"),
-                              _c("b", [_vm._v(_vm._s(talk.question.title))])
-                            ]),
-                            _vm._v(" "),
-                            talk.posts
-                              ? _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "d-flex justify-content-between",
-                                    attrs: {
-                                      set: (_vm.post =
-                                        talk.posts[talk.posts.length - 1])
-                                    }
-                                  },
-                                  [
-                                    _c("small", { staticClass: "text-muted" }, [
-                                      _vm._v(_vm._s(_vm.post.body))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "small",
-                                      { staticClass: "text-muted pl-3" },
-                                      [_vm._v(_vm._s(_vm.post.published))]
-                                    )
-                                  ]
-                                )
-                              : _vm._e()
-                          ]
-                        )
-                      ])
+                        on: { itemReceivedPost: _vm.onItemReceivedPost }
+                      })
                     ],
                     1
                   )
@@ -105829,6 +105715,235 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(13)
+/* script */
+var __vue_script__ = __webpack_require__(378)
+/* template */
+var __vue_template__ = __webpack_require__(379)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/chat/item.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-14bd76a2", Component.options)
+  } else {
+    hotAPI.reload("data-v-14bd76a2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 378 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__output_posts__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__output_posts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__output_posts__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	components: {
+		OutputPosts: __WEBPACK_IMPORTED_MODULE_0__output_posts___default.a
+	},
+	props: ['talk'],
+	methods: {
+		onReceivedPost: function onReceivedPost(post) {
+			this.$emit('itemReceivedPost', post);
+		}
+	},
+	computed: {
+		opposite: function opposite() {
+			return this.$userId == this.talk.user.id ? this.talk.receiver : this.talk.user;
+		}
+	}
+});
+
+/***/ }),
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "a",
+      {
+        staticClass:
+          "list-group-item list-group-item-action flex-column align-items-start",
+        attrs: { href: "/talks/" + _vm.talk.id }
+      },
+      [
+        _c("output-posts", {
+          attrs: { talk: _vm.talk },
+          on: { receivedPost: _vm.onReceivedPost }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex" }, [
+          _vm.opposite.avatar
+            ? _c("img", {
+                staticClass: "img-fluid avatar",
+                staticStyle: { height: "25px" },
+                attrs: {
+                  width: "25",
+                  src: "/storage/img/avatars/" + _vm.opposite.avatar,
+                  alt: _vm.opposite.name,
+                  title: _vm.opposite.name
+                }
+              })
+            : _c("i", { staticClass: "fas fa-user-circle fa-2x" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "ml-3 text-truncate flex-grow-1" }, [
+            _c("h6", { staticClass: "mb-1" }, [
+              _vm._v("Conversa com " + _vm._s(_vm.opposite.name))
+            ]),
+            _vm._v(" "),
+            _c("small", [
+              _vm._v("\n\t\t\t\t\tEm:\n\t\t\t\t\t"),
+              _c("b", [_vm._v(_vm._s(_vm.talk.question.title))])
+            ]),
+            _vm._v(" "),
+            _vm.talk.posts
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "d-flex justify-content-between",
+                    attrs: {
+                      set: (_vm.post =
+                        _vm.talk.posts[_vm.talk.posts.length - 1])
+                    }
+                  },
+                  [
+                    _c("small", { staticClass: "text-muted" }, [
+                      _vm._v(_vm._s(_vm.post.body))
+                    ]),
+                    _vm._v(" "),
+                    _c("small", { staticClass: "text-muted pl-3" }, [
+                      _vm._v(_vm._s(_vm.post.published))
+                    ])
+                  ]
+                )
+              : _vm._e()
+          ])
+        ])
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-14bd76a2", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

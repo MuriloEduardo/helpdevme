@@ -7,9 +7,9 @@ const getQuestion = ({ list, news }, question_id) =>
 const updateOrCreateComment = (state, comment) => {
 	const question = getQuestion(state, comment.talk.question_id);
 
-	const find = question.comments.find(_comment => _comment.id == comment.id);
+	const comments = question.comments.find(_comment => _comment.id == comment.id);
 
-	if (find) {
+	if (comments) {
 		question.comments = question.comments.map(_comment =>
 			_comment.id == comment.id ? comment : _comment
 		);

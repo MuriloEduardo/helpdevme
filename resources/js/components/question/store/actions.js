@@ -27,11 +27,11 @@ const addComment = ({ commit }, obj) => {
 	return new Promise((resolve, reject) => {
 		axios.post('/api/comments', obj).then(
 			response => {
-				commit('talks/SET_TALK', response.data.post.talk, {
+				commit('ADD_COMMENT', response.data.post);
+
+				commit('talks/SET_POST', response.data.post, {
 					root: true
 				});
-
-				commit('ADD_COMMENT', response.data.post);
 
 				resolve(response);
 			},

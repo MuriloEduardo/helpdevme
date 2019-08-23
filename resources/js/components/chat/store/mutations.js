@@ -1,32 +1,22 @@
 /**
  * PRIVATE
  */
+const createTalk = (state, talk) =>
+	state.talks = [talk, ...state.talks];
+
 const updateOrCreateTalk = (state, post) => {
-	console.log('updateOrCreateTalk', post);
-	if (state.talks.length) {
-		console.log('if');
-		state.talks = state.talks.map(talk => {
-			let _talk = talk;
+	const talkIndex = state.talks.findIndex(talk => talk.id == post.talk.id);
 
-			if (talk.id == post.talk.id) {
-				if (talk.posts) {
-					_talk = { ...talk, posts: [...talk.posts, post] };
-				} else {
-					_talk = { ...talk, posts: [post] };
-				}
-			}
-
-			return _talk;
-		});
-	} else {
-		console.log('else');
+	if (talkIndex != -1) {
+		state.talks.splice(talkIndex, 1);
 	}
+
+	createTalk(state, post.talk);
 };
 
 const SET_TALKS = (state, talks) => (state.talks = talks);
 
 const SET_TALK = (state, talk) => {
-	console.log('SET_TALK', talk);
 	return (state.talks = [...state.talks, talk]);
 };
 

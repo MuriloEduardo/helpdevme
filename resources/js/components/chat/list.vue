@@ -21,42 +21,9 @@
 		<div class="dropdown-menu dropdown-menu-right my-0 py-0" aria-labelledby="navbarDropdownTalks">
 			<div v-if="talks.length">
 				<div class="list-group list-group-flush">
-					<a
-						class="list-group-item list-group-item-action flex-column align-items-start"
-						v-for="talk in talks"
-						:key="talk.id"
-						:href="'/talks/' + talk.id"
-						:set="opposite = this.$userId == talk.user.id ? talk.receiver : talk.user"
-					>
-						<output-posts :talk="talk" @receivedPost="onReceivedPost"></output-posts>
-						<div class="d-flex">
-							<img
-								class="img-fluid avatar"
-								width="25"
-								style="height: 25px;"
-								v-if="opposite.avatar"
-								:src="'/storage/img/avatars/' + opposite.avatar"
-								:alt="opposite.name"
-								:title="opposite.name"
-							/>
-							<i v-else class="fas fa-user-circle fa-2x"></i>
-							<div class="ml-3 text-truncate flex-grow-1">
-								<h6 class="mb-1">Conversa com {{ opposite.name }}</h6>
-								<small>
-									Em:
-									<b>{{ talk.question.title }}</b>
-								</small>
-								<div
-									class="d-flex justify-content-between"
-									v-if="talk.posts"
-									:set="post = talk.posts[talk.posts.length - 1]"
-								>
-									<small class="text-muted">{{ post.body }}</small>
-									<small class="text-muted pl-3">{{ post.published }}</small>
-								</div>
-							</div>
-						</div>
-					</a>
+					<div v-for="talk in talks" :key="talk.id">
+						<item :talk="talk" @itemReceivedPost="onItemReceivedPost"></item>
+					</div>
 				</div>
 				<a class="btn btn-link btn-block" href="/talks">Ver Tudo</a>
 			</div>
@@ -68,12 +35,12 @@
 </template>
 
 <script>
-import OutputPosts from './output-posts';
+import Item from './item';
 import { mapActions, mapState, mapGetters } from 'vuex';
 
 export default {
 	components: {
-		OutputPosts
+		Item
 	},
 	mounted() {
 		this.setTalks();
@@ -85,7 +52,7 @@ export default {
 		...mapGetters('talks', ['getUnreadsPosts'])
 	},
 	methods: {
-		onReceivedPost(post) {
+		onItemReceivedPost(post) {
 			this.setPost(post);
 		},
 		...mapActions('talks', ['setTalks', 'setPost'])

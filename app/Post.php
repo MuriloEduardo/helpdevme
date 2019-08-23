@@ -40,7 +40,7 @@ class Post extends Model
 	public function talk()
 	{
 		return $this->belongsTo('App\Talk')
-			->with('question');
+			->with('question', 'user', 'receiver', 'posts');
 	}
 
 	public function user()
