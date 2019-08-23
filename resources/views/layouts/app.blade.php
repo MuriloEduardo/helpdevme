@@ -93,11 +93,13 @@
 						</li>
 						<notifications></notifications>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle d-flex flex-md-row-reverse justify-content-center align-items-center"
+							<a id="navbarDropdown"
+								class="nav-link dropdown-toggle d-flex flex-md-row-reverse justify-content-center align-items-center"
 								title="Minha Conta" href="#" role="button" v-b-tooltip.hover data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">
 								@include('shared.avatar', ['user' => auth()->user(), 'icon_class' => 'fa-2x'])
-								<small class="pr-md-2 pr-0 pl-2 pl-md-0">{{ Auth::user()->name }}</small>
+								<span class="pr-md-2 pr-0 pl-2 pl-md-0">Olá,
+									{{ strtok(Auth::user()->name, ' ') }}!</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 

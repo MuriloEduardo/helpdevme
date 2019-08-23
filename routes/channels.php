@@ -32,7 +32,8 @@ Broadcast::channel('comments', function () {
 	return true;
 });
 
-Broadcast::channel('talks.user', function () {
+Broadcast::channel('talks.user.{receiver_id}', function ($user, $receiver_id) {
+	dd($receiver_id);
 	return auth()->check();
 });
 

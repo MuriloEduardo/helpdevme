@@ -33,6 +33,6 @@ class PrivateCreatedTalks implements ShouldBroadcast
 	 */
 	public function broadcastOn()
 	{
-		return new PrivateChannel('talks.user');
+		return new PrivateChannel('talks.user.' . $this->talk->receiver_id);
 	}
 }

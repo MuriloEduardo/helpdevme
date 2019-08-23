@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h6 class="mb-3">{{ users.length }} dev's Online</h6>
+		<h6 class="mb-3 text-muted">{{ users.length }} dev's Online</h6>
 		<ul class="list-group list-group-flush">
 			<a
 				href="#"

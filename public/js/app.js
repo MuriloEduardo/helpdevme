@@ -82353,7 +82353,7 @@ Echo.private('App.User.' + window.$userId).notification(function (notification) 
 	}
 });
 
-Echo.private('talks.user').listen('PrivateCreatedTalks', function (response) {
+Echo.private('talks.user.' + window.$userId).listen('PrivateCreatedTalks', function (response) {
 	__WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].dispatch('talks/setTalk', response.talk);
 });
 
@@ -94695,6 +94695,10 @@ var addComment = function addComment(_ref7, obj) {
 
 	return new Promise(function (resolve, reject) {
 		axios.post('/api/comments', obj).then(function (response) {
+			commit('talks/SET_TALK', response.data.post.talk, {
+				root: true
+			});
+
 			commit('ADD_COMMENT', response.data.post);
 
 			resolve(response);
@@ -95712,16 +95716,17 @@ var setTalks = function () {
 	};
 }();
 
-var addPost = function () {
+var sendPost = function () {
 	var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(_ref4, post) {
 		var commit = _ref4.commit;
 		return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
 			while (1) {
 				switch (_context2.prev = _context2.next) {
 					case 0:
+						console.log('addPost');
 						return _context2.abrupt('return', new Promise(function (resolve, reject) {
 							axios.post('/api/posts', post).then(function (response) {
-								commit('ADD_POST', response.data.post);
+								commit('SET_POST', response.data.post);
 
 								resolve(response);
 							}, function (error) {
@@ -95729,7 +95734,7 @@ var addPost = function () {
 							});
 						}));
 
-					case 1:
+					case 2:
 					case 'end':
 						return _context2.stop();
 				}
@@ -95737,7 +95742,7 @@ var addPost = function () {
 		}, _callee2, _this);
 	}));
 
-	return function addPost(_x2, _x3) {
+	return function sendPost(_x2, _x3) {
 		return _ref5.apply(this, arguments);
 	};
 }();
@@ -95749,8 +95754,8 @@ var setPost = function setPost(_ref6, post) {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
 	setTalks: setTalks,
-	addPost: addPost,
 	setPost: setPost,
+	sendPost: sendPost,
 	setTalk: setTalk
 });
 
@@ -95767,19 +95772,25 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * PRIVATE
  */
 var updateOrCreateTalk = function updateOrCreateTalk(state, post) {
-	state.talks = state.talks.map(function (talk) {
-		var _talk = talk;
+	console.log('updateOrCreateTalk', post);
+	if (state.talks.length) {
+		console.log('if');
+		state.talks = state.talks.map(function (talk) {
+			var _talk = talk;
 
-		if (talk.id == post.talk.id) {
-			if (talk.posts) {
-				_talk = _extends({}, talk, { posts: [].concat(_toConsumableArray(talk.posts), [post]) });
-			} else {
-				_talk = _extends({}, talk, { posts: [post] });
+			if (talk.id == post.talk.id) {
+				if (talk.posts) {
+					_talk = _extends({}, talk, { posts: [].concat(_toConsumableArray(talk.posts), [post]) });
+				} else {
+					_talk = _extends({}, talk, { posts: [post] });
+				}
 			}
-		}
 
-		return _talk;
-	});
+			return _talk;
+		});
+	} else {
+		console.log('else');
+	}
 };
 
 var SET_TALKS = function SET_TALKS(state, talks) {
@@ -95787,11 +95798,8 @@ var SET_TALKS = function SET_TALKS(state, talks) {
 };
 
 var SET_TALK = function SET_TALK(state, talk) {
+	console.log('SET_TALK', talk);
 	return state.talks = [].concat(_toConsumableArray(state.talks), [talk]);
-};
-
-var ADD_POST = function ADD_POST(state, post) {
-	return updateOrCreateTalk(state, post);
 };
 
 var SET_POST = function SET_POST(state, post) {
@@ -95801,7 +95809,6 @@ var SET_POST = function SET_POST(state, post) {
 /* harmony default export */ __webpack_exports__["a"] = ({
 	SET_TALKS: SET_TALKS,
 	SET_TALK: SET_TALK,
-	ADD_POST: ADD_POST,
 	SET_POST: SET_POST
 });
 
@@ -102409,14 +102416,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 			this.allPosts.push(post);
 		}
-	}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('talks', ['addPost']), {
+	}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('talks', ['setPost']), {
 		onTyping: function onTyping() {
 			this.$emit('typing');
 		},
 		sendMessage: function sendMessage() {
 			var _this2 = this;
 
-			this.addPost({
+			this.setPost({
 				type: 0, // message
 				body: this.body,
 				talk_id: this.talk.id,
@@ -104316,7 +104323,7 @@ var render = function() {
   return _c(
     "section",
     [
-      _c("h6", { staticClass: "pb-3" }, [
+      _c("h6", { staticClass: "pb-3 text-muted" }, [
         _vm._v(_vm._s(_vm.list.length + _vm.news.length) + " pergunta(s)")
       ]),
       _vm._v(" "),
@@ -105338,7 +105345,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h6", { staticClass: "mb-3" }, [
+    _c("h6", { staticClass: "mb-3 text-muted" }, [
       _vm._v(_vm._s(_vm.users.length) + " dev's Online")
     ]),
     _vm._v(" "),
