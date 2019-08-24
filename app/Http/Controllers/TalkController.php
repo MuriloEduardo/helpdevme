@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Talk;
-use App\Events\OpenedTalk;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
