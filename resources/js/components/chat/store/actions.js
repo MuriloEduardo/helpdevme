@@ -21,9 +21,23 @@ const sendPost = async ({ commit }, post) => {
 
 const setPost = ({ commit }, post) => commit('SET_POST', post);
 
+const markAsRead = async ({ commit }, talk_id) => {
+	const response = (await axios.get(`/api/talks/${talk_id}`)).data;
+
+	commit('MARK_AS_READ', response.talk);
+};
+
+const markAllAsRead = async ({ commit }) => {
+	const response = (await axios.get('/api/talks/all-read')).data;
+
+	commit('MARK_ALL_AS_READ', response.talks);
+};
+
 export default {
 	setTalks,
 	setPost,
 	sendPost,
-	setTalk
+	setTalk,
+	markAsRead,
+	markAllAsRead
 };

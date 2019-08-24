@@ -5,7 +5,10 @@
 			<p class="lead">
 				<span>Conversa com</span>
 				<a :href="'/users/' + opposite.slug" class="badge badge-secondary">
-					<span :class="(onlineFriends.find(user=>user.id===opposite.id))?'text-success':''">&bull;</span>
+					<i
+						:class="(onlineFriends.find(user=>user.id===opposite.id))?'text-success':''"
+						class="fas fa-circle fa-xs"
+					></i>
 					<span>{{ opposite.name }}</span>
 				</a>
 			</p>

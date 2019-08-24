@@ -50,7 +50,7 @@
 	<div id="app" class="d-flex flex-column justify-content-between h-100">
 		<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top shadow-sm">
 			<div class="container-fluid">
-				<a class="navbar-brand d-flex align-items-center" href="{{ route('questions.index') }}">
+				<a class="navbar-brand d-flex align-items-center" href="{{ route('index') }}">
 					@svg('logo-helpdev')
 					<span class="ml-2">{{ config('app.name', 'HelpDev.me') }}</span>
 				</a>

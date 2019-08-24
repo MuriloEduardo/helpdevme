@@ -8,8 +8,7 @@
 		>
 			<div class="d-flex justify-content-between align-items-center">
 				<a :href="'/' + post.talk.question.slug">
-					Novo comentário
-					<b>{{ post.body }}</b> em
+					Novo comentário em
 					<b>{{ post.talk.question.title }}</b>
 					<div v-if="post.budget" class="badge badge-success">{{ post.budget | currency }}</div>
 				</a>

@@ -12,9 +12,9 @@
 			title="Conversas"
 		>
 			<span
-				v-if="getUnreadsPosts.length"
+				v-if="getUnreadsPosts"
 				class="badge badge-count badge-pill badge-danger position-absolute text-white"
-			>{{ getUnreadsPosts.length }}</span>
+			>{{ getUnreadsPosts }}</span>
 			<i class="fas fa-comments fa-2x"></i>
 			<span class="pl-3 d-md-none d-block">Conversas</span>
 		</a>
@@ -25,7 +25,10 @@
 						<item :talk="talk" @itemReceivedPost="onItemReceivedPost"></item>
 					</div>
 				</div>
-				<a class="btn btn-link btn-block" href="/talks">Ver Tudo</a>
+				<div class="d-flex justify-content-between align-items-center py-1">
+					<a class="btn btn-link" href="/talks">Ver Tudo</a>
+					<button class="btn btn-link" @click="markAllAsRead()">Marcar tudo como lido</button>
+				</div>
 			</div>
 			<div class="card card-body" v-else>
 				<h6 class="text-muted text-center m-0">Você não possui conversas.</h6>
@@ -55,7 +58,7 @@ export default {
 		onItemReceivedPost(post) {
 			this.setPost(post);
 		},
-		...mapActions('talks', ['setTalks', 'setPost'])
+		...mapActions('talks', ['setTalks', 'setPost', 'markAllAsRead'])
 	}
 };
 </script>

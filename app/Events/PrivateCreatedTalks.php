@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Talk;
+use App\Post;
 
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -14,16 +14,16 @@ class PrivateCreatedTalks implements ShouldBroadcastNow
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 
-	public $talk;
+	public $post;
 
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(Talk $talk)
+	public function __construct(Post $post)
 	{
-		$this->talk = $talk->load('posts', 'user');
+		$this->post = $post->load('talk');
 	}
 
 	/**
@@ -33,6 +33,6 @@ class PrivateCreatedTalks implements ShouldBroadcastNow
 	 */
 	public function broadcastOn()
 	{
-		return new PrivateChannel('talks.user.' . $this->talk->receiver_id);
+		return new PrivateChannel('talks.user.' . $this->post->talk->receiver_id);
 	}
 }

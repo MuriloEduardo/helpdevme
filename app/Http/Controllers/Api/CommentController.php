@@ -56,7 +56,8 @@ class CommentController extends Controller
 			],
 			[
 				'body' => $request->body,
-				'budget' => $request->budget
+				'budget' => $request->budget,
+				'read_at' => null
 			]
 		);
 
@@ -64,9 +65,8 @@ class CommentController extends Controller
 
 		/**
 		 * Dispara para o echo (resources/js/echo.js)
-		 * Canal de websocket somente para o usuário logado
 		 */
-		broadcast(new PrivateCreatedTalks($talk))->toOthers();
+		broadcast(new PrivateCreatedTalks($post))->toOthers();
 		broadcast(new PrivateCommentSent($post))->toOthers();
 		broadcast(new PrivatePostSent($post))->toOthers();
 

@@ -19,6 +19,7 @@ Route::resource('tags', 'Api\TagController');
 
 Route::resource('questions', 'Api\QuestionController');
 
+Route::get('talks/all-read', 'Api\TalkController@markAllAsRead')->name('talks.allread');
 Route::resource('talks', 'Api\TalkController');
 
 Route::get('user', 'Api\UserController@current');

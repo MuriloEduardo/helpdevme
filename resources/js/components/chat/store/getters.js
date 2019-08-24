@@ -1,12 +1,18 @@
-const getUnreadsPosts = state =>
-	state.talks.filter(talk => {
+const getUnreadsPosts = state => {
+	let total = 0;
+
+	state.talks.forEach(talk => {
 		if (talk.posts) {
-			talk.posts.filter(post => {
-				return !post.read_at && post.user_id != window.$userId;
+			talk.posts.forEach(post => {
+				if (!post.read_at && post.user_id != window.$userId) {
+					total++;
+				}
 			});
 		}
-	}
-);
+	});
+
+	return total;
+};
 
 export default {
 	getUnreadsPosts

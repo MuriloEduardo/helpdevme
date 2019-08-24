@@ -31,11 +31,21 @@
 						<small class="text-muted pl-3">{{ post.published }}</small>
 					</div>
 				</div>
+				<b-button
+					size="sm"
+					variant="link"
+					@click.prevent="markAsRead(talk.id)"
+					v-b-tooltip.hover
+					title="Marcar como lido"
+				>
+					<i class="fas fa-check text-muted"></i>
+				</b-button>
 			</div>
 		</a>
 	</div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 import OutputPosts from './output-posts';
 
 export default {
@@ -44,13 +54,16 @@ export default {
 	},
 	props: ['talk'],
 	methods: {
+		...mapActions('talks', ['markAsRead']),
 		onReceivedPost(post) {
 			this.$emit('itemReceivedPost', post);
 		}
 	},
 	computed: {
 		opposite() {
-			return this.$userId == this.talk.user.id ? this.talk.receiver : this.talk.user
+			return this.$userId == this.talk.user.id
+				? this.talk.receiver
+				: this.talk.user;
 		}
 	}
 };
