@@ -3,7 +3,7 @@
 @section('title', 'Minhas Atividades como Freelancer - ')
 
 @section('content')
-<div class="row">
+<div class="row py-5">
 	<div class="col-lg-10 offset-lg-1">
 		<ul class="nav nav-pills mb-5">
 			<li class="nav-item">

@@ -4,8 +4,8 @@
 
 @section('content')
 <div class="py-5">
-	<div class="row">
-		<div class="col-lg-10 off-lg-1">
+	<div class="row justify-content-center">
+		<div class="col-lg-10">
 			<form action="{{ route('payments.paypal.fund') }}" method="POST">
 				<h1>Adicionar crédito a minha conta</h1>
 				<div class="card">
