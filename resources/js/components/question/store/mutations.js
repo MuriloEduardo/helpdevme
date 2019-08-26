@@ -7,7 +7,9 @@ const getQuestion = ({ list, news }, question_id) =>
 const updateOrCreateComment = (state, comment) => {
 	const question = getQuestion(state, comment.talk.question_id);
 
-	const comments = question.comments.find(_comment => _comment.id == comment.id);
+	const comments = question.comments.find(
+		_comment => _comment.id == comment.id
+	);
 
 	if (comments) {
 		question.comments = question.comments.map(_comment =>
@@ -28,8 +30,11 @@ const SET_QUESTIONS = (state, questions) => (state.list = questions);
 
 const SET_QUESTION = ({ news }, question) => news.unshift(question);
 
-const SET_TYPING_QUESTION = (state, user) =>
+const START_TYPING_QUESTION = (state, user) =>
 	(state.typings = [...state.typings, user.id]);
+
+const STOP_TYPING_QUESTION = (state, user) =>
+	(state.typings = state.typings.filter(user_id => user_id != user.id));
 
 /**
  * Comments
@@ -61,7 +66,8 @@ export default {
 	ADD_QUESTION,
 	SET_QUESTIONS,
 	SET_QUESTION,
-	SET_TYPING_QUESTION,
+	START_TYPING_QUESTION,
+	STOP_TYPING_QUESTION,
 	ADD_COMMENT,
 	SET_COMMENT,
 	SET_TYPING_COMMENT

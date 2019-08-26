@@ -18,7 +18,10 @@ Echo.private('newquestions')
 		store.dispatch('questions/setQuestion', response.question)
 	)
 	.listenForWhisper('typing', user =>
-		store.dispatch('questions/setTypingQuestion', user)
+		store.dispatch('questions/startTypingQuestion', user)
+	)
+	.listenForWhisper('stop-typing', user =>
+		store.dispatch('questions/stopTypingQuestion', user)
 	);
 
 Echo.private(`App.User.${window.$userId}`).notification(notification => {

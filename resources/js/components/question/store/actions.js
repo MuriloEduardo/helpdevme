@@ -17,8 +17,11 @@ const setQuestions = async ({ commit }) => {
 
 const setQuestion = ({ commit }, question) => commit('SET_QUESTION', question);
 
-const setTypingQuestion = ({ commit }, user) =>
-	commit('SET_TYPING_QUESTION', user);
+const startTypingQuestion = ({ commit }, user) =>
+	commit('START_TYPING_QUESTION', user);
+
+const stopTypingQuestion = ({ commit }, user) =>
+	commit('STOP_TYPING_QUESTION', user);
 
 /**
  * Comments
@@ -49,7 +52,8 @@ export default {
 	addQuestion,
 	setQuestions,
 	setQuestion,
-	setTypingQuestion,
+	startTypingQuestion,
+	stopTypingQuestion,
 	addComment,
 	setComment,
 	setTypingComment

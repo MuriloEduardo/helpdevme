@@ -103,12 +103,13 @@ export default {
 		toastErrorTexts: {
 			title: 'Ops!',
 			body: 'Tente novamente de uma forma diferente!'
-		}
+		},
+		channel: Echo.private('newquestions')
 	}),
 	methods: {
 		...mapActions('questions', ['addQuestion']),
 		onTyping: _.debounce(function() {
-			Echo.private('newquestions').whisper('typing', this.user);
+			this.channel.whisper('typing', this.user);
 		}, 1000),
 		resetForm() {
 			this.$bvModal.hide('modal-create-question');
@@ -170,10 +171,15 @@ export default {
 						solid: true
 					});
 				});
-		}
+		},
+		stopTyping() {}
 	},
 	mounted() {
 		this.listTags();
+
+		this.$root.$on('bv::modal::hidden', () =>
+			this.channel.whisper('stop-typing', this.user)
+		);
 	}
 };
 </script>
