@@ -7,14 +7,14 @@
 	<div class="col-lg-10 offset-lg-1">
 		<ul class="nav nav-pills mb-5">
 			<li class="nav-item">
-				<a class="nav-link" href="{{ route('activities.client') }}">Cliente</a>
+				<a class="nav-link" href="{{ route('activities.client') }}">Ajudado</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" href="{{ route('activities.freelancer') }}">Freelancer</a>
+				<a class="nav-link active" href="{{ route('activities.freelancer') }}">Ajudante</a>
 			</li>
 		</ul>
 
-		<h1 class="display-4 my-5">Minhas Atividades como Freelancer</h1>
+		<h1 class="font-weight-light my-5">{{ $talks->count() . ' ' . str_plural('ajuda', $talks->count()) }}</h1>
 
 		@foreach($talks as $talk)
 

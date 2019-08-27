@@ -59,7 +59,16 @@
 								:multiple="true"
 								:taggable="true"
 								@tag="addTag"
-							></multiselect>
+							>
+								<template slot="option" slot-scope="props">
+									<div class="d-flex align-items-center">
+										<i :class="props.option.image" class="option__image"></i>
+										<div class="option__desc">
+											<span class="option__title">{{ props.option.title }}</span>
+										</div>
+									</div>
+								</template>
+							</multiselect>
 						</div>
 						<div class="form-row justify-content-end">
 							<div class="col-lg-3">

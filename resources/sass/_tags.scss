@@ -1,10 +1,4 @@
-.tags-index {
-	.card-body {
-		a {
-			&:hover {
-				text-decoration: none;
-				color: $success;
-			}
-		}
-	}
+.option__image {
+	font-size: 2rem;
+	margin-right: 1rem;
 }

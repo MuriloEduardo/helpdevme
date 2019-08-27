@@ -103752,6 +103752,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -104040,6 +104049,33 @@ var render = function() {
                         taggable: true
                       },
                       on: { tag: _vm.addTag },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "option",
+                          fn: function(props) {
+                            return [
+                              _c(
+                                "div",
+                                { staticClass: "d-flex align-items-center" },
+                                [
+                                  _c("i", {
+                                    staticClass: "option__image",
+                                    class: props.option.image
+                                  }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "option__desc" }, [
+                                    _c(
+                                      "span",
+                                      { staticClass: "option__title" },
+                                      [_vm._v(_vm._s(props.option.title))]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ]
+                          }
+                        }
+                      ]),
                       model: {
                         value: _vm.tags,
                         callback: function($$v) {
@@ -105427,7 +105463,7 @@ var render = function() {
                 },
                 [
                   !_vm.loading
-                    ? _c("i", { staticClass: "fas fa-paper-plane" })
+                    ? _c("span", [_vm._v("Enviar proposta")])
                     : _c("span", { staticClass: "ellipsis" })
                 ]
               )

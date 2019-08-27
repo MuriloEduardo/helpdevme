@@ -6,35 +6,35 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateQuestionsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('questions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('body');
-            $table->integer('user_id')->unsigned();
-            $table->tinyInteger('status')->default(0);
-            $table->tinyInteger('user_ended')->default(0);
-            $table->tinyInteger('freelancer_ended')->default(0);
-            $table->timestamps();
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('questions', function (Blueprint $table) {
+			$table->increments('id');
+			$table->string('title');
+			$table->string('slug')->unique();
+			$table->text('body');
+			$table->integer('user_id')->unsigned();
+			$table->tinyInteger('status')->default(0);
+			$table->tinyInteger('user_ended')->default(0);
+			$table->tinyInteger('freelancer_ended')->default(0);
+			$table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-        });
-    }
+			$table->foreign('user_id')->references('id')->on('users');
+		});
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('questions');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('questions');
+	}
 }

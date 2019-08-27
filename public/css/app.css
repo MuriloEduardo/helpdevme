@@ -19617,9 +19617,9 @@ readers do not read off random characters that represent icons */
   border-bottom: none;
 }
 
-.tags-index .card-body a:hover {
-  text-decoration: none;
-  color: #41b883;
+.option__image {
+  font-size: 2rem;
+  margin-right: 1rem;
 }
 
 #privateMessageBox .badge.default {

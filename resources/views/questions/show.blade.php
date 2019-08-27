@@ -13,7 +13,7 @@
 						</votes-question>
 					</div>
 					<div class="col">
-						<h1 class="display-4 m-0">{{ $question->title }}</h1>
+						<h1 class="font-weight-light m-0">{{ $question->title }}</h1>
 					</div>
 				</header>
 				@include('shared.questions.status', ['status' => $question->status])

@@ -29,7 +29,7 @@
 					</b-dropdown-form>
 				</b-dropdown>
 				<b-button variant="primary" type="submit" v-b-tooltip.hover title="Enviar">
-					<i v-if="!loading" class="fas fa-paper-plane"></i>
+					<span v-if="!loading">Enviar proposta</span>
 					<span v-else class="ellipsis"></span>
 				</b-button>
 			</b-input-group-append>
