@@ -1,18 +1,24 @@
 <template>
 	<form @submit.prevent="onSubmit">
-		<b-input-group>
-			<b-form-input @keydown="onTyping" placeholder="Escreva uma mensagem..." v-model="body" required></b-form-input>
+		<b-input-group class="border rounded-pill p-1 bg-white">
+			<b-form-input
+				@keydown="onTyping"
+				class="border-0"
+				placeholder="Escreva uma mensagem..."
+				v-model="body"
+				required
+			></b-form-input>
 
 			<b-input-group-append>
 				<b-dropdown
-					variant="outline-primary"
+					variant="success rounded-pill mx-1"
 					v-b-tooltip.hover
 					title="Adicionar Orçamento"
 					right
 					slot="append"
 				>
 					<template slot="button-content">
-						<i v-if="!budget" class="fas fa-hand-holding-usd"></i>
+						<i v-if="!budget" class="fas fa-dollar-sign"></i>
 						<span v-else>{{ budget | currency }}</span>
 					</template>
 					<b-dropdown-form>
@@ -28,8 +34,8 @@
 						</b-form-group>
 					</b-dropdown-form>
 				</b-dropdown>
-				<b-button variant="primary" type="submit" v-b-tooltip.hover title="Enviar">
-					<span v-if="!loading">Enviar proposta</span>
+				<b-button variant="primary" type="submit" class="rounded-pill" v-b-tooltip.hover title="Enviar">
+					<i v-if="!loading" class="fas fa-paper-plane"></i>
 					<span v-else class="ellipsis"></span>
 				</b-button>
 			</b-input-group-append>

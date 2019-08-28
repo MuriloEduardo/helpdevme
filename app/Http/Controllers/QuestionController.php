@@ -7,7 +7,9 @@ use App\Post;
 use App\Finance;
 use App\User;
 use App\Talk;
+use App\Tag;
 
+use App\Events\ViewQuestion;
 use App\Events\PrivatePostSent;
 
 use Illuminate\Http\Request;
@@ -35,7 +37,9 @@ class QuestionController extends Controller
 			->orderBy('updated_at', 'DESC')
 			->get();
 
-		return view('questions.index', compact('questions'));
+		$tags = Tag::has('questions')->get();
+
+		return view('questions.index', compact('questions', 'tags'));
 	}
 
 	/**
@@ -80,6 +84,8 @@ class QuestionController extends Controller
 	 */
 	public function show(Question $question)
 	{
+		event(new ViewQuestion($question));
+
 		return view('questions.show', compact('question'));
 	}
 

@@ -14,7 +14,7 @@
 						<div class="card-body">
 							<a href="{{ route('tags.show', $tag) }}">
 								<div class="d-flex align-items-center mb-3">
-									<i class="{{ $tag->image }} colored"></i>
+									<i class="{{ $tag->image }} colored fa-4x"></i>
 									<h2 class="h5 card-title my-0 mx-3">{{ $tag->title }}</h2>
 								</div>
 							</a>

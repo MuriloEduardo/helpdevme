@@ -98,4 +98,9 @@ class Question extends Model
 	{
 		return $this->hasMany('App\Vote');
 	}
+
+	public function views()
+	{
+		return $this->hasMany('App\View');
+	}
 }

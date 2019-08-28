@@ -105279,6 +105279,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -105357,8 +105363,10 @@ var render = function() {
     [
       _c(
         "b-input-group",
+        { staticClass: "border rounded-pill p-1 bg-white" },
         [
           _c("b-form-input", {
+            staticClass: "border-0",
             attrs: { placeholder: "Escreva uma mensagem...", required: "" },
             on: { keydown: _vm.onTyping },
             model: {
@@ -105385,7 +105393,7 @@ var render = function() {
                   ],
                   attrs: {
                     slot: "append",
-                    variant: "outline-primary",
+                    variant: "success rounded-pill mx-1",
                     title: "Adicionar Orçamento",
                     right: ""
                   },
@@ -105394,7 +105402,7 @@ var render = function() {
                 [
                   _c("template", { slot: "button-content" }, [
                     !_vm.budget
-                      ? _c("i", { staticClass: "fas fa-hand-holding-usd" })
+                      ? _c("i", { staticClass: "fas fa-dollar-sign" })
                       : _c("span", [
                           _vm._v(_vm._s(_vm._f("currency")(_vm.budget)))
                         ])
@@ -105459,11 +105467,12 @@ var render = function() {
                       modifiers: { hover: true }
                     }
                   ],
+                  staticClass: "rounded-pill",
                   attrs: { variant: "primary", type: "submit", title: "Enviar" }
                 },
                 [
                   !_vm.loading
-                    ? _c("span", [_vm._v("Enviar proposta")])
+                    ? _c("i", { staticClass: "fas fa-paper-plane" })
                     : _c("span", { staticClass: "ellipsis" })
                 ]
               )
@@ -105497,7 +105506,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.question
     ? _c(
-        "section",
+        "div",
         [
           _c("p", { staticClass: "small" }, [
             _vm._v(_vm._s(_vm.comments.length) + " resposta(s)")

@@ -1,9 +1,9 @@
 <template>
-	<section v-if="question">
+	<div v-if="question">
 		<p class="small">{{ comments.length }} resposta(s)</p>
 		<List :question="question" :comments="comments" />
 		<Create v-if="$userId != question.user_id && question.status == 0" :question="question" />
-	</section>
+	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';

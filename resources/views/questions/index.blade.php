@@ -5,7 +5,23 @@
 @section('content')
 <div class="py-5">
 	<div class="row">
-		<div class="col offset-lg-2">
+		<div class="col-lg-3">
+			<ul class="list-group list-group-flush sticky-top top-navbar-height">
+				<h4 class="font-weight-light mb-3">Tag's</h4>
+				@foreach ($tags as $tag)
+				<a href="{{ url('tags/' . $tag->slug) }}" class="list-group-item">
+					<div class="d-flex align-items-center justify-content-between">
+						<span>
+							<i class="{{ $tag->image }} colored fa-lg mr-2"></i>
+							<span>{{ $tag->title }}</span>
+						</span>
+						<span class="badge badge-primary badge-pill">{{ $tag->questions->count() }}</span>
+					</div>
+				</a>
+				@endforeach
+			</ul>
+		</div>
+		<div class="col">
 			<div class="row">
 				<div class="col">
 					@if ($errors->any())
@@ -47,9 +63,6 @@
 					@endforeach
 				</div>
 			</div>
-		</div>
-		<div class="col-lg-2 col-md-3">
-			<online-users></online-users>
 		</div>
 	</div>
 </div>

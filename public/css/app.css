@@ -19523,11 +19523,6 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Brands';
 }
 
-[class*=' devicon-'],
-[class^='devicon-'] {
-  font-size: 3.5rem;
-}
-
 .avatar {
   border-radius: 100%;
   -o-object-fit: cover;
@@ -19670,8 +19665,8 @@ readers do not read off random characters that represent icons */
   max-width: 100%;
 }
 
-body {
-  padding-top: 61px;
+.top-navbar-height {
+  top: 61px;
 }
 
 textarea {

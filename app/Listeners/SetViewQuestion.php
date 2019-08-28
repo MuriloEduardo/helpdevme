@@ -24,6 +24,9 @@ class SetViewQuestion
 	 */
 	public function handle(ViewQuestion $event)
 	{
-		//
+		$event->question->views()->updateOrCreate([
+			'visitor' => \Request::ip(),
+			'user_id' => auth()->id()
+		]);
 	}
 }

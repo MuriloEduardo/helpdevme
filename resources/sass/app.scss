@@ -14,7 +14,6 @@
 @import '~devicon/devicon.min.css';
 @import '~vue-multiselect/dist/vue-multiselect.min.css';
 
-@import 'devicon';
 @import 'avatar';
 @import 'navbar';
 @import 'comment';
@@ -27,8 +26,8 @@
 @import 'site';
 @import 'vue-editor';
 
-body {
-	padding-top: $nav-height;
+.top-navbar-height {
+	top: $nav-height;
 }
 
 textarea {
