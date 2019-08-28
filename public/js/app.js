@@ -105367,7 +105367,7 @@ var render = function() {
         [
           _c("b-form-input", {
             staticClass: "border-0",
-            attrs: { placeholder: "Escreva uma mensagem...", required: "" },
+            attrs: { placeholder: "Oi, eu sei solucionar isso!", required: "" },
             on: { keydown: _vm.onTyping },
             model: {
               value: _vm.body,
@@ -105393,7 +105393,7 @@ var render = function() {
                   ],
                   attrs: {
                     slot: "append",
-                    variant: "success rounded-pill mx-1",
+                    variant: "outline-success rounded-pill mx-1",
                     title: "Adicionar Orçamento",
                     right: ""
                   },
@@ -105402,7 +105402,7 @@ var render = function() {
                 [
                   _c("template", { slot: "button-content" }, [
                     !_vm.budget
-                      ? _c("i", { staticClass: "fas fa-dollar-sign" })
+                      ? _c("i", { staticClass: "fas fa-dollar-sign px-1" })
                       : _c("span", [
                           _vm._v(_vm._s(_vm._f("currency")(_vm.budget)))
                         ])

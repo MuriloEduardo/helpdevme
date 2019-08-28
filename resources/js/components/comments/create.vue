@@ -4,21 +4,21 @@
 			<b-form-input
 				@keydown="onTyping"
 				class="border-0"
-				placeholder="Escreva uma mensagem..."
+				placeholder="Oi, eu sei solucionar isso!"
 				v-model="body"
 				required
 			></b-form-input>
 
 			<b-input-group-append>
 				<b-dropdown
-					variant="success rounded-pill mx-1"
+					variant="outline-success rounded-pill mx-1"
 					v-b-tooltip.hover
 					title="Adicionar Orçamento"
 					right
 					slot="append"
 				>
 					<template slot="button-content">
-						<i v-if="!budget" class="fas fa-dollar-sign"></i>
+						<i v-if="!budget" class="fas fa-dollar-sign px-1"></i>
 						<span v-else>{{ budget | currency }}</span>
 					</template>
 					<b-dropdown-form>

@@ -47,7 +47,7 @@
 			style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
 
-	<div id="app" class="d-flex flex-column justify-content-between h-100">
+	<div id="app">
 		<nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top shadow-sm">
 			<div class="container-fluid">
 				<a class="navbar-brand d-flex align-items-center" href="{{ route('index') }}">

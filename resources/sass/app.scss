@@ -27,7 +27,7 @@
 @import 'vue-editor';
 
 .top-navbar-height {
-	top: $nav-height;
+	top: $nav-height + 16px;
 }
 
 textarea {

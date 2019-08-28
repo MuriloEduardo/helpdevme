@@ -34,6 +34,7 @@ class QuestionController extends Controller
 	public function index()
 	{
 		$questions = Question::where('status', Question::status['analyzing'])
+			->where('user_id', '!=', auth()->id())
 			->orderBy('updated_at', 'DESC')
 			->get();
 

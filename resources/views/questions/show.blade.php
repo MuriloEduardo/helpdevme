@@ -11,6 +11,11 @@
 					<div class="col flex-grow-0">
 						<votes-question :initi-votes="{{ count($question->votes) }}" :question="{{ $question }}">
 						</votes-question>
+						<div
+							class="p-1 mt-2 border border-info text-info rounded d-flex flex-column align-items-center">
+							<span>{{ $question->views->count() }}</span>
+							<small>views</small>
+						</div>
 					</div>
 					<div class="col">
 						<h1 class="font-weight-light m-0">{{ $question->title }}</h1>
