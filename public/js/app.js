@@ -105509,7 +105509,11 @@ var render = function() {
         "div",
         [
           _c("p", { staticClass: "small" }, [
-            _vm._v(_vm._s(_vm.comments.length) + " resposta(s)")
+            _vm._v(
+              _vm._s(_vm.comments.length) +
+                " " +
+                _vm._s(_vm.comments.length == 1 ? "proposta" : "propostas")
+            )
           ]),
           _vm._v(" "),
           _c("List", {
