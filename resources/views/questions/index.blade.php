@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="row">
+	@if ($tags->count())
 	<div class="col-lg-3">
 		<ul class="list-group list-group-flush sticky-top top-navbar-height">
 			<h4 class="font-weight-light mb-3">Tag's</h4>
@@ -20,6 +21,7 @@
 			@endforeach
 		</ul>
 	</div>
+	@endif
 	<div class="col">
 
 		<div class="mb-5">
