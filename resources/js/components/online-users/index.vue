@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="sticky-top top-navbar-height py-3">
 		<h6 class="mb-3 text-muted">{{ users.length }} dev's Online</h6>
 		<ul class="list-group list-group-flush">
 			<a

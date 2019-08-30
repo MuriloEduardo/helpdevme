@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
 @php ($opposite = auth()->id() === $talk->user->id ? $talk->receiver : $talk->user)

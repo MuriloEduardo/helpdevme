@@ -31,7 +31,7 @@
 	<!-- User ID -->
 	<meta name="user-id" content="{{ Auth::id() }}">
 
-	<title>@yield('title'){{ config('app.name', 'Help Dev') }}</title>
+	<title>@yield('title')</title>
 
 	<!-- Scripts -->
 	<script src="{{ asset('js/app.js') }}" defer></script>
@@ -48,7 +48,7 @@
 	<!-- End Google Tag Manager (noscript) -->
 
 	<div id="app">
-		<nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top shadow-sm">
+		<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top shadow-sm">
 			<div class="container-fluid">
 				<a class="navbar-brand d-flex align-items-center" href="{{ route('index') }}">
 					@svg('logo-helpdev')
@@ -137,18 +137,7 @@
 			</div>
 		</nav>
 		<main role="main">
-			<section>
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col">
-							@yield('content')
-						</div>
-						<div class="col-lg-2 py-3">
-							<online-users class="sticky-top top-navbar-height"></online-users>
-						</div>
-					</div>
-				</div>
-			</section>
+			@yield('main')
 		</main>
 		<footer>
 			<div class="container">

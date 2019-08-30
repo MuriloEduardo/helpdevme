@@ -1,6 +1,6 @@
 @php ($user = auth()->user())
 
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
 <div class="py-5">

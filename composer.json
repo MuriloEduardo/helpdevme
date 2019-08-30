@@ -18,7 +18,8 @@
 		"league/flysystem-cached-adapter": "^1.0",
 		"nothingworks/blade-svg": "^0.3.1",
 		"paypal/rest-api-sdk-php": "*",
-		"pusher/pusher-php-server": "~3.0"
+		"pusher/pusher-php-server": "~3.0",
+		"spatie/laravel-sitemap": "^5.2"
 	},
 	"require-dev": {
 		"beyondcode/laravel-dump-server": "^1.0",

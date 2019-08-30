@@ -1,7 +1,7 @@
 @php ($post = $question->talks[0])
 @php ($opposite = auth()->id() === $post->user->id ? $post->receiver : $post->user)
 
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title', 'Conversa com ' . $opposite . ' - ')
 

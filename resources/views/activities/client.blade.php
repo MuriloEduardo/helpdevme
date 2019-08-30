@@ -1,10 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title', 'Minhas Atividades como Cliente - ')
 
 @section('content')
-
-<div class="row py-5">
+<div class="row">
 	<div class="col-lg-10 offset-lg-1">
 
 		<ul class="nav nav-pills mb-5">

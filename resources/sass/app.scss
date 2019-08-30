@@ -30,6 +30,10 @@
 	top: $nav-height + 16px;
 }
 
+body {
+	padding-top: $nav-height;
+}
+
 textarea {
 	resize: none;
 }

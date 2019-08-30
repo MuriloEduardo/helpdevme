@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-@section('title', $user->name . ' - ')
+@section('title', $user->name . ' - Help Dev')
 
 @section('content')
 <div class="py-5">

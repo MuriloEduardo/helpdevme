@@ -18,7 +18,7 @@
 					slot="append"
 				>
 					<template slot="button-content">
-						<i v-if="!budget" class="fas fa-dollar-sign px-1"></i>
+						<i v-if="!budget" class="fas fa-dollar-sign"></i>
 						<span v-else>{{ budget | currency }}</span>
 					</template>
 					<b-dropdown-form>

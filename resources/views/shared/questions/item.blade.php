@@ -21,7 +21,7 @@
 			<div class="col text-right">
 				<div class="small mb-3">
 					<span>{{ $question->published }} por</span>
-					<a href="{{ route('users.show', $question->user) }}">
+					<a href="{{ route('users.show', $question->user) }}" class="d-inline-block">
 						<div class="d-flex align-items-center justify-content-end py-2">
 							<span
 								class="mr-2">{{ $question->user_id == auth()->id() ? 'Eu' : $question->user->name }}</span>
