@@ -11,9 +11,9 @@
 			<div class="d-flex">
 				<div class="pr-3">
 					<img
-						v-if="user.avatar"
+						v-if="user.avatar_url"
 						class="img-fluid avatar"
-						:src="'/storage/img/avatars/' + user.avatar"
+						:src="user.avatar_url"
 						v-bind:alt="user.name"
 						v-bind:title="user.name"
 					/>

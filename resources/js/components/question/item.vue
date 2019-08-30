@@ -21,9 +21,9 @@
 							<div class="d-flex align-items-center justify-content-end py-2">
 								<span class="mr-2">{{ question.user_id == $userId ? 'Eu' : question.user.name }}</span>
 								<img
-									v-if="question.user.avatar"
+									v-if="question.user.avatar_url"
 									class="img-fluid avatar"
-									:src="'/storage/img/avatars/' + question.user.avatar"
+									:src="question.user.avatar_url"
 									v-bind:alt="question.user.name"
 									v-bind:title="question.user.name"
 								/>

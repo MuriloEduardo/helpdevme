@@ -1,5 +1,5 @@
 <template>
-	<div class="sticky-top top-navbar-height py-3">
+	<div class="sticky-top top-navbar-height py-3 online-users">
 		<h6 class="mb-3 text-muted">{{ users.length }} dev's Online</h6>
 		<ul class="list-group list-group-flush">
 			<a
@@ -12,9 +12,9 @@
 					<div class="d-flex align-items-center text-truncate mr-2">
 						<picture>
 							<img
-								v-if="user.avatar"
+								v-if="user.avatar_url"
 								class="img-fluid avatar"
-								:src="'/storage/img/avatars/' + user.avatar"
+								:src="user.avatar_url"
 								v-bind:alt="user.name"
 								v-bind:title="user.name"
 							/>

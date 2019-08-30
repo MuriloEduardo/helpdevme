@@ -10,8 +10,8 @@
 					class="img-fluid avatar"
 					width="25"
 					style="height: 25px;"
-					v-if="opposite.avatar"
-					:src="'/storage/img/avatars/' + opposite.avatar"
+					v-if="opposite.avatar_url"
+					:src="opposite.avatar_url"
 					:alt="opposite.name"
 					:title="opposite.name"
 				/>

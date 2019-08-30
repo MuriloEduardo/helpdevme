@@ -3,10 +3,10 @@
 		<a :href="`/users/${comment.user.slug}`">
 			<span class="mr-2">
 				<img
-					v-if="comment.user.avatar"
+					v-if="comment.user.avatar_url"
 					width="25"
 					class="img-fluid avatar"
-					:src="'/storage/img/avatars/' + comment.user.avatar"
+					:src="comment.user.avatar_url"
 					v-bind:alt="comment.user.name"
 					v-bind:title="comment.user.name"
 				/>

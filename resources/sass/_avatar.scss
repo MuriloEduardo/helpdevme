@@ -1,11 +1,29 @@
 .avatar {
-    border-radius: 100%;
-    object-fit: cover;
+	border-radius: 100%;
+	object-fit: cover;
 }
 
 .nav-link {
-    .avatar {
-        width: 30px;
-        height: 30px;
-    }
+	.avatar {
+		width: 30px;
+		height: 30px;
+	}
+}
+
+.users-index-user {
+	.avatar {
+		max-width: 65px;
+	}
+}
+
+.user-show {
+	.avatar {
+		max-width: 100px;
+	}
+}
+
+.online-users {
+	.avatar {
+		max-width: 30px;
+	}
 }

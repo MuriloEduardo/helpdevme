@@ -9,107 +9,105 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $users = User::all();
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index()
+	{
+		$users = User::all();
 
-        return view('users.index', compact('users'));
-    }
+		return view('users.index', compact('users'));
+	}
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create()
+	{
+		//
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request)
+	{
+		//
+	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        return view('users.show', compact('user'));
-    }
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  \App\User  $user
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show(User $user)
+	{
+		return view('users.show', compact('user'));
+	}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id)
+	{
+		//
+	}
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        if ($request->has('avatar')) {
-            $avatarName = $user->id . '_avatar' . time() . '.' . $request->avatar->getClientOriginalExtension();
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \App\User $user
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, User $user)
+	{
+		if ($request->has('avatar')) {
+			$path = $request->file('avatar')->storePublicly('avatars');
 
-            $request->avatar->storeAs('img/avatars', $avatarName);
+			$user->avatar = $path;
+		}
 
-            $user->avatar = $avatarName;
-        }
+		if ($request->has('password')) {
+			if (!Hash::check($request->current_password, $user->password)) {
 
-        if ($request->has('password')) {
-            if (!Hash::check($request->current_password, $user->password)) {
+				return back()->withErrors('Senha errada!');
+			} else {
 
-                return back()->withErrors('Senha errada!');
-            } else {
+				Validator::make($request->all(), [
+					'password' => 'required|confirmed',
+				])->validate();
 
-                Validator::make($request->all(), [
-                    'password' => 'required|confirmed',
-                ])->validate();
+				$request->merge([
+					'password' => Hash::make($request->password)
+				]);
+			}
+		}
 
-                $request->merge([
-                    'password' => Hash::make($request->password)
-                ]);
-            }
-        }
+		$user->update($request->all());
 
-        $user->update($request->all());
+		return back()->with('success', 'Perfil Editado!');
+	}
 
-        return back()->with('success', 'Perfil Editado!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id)
+	{
+		//
+	}
 }

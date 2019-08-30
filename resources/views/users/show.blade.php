@@ -3,7 +3,7 @@
 @section('title', $user->name . ' - Help Dev')
 
 @section('content')
-<div class="row">
+<div class="row user-show">
 	<div class="col col-lg offset-lg-1">
 		<div class="row align-items-center">
 			<div class="col flex-grow-0">

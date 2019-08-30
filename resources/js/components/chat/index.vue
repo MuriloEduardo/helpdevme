@@ -115,10 +115,10 @@
 										>
 											<span v-if="user.id!=post.user_id">
 												<img
-													v-if="opposite.avatar"
+													v-if="opposite.avatar_url"
 													width="25"
-													class="img-fluid"
-													:src="'/storage/img/avatars/' + opposite.avatar"
+													class="img-fluid avatar"
+													:src="opposite.avatar_url"
 													v-bind:alt="opposite.name"
 													v-bind:title="opposite.name"
 												/>
