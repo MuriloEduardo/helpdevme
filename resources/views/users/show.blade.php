@@ -16,7 +16,9 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				<h2 class="my-5">{{ $user->talks->count() . ' ' . str_plural('ajuda', $user->talks->count()) }}</h2>
+				<h2 class="my-5">
+					{{ $user->talks->count() . ' ' . str_plural('ajuda', $user->talks->count()) . ' ' . str_plural('prestada', $user->talks->count()) }}
+				</h2>
 				@foreach ($user->talks as $talk)
 				@include('shared.questions.item', ['question' => $talk->question])
 				@endforeach

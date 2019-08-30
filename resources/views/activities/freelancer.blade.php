@@ -14,7 +14,9 @@
 			</li>
 		</ul>
 
-		<h1 class="font-weight-light my-5">{{ $talks->count() . ' ' . str_plural('ajuda', $talks->count()) }}</h1>
+		<h1 class="font-weight-light my-5">
+			{{ $talks->count() . ' ' . str_plural('ajuda', $talks->count()) . ' ' . str_plural('prestada', $talks->count()) }}
+		</h1>
 
 		@foreach($talks as $talk)
 

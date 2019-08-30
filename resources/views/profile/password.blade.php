@@ -2,6 +2,8 @@
 
 @extends('layouts.main')
 
+@section('title', 'Senha - Help Dev')
+
 @section('content')
 <div class="row justify-content-center">
 	<div class="col-lg-10">
