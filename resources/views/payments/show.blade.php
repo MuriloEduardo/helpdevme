@@ -1,9 +1,9 @@
 @extends('layouts.main')
 
-@section('title', 'Realizar Pagamento - ')
+@section('title', 'Realizar Pagamento - Help Dev')
 
 @section('content')
-<div class="py-5">
+<div>
 	@if(session()->get('success'))
 	<div class="alert alert-success">
 		{{ session()->get('success') }}

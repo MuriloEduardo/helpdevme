@@ -5,7 +5,7 @@
 @section('main')
 <section>
 	<div class="container-fluid">
-		<div class="row">
+		<div class="row mb-5">
 			<div class="col">
 				<div class="row">
 					<header class="header-site mb-5 p-5 bg-success shadow-sm">

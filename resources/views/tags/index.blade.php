@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Tags - ')
+@section('title', 'Tags - Help Dev')
 
 @section('content')
 <div class="row">

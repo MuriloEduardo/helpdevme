@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', $question->title . ' - ')
+@section('title', $question->title . ' - Help Dev')
 
 @section('content')
 <div class="row justify-content-center">
