@@ -39,7 +39,7 @@ class User extends Authenticatable
 
 	public function getAvatarUrlAttribute()
 	{
-		return !$this->avatar ? $this->avatar : Storage::disk('s3')->url($this->avatar);
+		return !$this->avatar ? $this->avatar : Storage::url($this->avatar);
 	}
 
 	public function questions()
