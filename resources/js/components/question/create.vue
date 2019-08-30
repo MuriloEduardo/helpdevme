@@ -8,8 +8,8 @@
 		</template>
 
 		<template slot="default">
-			<div class="d-flex">
-				<div class="pr-3">
+			<div class="d-flex flex-column flex-md-row">
+				<div class="pr-3 pb-3 pb-md-0">
 					<img
 						v-if="user.avatar_url"
 						class="img-fluid avatar"
