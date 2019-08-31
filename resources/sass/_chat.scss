@@ -1,4 +1,6 @@
 #privateMessageBox {
+	max-height: 300px;
+	overflow-y: auto;
 	.badge {
 		&.default {
 			white-space: initial;

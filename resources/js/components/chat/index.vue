@@ -1,6 +1,6 @@
 <template>
 	<section v-if="talk">
-		<output-posts :talk="talk" @whisper="onWhisper" @receivedPost="onReceivedPost"></output-posts>
+		<output-posts :talk_id="talk.id" @whisper="onWhisper"></output-posts>
 		<div class="d-flex align-items-center py-3">
 			<p class="lead">
 				<span>Conversa com</span>
@@ -57,8 +57,8 @@
 				<div class="row">
 					<div class="col">
 						<div id="privateMessageBox">
-							<div class="d-flex flex-column p-3">
-								<div v-for="(post, index) in allPosts" :key="index" class="h5">
+							<div class="d-flex flex-column">
+								<div v-for="(post, index) in talk.posts" :key="index" class="mb-2">
 									<div v-if="post.body">
 										<!-- Proposta Recusada -->
 										<div v-if="post.type==2 && post.status==1" class="text-center">
@@ -140,7 +140,7 @@
 					</div>
 				</div>
 			</div>
-			<div v-if="formActive" class="card-footer">
+			<div v-if="talk.status != 1" class="card-footer">
 				<form @submit.prevent="sendMessage">
 					<div class="input-group">
 						<textarea
@@ -148,7 +148,6 @@
 							placeholder="Digite uma mensagem..."
 							v-model="body"
 							@keydown="onTyping"
-							@keydown.enter="sendMessage"
 							required
 						></textarea>
 						<div class="input-group-append">
@@ -165,23 +164,20 @@
 
 <script>
 import OutputPosts from './output-posts';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
 	components: {
 		OutputPosts
 	},
 
-	props: ['user', 'talkprop', 'opposite', 'posts'],
+	props: ['user', 'talk_id', 'opposite'],
 
 	data() {
 		return {
-			talk: undefined,
 			body: null,
 			timeOut: undefined,
-			formActive: true,
-			typing: false,
-			allPosts: []
+			typing: false
 		};
 	},
 
@@ -208,7 +204,11 @@ export default {
 		},
 		...mapState({
 			onlineFriends: state => state.users
-		})
+		}),
+		...mapGetters('talks', ['getTalk']),
+		talk: function() {
+			return this.getTalk(this.talk_id);
+		}
 	},
 
 	methods: {
@@ -220,13 +220,6 @@ export default {
 			this.timeOut = setTimeout(() => {
 				this.typing = false;
 			}, 900);
-		},
-		onReceivedPost(post) {
-			this.talk = post.talk;
-
-			this.talkStatus(post.talk);
-
-			this.allPosts.push(post);
 		},
 		...mapActions('talks', ['sendPost']),
 		onTyping() {
@@ -241,22 +234,8 @@ export default {
 				receiver_id: this.talk.question.user_id
 			}).then(response => {
 				this.body = null;
-				this.allPosts.push(response.data.post);
 			});
-		},
-		fetchMessages() {
-			this.allPosts = this.posts;
-			this.talkStatus(this.talk);
-		},
-		talkStatus(talk) {
-			this.formActive = talk.status == 1 ? false : true;
 		}
-	},
-
-	created() {
-		this.talk = this.talkprop;
-
-		this.fetchMessages();
 	}
 };
 </script>

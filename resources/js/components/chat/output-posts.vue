@@ -1,11 +1,11 @@
 <template></template>
 <script>
 export default {
-	props: ['talk'],
+	props: ['talk_id'],
 
 	data() {
 		return {
-			channel: Echo.private(`posts.${this.talk.id}.private`)
+			channel: Echo.private(`posts.${this.talk_id}.private`)
 		};
 	},
 

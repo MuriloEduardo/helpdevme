@@ -13,8 +13,8 @@
 		</div>
 		@endif
 		<h1>{{ $talk->question->title }}</h1>
-		<private-chat :user="{{ auth()->user() }}" :talkprop="{{ $talk }}" :posts="{{ $talk->posts }}"
-			:opposite="{{ $opposite }}"></private-chat>
+		<private-chat :user="{{ auth()->user() }}" :talk_id="{{ $talk->id }}" :opposite="{{ $opposite }}">
+		</private-chat>
 	</div>
 </div>
 @endsection

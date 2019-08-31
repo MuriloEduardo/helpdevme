@@ -4,7 +4,7 @@
 			class="list-group-item list-group-item-action flex-column align-items-start"
 			:href="'/talks/' + talk.id"
 		>
-			<output-posts :talk="talk" @receivedPost="onReceivedPost"></output-posts>
+			<output-posts :talk_id="talk.id" @receivedPost="onReceivedPost"></output-posts>
 			<div class="d-flex">
 				<img
 					class="img-fluid avatar"

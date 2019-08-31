@@ -14,6 +14,10 @@ const getUnreadsPosts = state => {
 	return total;
 };
 
+const getTalk = state => talk_id =>
+	state.talks.find(talk => talk.id == talk_id);
+
 export default {
-	getUnreadsPosts
+	getUnreadsPosts,
+	getTalk
 };
