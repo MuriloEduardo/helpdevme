@@ -23,16 +23,14 @@
 	</div>
 	@endif
 	<div class="col">
-
-		<div class="mb-5">
-			<h1>Crie perguntas ou ajude outros programadores</h1>
-			<p class="lead">Peça seu pedido de ajuda, fique por dentro das perguntas e tag's que mais estão bombando
-				no momento.</p>
+		<div class="mb-5 pb-4">
+			<h1>Fique de olho!</h1>
+			<p class="lead">Aqui abaixo ficarão os pedidos de ajuda de outros programadores</p>
 		</div>
 		<div class="row">
 			<div class="col">
 				@if ($errors->any())
-				<div class="alert alert-danger">
+				<div class="alert alert-danger fixed-top">
 					<ul class="nav flex-column">
 						@foreach ($errors->all() as $error)
 						<li class="nav-item">{{ $error }}</li>
@@ -41,30 +39,15 @@
 				</div>
 				@endif
 				@if(session()->get('success'))
-				<div class="alert alert-success">
+				<div class="alert alert-success fixed-top">
 					{{ session()->get('success') }}
 				</div>
 				@endif
 			</div>
 		</div>
 		<div class="row">
-			<div class="col create-question">
-				<b-button @click="$bvModal.show('modal-create-question')" variant="link"
-					class="btn-block card card-body card mb-5">
-					<div class="d-flex align-items-center">
-						<div class="pr-3">
-							@include('shared.avatar', ['user' => auth()->user(), 'icon_class' => 'fa-4x'])
-						</div>
-						<div class="flex-grow-1">
-							<div class="placeholder text-muted py-3">Qual sua dúvida sobre programação?</div>
-						</div>
-					</div>
-				</b-button>
-			</div>
-		</div>
-		<div class="row">
 			<div class="col">
-				<list-new-questions></list-new-questions>
+				<list-new-questions :questions="{{ $questions }}"></list-new-questions>
 				@foreach($questions as $question)
 				@include('shared.questions.item', ['question' => $question])
 				@endforeach

@@ -38,7 +38,10 @@ class QuestionController extends Controller
 			->orderBy('updated_at', 'DESC')
 			->get();
 
-		$tags = Tag::has('questions')->get();
+		$tags = Tag::whereHas('questions', function ($query) {
+			$query->where('status', Question::status['analyzing'])
+				->where('user_id', '!=', auth()->id());
+		})->get();
 
 		return view('questions.index', compact('questions', 'tags'));
 	}
@@ -50,7 +53,7 @@ class QuestionController extends Controller
 	 */
 	public function create()
 	{
-		//
+		return view('questions.create');
 	}
 
 	/**

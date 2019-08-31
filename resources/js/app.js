@@ -50,8 +50,5 @@ Vue.component('Notifications', require('./components/notifications'));
 
 const app = new Vue({
 	store,
-	el: '#app',
-	mounted() {
-		store.dispatch('questions/setQuestions');
-	}
+	el: '#app'
 });

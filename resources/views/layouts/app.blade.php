@@ -88,8 +88,8 @@
 						</li>
 						@else
 						<li class="nav-item">
-							<b-button @click="$bvModal.show('modal-create-question')" variant="link"
-								class="btn text-white btn-success px-5 my-1 mx-3">Pedir Ajuda</b-button>
+							<a class="btn text-white btn-success px-5 my-1 mx-3"
+								href="{{ route('questions.create') }}">Pedir Ajuda</a>
 						</li>
 						<notifications></notifications>
 						<li class="nav-item dropdown">
@@ -147,7 +147,6 @@
 				</div>
 			</div>
 		</footer>
-		<create-question :user="{{ auth()->check() ? auth()->user() : '{}' }}"></create-question>
 	</div>
 </body>
 

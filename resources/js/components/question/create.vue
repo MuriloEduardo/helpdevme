@@ -1,92 +1,67 @@
 <template>
-	<b-modal id="modal-create-question" size="lg">
-		<template slot="modal-header" slot-scope="{ close }">
-			<h5 class="m-0">Criar Pergunta</h5>
-			<a href="javascript:void(0)" class="close" @click="close()" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</a>
-		</template>
-
-		<template slot="default">
-			<div class="d-flex flex-column flex-md-row">
-				<div class="pr-3 pb-3 pb-md-0">
-					<img
-						v-if="user.avatar_url"
-						class="img-fluid avatar"
-						:src="user.avatar_url"
-						v-bind:alt="user.name"
-						v-bind:title="user.name"
-					/>
-					<i v-else class="fas fa-user-circle fa-4x"></i>
-				</div>
-				<div class="flex-grow-1">
-					<form @submit.prevent="onSubmit">
-						<div class="form-group">
-							<input
-								type="text"
-								class="form-control"
-								name="title"
-								v-model="title"
-								placeholder="Qual sua dúvida sobre programação?"
-								@keydown="onTyping"
-								required
-							/>
-						</div>
-						<div class="form-group">
-							<b-card no-body>
-								<b-tabs card>
-									<b-tab title="Escrever" active>
-										<b-card-text>
-											<vue-editor v-model="body" :editor-toolbar="customToolbar" />
-										</b-card-text>
-									</b-tab>
-									<b-tab title="Visualizar">
-										<b-card-text>
-											<div v-html="body"></div>
-										</b-card-text>
-									</b-tab>
-								</b-tabs>
-							</b-card>
-						</div>
-						<div class="form-group">
-							<multiselect
-								v-model="tags"
-								tag-placeholder="Adicione isto como nova tag"
-								placeholder="Pesquise ou adicione uma tag"
-								label="title"
-								track-by="id"
-								:options="options"
-								:multiple="true"
-								:taggable="true"
-								@tag="addTag"
-							>
-								<template slot="option" slot-scope="props">
-									<div class="d-flex align-items-center">
-										<i :class="props.option.image" class="option__image"></i>
-										<div class="option__desc">
-											<span class="option__title">{{ props.option.title }}</span>
-										</div>
-									</div>
-								</template>
-							</multiselect>
-						</div>
-						<div class="form-row justify-content-end">
-							<div class="col-lg-3">
-								<button type="submit" class="d-none" id="submit-modal-create-question"></button>
+	<div>
+		<form @submit.prevent="onSubmit">
+			<div class="form-group">
+				<input
+					type="text"
+					class="form-control form-control-lg"
+					name="title"
+					v-model="title"
+					placeholder="Qual sua dúvida sobre programação?"
+					@keydown="onTyping"
+					required
+				/>
+			</div>
+			<div class="form-group">
+				<b-card no-body>
+					<b-tabs card>
+						<b-tab title="Escrever" active>
+							<b-card-text>
+								<vue-editor v-model="body" :editor-toolbar="customToolbar" />
+							</b-card-text>
+						</b-tab>
+						<b-tab title="Visualizar">
+							<b-card-text>
+								<div v-html="body"></div>
+							</b-card-text>
+						</b-tab>
+					</b-tabs>
+				</b-card>
+			</div>
+			<div class="form-group">
+				<multiselect
+					v-model="tags"
+					tag-placeholder="Adicione isto como nova tag"
+					placeholder="Pesquise ou adicione uma tag"
+					label="title"
+					track-by="id"
+					:options="options"
+					:multiple="true"
+					:taggable="true"
+					@tag="addTag"
+				>
+					<template slot="option" slot-scope="props">
+						<div class="d-flex align-items-center">
+							<i :class="props.option.image" class="option__image"></i>
+							<div class="option__desc">
+								<span class="option__title">{{ props.option.title }}</span>
 							</div>
 						</div>
-					</form>
+					</template>
+				</multiselect>
+			</div>
+			<div class="form-row justify-content-end mt-5">
+				<div class="col-lg-3">
+					<button type="submit" class="btn btn-success btn-lg btn-block">
+						<div class="d-flex justify-content-center">
+							<span v-if="!loading">Enviar</span>
+							<span v-else class="ellipsis"></span>
+						</div>
+					</button>
 				</div>
 			</div>
-		</template>
-
-		<template slot="modal-footer">
-			<label for="submit-modal-create-question" class="btn btn-success px-5">
-				<span v-if="!loading">Enviar</span>
-				<span v-else class="ellipsis"></span>
-			</label>
-		</template>
-	</b-modal>
+		</form>
+	</div>
 </template>
 
 <script>

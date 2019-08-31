@@ -9,11 +9,8 @@ const addQuestion = async ({ commit }, obj) => {
 	return question;
 };
 
-const setQuestions = async ({ commit }) => {
-	const list = (await axios.get('/api/questions')).data.questions;
-
-	commit('SET_QUESTIONS', list);
-};
+const setQuestions = async ({ commit }, questions) =>
+	commit('SET_QUESTIONS', questions);
 
 const setQuestion = ({ commit }, question) => commit('SET_QUESTION', question);
 

@@ -29,7 +29,8 @@ class QuestionController extends Controller
 	 */
 	public function index()
 	{
-		$questions = Question::with(['talks', 'comments', 'tags'])->where('status', Question::status['analyzing'])
+		$questions = Question::with(['talks', 'comments', 'tags'])
+			->where('status', Question::status['analyzing'])
 			->where('user_id', '!=', auth()->id())
 			->get();
 
