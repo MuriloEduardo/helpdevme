@@ -1,10 +1,13 @@
-.quillWrapper {
+.quill-editor {
 	.ql-toolbar {
 		&.ql-snow {
 			border: none;
+			padding: 0;
+			margin-bottom: 1rem;
 		}
 	}
 	.ql-container {
+		font-family: inherit;
 		&.ql-snow {
 			border: none;
 		}

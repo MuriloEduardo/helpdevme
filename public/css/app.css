@@ -19664,15 +19664,21 @@ readers do not read off random characters that represent icons */
   background-attachment: fixed;
 }
 
-.quillWrapper .ql-toolbar.ql-snow {
+.quill-editor .ql-toolbar.ql-snow {
+  border: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.quill-editor .ql-container {
+  font-family: inherit;
+}
+
+.quill-editor .ql-container.ql-snow {
   border: none;
 }
 
-.quillWrapper .ql-container.ql-snow {
-  border: none;
-}
-
-.quillWrapper .ql-container .ql-editor * {
+.quill-editor .ql-container .ql-editor * {
   max-width: 100%;
 }
 

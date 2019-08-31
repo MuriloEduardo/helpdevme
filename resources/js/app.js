@@ -17,9 +17,15 @@ window.Vue = require('vue');
 import store from './store';
 import BootstrapVue from 'bootstrap-vue';
 import VueCurrencyFilter from 'vue-currency-filter';
-import Vue2Editor from 'vue2-editor';
 
-Vue.use(Vue2Editor);
+import VueQuillEditor from 'vue-quill-editor';
+
+// require styles
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+
+Vue.use(VueQuillEditor);
 
 Vue.use(BootstrapVue);
 

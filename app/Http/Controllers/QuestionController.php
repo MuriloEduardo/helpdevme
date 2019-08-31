@@ -14,6 +14,8 @@ use App\Events\PrivatePostSent;
 
 use Illuminate\Http\Request;
 
+use App\Events\NewQuestionsEvent;
+
 class QuestionController extends Controller
 {
 	/**
@@ -65,16 +67,23 @@ class QuestionController extends Controller
 	public function store(Request $request)
 	{
 		$request->validate([
-			'title' => 'required|unique:questions',
+			'title' => 'required',
 			'body' => 'required'
 		]);
 
-		$request->merge([
-			'slug' => str_slug($request->title),
-			'user_id' => auth()->id()
-		]);
+		$question = new Question;
+		$question->title = $request->title;
+		$question->slug = str_slug($request->title);
+		$question->body = $request->body;
+		$question->user_id = auth()->id();
 
-		Question::create($request->all());
+		$question->save();
+
+		$question->tags()->sync($request->tags);
+
+		$question->load('comments', 'tags', 'user');
+
+		broadcast(new NewQuestionsEvent($question))->toOthers();
 
 		return redirect()->route('questions.index')
 			->with('success', 'Pergunta criada!');

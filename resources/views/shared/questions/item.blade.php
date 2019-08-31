@@ -14,7 +14,7 @@
 					<a href="{{ route('questions.show', $question) }}">{{ $question->title }}</a>
 				</h3>
 				@include('shared.questions.status', ['question' => $question])
-				<p>{!! $question->body !!}</p>
+				<div>{!! $question->body !!}</div>
 			</div>
 		</div>
 		<div class="row align-items-center">

@@ -4,47 +4,49 @@
 
 @section('content')
 <div class="row">
-	@if ($tags->count())
-	<div class="col-lg-3">
-		<ul class="list-group list-group-flush sticky-top top-navbar-height">
-			<h4 class="font-weight-light mb-3">Tag's</h4>
-			@foreach ($tags as $tag)
-			<a href="{{ url('tags/' . $tag->slug) }}" class="list-group-item">
-				<div class="d-flex align-items-center justify-content-between">
-					<span>
-						<i class="{{ $tag->image }} colored fa-lg mr-2"></i>
-						<span>{{ $tag->title }}</span>
-					</span>
-					<span class="badge badge-primary badge-pill">{{ $tag->questions->count() }}</span>
-				</div>
-			</a>
-			@endforeach
-		</ul>
-	</div>
-	@endif
 	<div class="col">
-		<div class="mb-5 pb-4">
+		@if ($errors->any())
+		<div class="alert alert-danger">
+			<ul class="nav flex-column">
+				@foreach ($errors->all() as $error)
+				<li class="nav-item">{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div>
+		@endif
+		@if(session()->get('success'))
+		<div class="alert alert-success">
+			{{ session()->get('success') }}
+		</div>
+		@endif
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="mb-5">
 			<h1>Fique de olho!</h1>
 			<p class="lead">Aqui abaixo ficarão os pedidos de ajuda de outros programadores</p>
 		</div>
-		<div class="row">
-			<div class="col">
-				@if ($errors->any())
-				<div class="alert alert-danger fixed-top">
-					<ul class="nav flex-column">
-						@foreach ($errors->all() as $error)
-						<li class="nav-item">{{ $error }}</li>
-						@endforeach
-					</ul>
+		@if ($tags->count())
+		{{-- <h4 class="font-weight-light mb-3">Tag's</h4> --}}
+		<div class="row mb-5">
+			@foreach ($tags as $tag)
+			<div class="col-lg-2">
+				<div class="card card-body">
+					<div class="d-flex align-items-center justify-content-between">
+						<a href="{{ url('tags/' . $tag->slug) }}">
+							<span>
+								<i class="{{ $tag->image }} colored fa-lg mr-2"></i>
+								<span>{{ $tag->title }}</span>
+							</span>
+						</a>
+						<span class="badge badge-primary badge-pill">{{ $tag->questions->count() }}</span>
+					</div>
 				</div>
-				@endif
-				@if(session()->get('success'))
-				<div class="alert alert-success fixed-top">
-					{{ session()->get('success') }}
-				</div>
-				@endif
 			</div>
+			@endforeach
 		</div>
+		@endif
 		<div class="row">
 			<div class="col">
 				<list-new-questions :questions="{{ $questions }}"></list-new-questions>

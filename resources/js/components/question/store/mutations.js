@@ -7,6 +7,8 @@ const getQuestion = ({ list, news }, question_id) =>
 const updateOrCreateComment = (state, comment) => {
 	const question = getQuestion(state, comment.talk.question_id);
 
+	console.log(question.comments);
+
 	const comments = question.comments.find(
 		_comment => _comment.id == comment.id
 	);
