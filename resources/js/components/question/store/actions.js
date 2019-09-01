@@ -9,7 +9,7 @@ const addQuestion = async ({ commit }, obj) => {
 	return question;
 };
 
-const setQuestions = async ({ commit }, questions) =>
+const setQuestions = ({ commit }, questions) =>
 	commit('SET_QUESTIONS', questions);
 
 const setQuestion = ({ commit }, question) => commit('SET_QUESTION', question);

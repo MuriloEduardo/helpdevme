@@ -8,7 +8,7 @@
 		<div class="row mb-5">
 			<div class="col">
 				<div class="row">
-					<header class="header-site mb-5 p-5 bg-success shadow-sm">
+					<header class="header-site mb-5 p-5 bg-success shadow-sm w-100">
 						<div class="row">
 							<div class="col-lg-8 text-white">
 								<h1 class="display-4 pb-3">Help Dev - Compartilhando Conhecimento</h1>

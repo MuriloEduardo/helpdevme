@@ -1,9 +1,9 @@
 import store from './store';
 
 Echo.join('online')
-	.here(users => store.dispatch('SET_PRESENCE', users))
-	.joining(user => store.dispatch('JOINING_PRESENCE', user))
-	.leaving(user => store.dispatch('LEAVING_PRESENCE', user));
+	.here(users => store.dispatch('users/SET_PRESENCE', users))
+	.joining(user => store.dispatch('users/JOINING_PRESENCE', user))
+	.leaving(user => store.dispatch('users/LEAVING_PRESENCE', user));
 
 Echo.private('comments')
 	.listen('PrivateCommentSent', response =>

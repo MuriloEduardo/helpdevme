@@ -1,25 +1,24 @@
 /**
  * PRIVATE
  */
-const getQuestion = ({ list, news }, question_id) =>
-	[...list, ...news].find(question => question.id == question_id);
-
 const updateOrCreateComment = (state, comment) => {
-	const question = getQuestion(state, comment.talk.question_id);
-
-	console.log(question.comments);
-
-	const comments = question.comments.find(
-		_comment => _comment.id == comment.id
-	);
-
-	if (comments) {
-		question.comments = question.comments.map(_comment =>
-			_comment.id == comment.id ? comment : _comment
-		);
-	} else {
-		question.comments.push(comment);
-	}
+	['list', 'news'].forEach(type => {
+		state[type] = state[type].map(question => {
+			if (question.id == comment.talk.question_id) {
+				if (
+					question.comments.find(
+						_comment => _comment.id == comment.id
+					)
+				) {
+					question.comments = question.comments.filter(
+						_comment => comment.id != _comment.id
+					);
+				}
+				question.comments = [...question.comments, comment];
+			}
+			return question;
+		});
+	});
 };
 
 /**

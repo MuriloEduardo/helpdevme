@@ -35,11 +35,17 @@ class QuestionController extends Controller
 	 */
 	public function index()
 	{
-		$questions = Question::where('status', Question::status['analyzing'])
+		/**
+		 * Traz as questões que o usuário logado pode responder
+		 */
+		$questions = Question::with(['talks', 'comments', 'tags'])->where('status', Question::status['analyzing'])
 			->where('user_id', '!=', auth()->id())
 			->orderBy('updated_at', 'DESC')
 			->get();
 
+		/**
+		 * Traz as tags bombando
+		 */
 		$tags = Tag::whereHas('questions', function ($query) {
 			$query->where('status', Question::status['analyzing'])
 				->where('user_id', '!=', auth()->id());

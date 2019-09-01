@@ -5,10 +5,7 @@
 			<p class="lead">
 				<span>Conversa com</span>
 				<a :href="'/users/' + opposite.slug" class="badge badge-secondary">
-					<i
-						:class="(onlineFriends.find(user=>user.id===opposite.id))?'text-success':''"
-						class="fas fa-circle fa-xs"
-					></i>
+					<i :class="opposite_online ? 'text-success' : ''" class="fas fa-circle fa-xs"></i>
 					<span>{{ opposite.name }}</span>
 				</a>
 			</p>
@@ -164,7 +161,7 @@
 
 <script>
 import OutputPosts from './output-posts';
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
 	components: {
@@ -202,12 +199,15 @@ export default {
 
 			return question.user_ended == 1 && question.freelancer_ended == 1;
 		},
-		...mapState({
-			onlineFriends: state => state.users
+		...mapGetters({
+			getTalk: 'talks/getTalk',
+			getOnlineUser: 'users/getOnlineUser'
 		}),
-		...mapGetters('talks', ['getTalk']),
 		talk: function() {
 			return this.getTalk(this.talk_id);
+		},
+		opposite_online: function() {
+			return this.getOnlineUser(this.opposite.id);
 		}
 	},
 
