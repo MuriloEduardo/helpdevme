@@ -49,7 +49,7 @@
 		@endif
 		<div class="row">
 			<div class="col">
-				<list-new-questions :questions="{{ $questions }}"></list-new-questions>
+				<list-new-questions></list-new-questions>
 				@foreach($questions as $question)
 				@include('shared.questions.item', ['question' => $question])
 				@endforeach

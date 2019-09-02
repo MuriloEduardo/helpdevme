@@ -1,6 +1,11 @@
 /**
  * Question
  */
+
+const getQuestion = async ({ commit }, obj) => {
+	console.log('getQuestion');
+};
+
 const addQuestion = async ({ commit }, obj) => {
 	const question = await axios.post('/api/questions', obj);
 
@@ -9,8 +14,11 @@ const addQuestion = async ({ commit }, obj) => {
 	return question;
 };
 
-const setQuestions = ({ commit }, questions) =>
-	commit('SET_QUESTIONS', questions);
+const setQuestions = async ({ commit }) => {
+	const list = (await axios.get('/api/questions')).data.questions;
+
+	commit('SET_QUESTIONS', list);
+};
 
 const setQuestion = ({ commit }, question) => commit('SET_QUESTION', question);
 
@@ -46,6 +54,7 @@ const setTypingComment = ({ commit }, payload) =>
 	commit('SET_TYPING_COMMENT', payload);
 
 export default {
+	getQuestion,
 	addQuestion,
 	setQuestions,
 	setQuestion,

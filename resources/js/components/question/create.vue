@@ -14,19 +14,20 @@
 			/>
 		</div>
 		<div class="form-group">
-			<b-card no-body>
+			<div class="card card-body">
+				<quill-editor
+					ref="myTextEditor"
+					v-model="body"
+					:options="editorOption"
+					@blur="onEditorBlur($event)"
+					@focus="onEditorFocus($event)"
+					@ready="onEditorReady($event)"
+				></quill-editor>
+			</div>
+			<!-- <b-card no-body>
 				<b-tabs card>
 					<b-tab title="Escrever" active>
-						<b-card-text>
-							<quill-editor
-								ref="myTextEditor"
-								v-model="body"
-								:options="editorOption"
-								@blur="onEditorBlur($event)"
-								@focus="onEditorFocus($event)"
-								@ready="onEditorReady($event)"
-							></quill-editor>
-						</b-card-text>
+						<b-card-text></b-card-text>
 					</b-tab>
 					<b-tab title="Visualizar">
 						<b-card-text>
@@ -36,7 +37,7 @@
 						</b-card-text>
 					</b-tab>
 				</b-tabs>
-			</b-card>
+			</b-card>-->
 		</div>
 		<div class="form-group">
 			<multiselect
@@ -108,10 +109,10 @@ export default {
 				}
 			}
 		},
-		toastErrorTexts: {
-			title: 'Ops!',
-			body: 'Tente novamente de uma forma diferente!'
-		},
+		// toastErrorTexts: {
+		// 	title: 'Ops!',
+		// 	body: 'Tente novamente de uma forma diferente!'
+		// },
 		channel: Echo.private('newquestions')
 	}),
 	computed: {

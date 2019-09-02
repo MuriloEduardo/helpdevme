@@ -1,5 +1,5 @@
 <template>
-	<section class="py-3 border-top comment" :set="question = comment.talk.question">
+	<div class="py-3 border-top comment" :set="question = comment.talk.question">
 		<a :href="`/users/${comment.user.slug}`">
 			<span class="mr-2">
 				<img
@@ -57,7 +57,7 @@
 				class="btn btn-sm text-secondary"
 			>Conversar</a>
 		</div>
-	</section>
+	</div>
 </template>
 <script>
 export default {

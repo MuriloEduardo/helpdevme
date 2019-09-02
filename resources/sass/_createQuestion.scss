@@ -1,27 +1,4 @@
-.create-question {
-	button {
-		.avatar {
-			width: 55px;
-			height: 55px;
-		}
-
-		&:hover,
-		&:focus {
-			text-decoration: none;
-		}
-
-		&:not(:disabled) {
-			cursor: text;
-		}
-	}
-}
-
-#modal-create-question {
-	.avatar {
-		width: 65px;
-	}
-
-	.modal-header {
-		border-bottom: none;
-	}
+.ql-container {
+	font-family: $font-family-base !important;
+	font-size: $font-size-base !important;
 }

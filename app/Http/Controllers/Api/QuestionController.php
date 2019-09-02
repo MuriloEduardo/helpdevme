@@ -31,7 +31,7 @@ class QuestionController extends Controller
 	{
 		$questions = Question::with(['talks', 'comments', 'tags'])
 			->where('status', Question::status['analyzing'])
-			->where('user_id', '!=', auth()->id())
+			->orderBy('updated_at', 'DESC')
 			->get();
 
 		return response(['questions' => $questions]);

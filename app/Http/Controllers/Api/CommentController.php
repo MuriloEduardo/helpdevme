@@ -48,6 +48,32 @@ class CommentController extends Controller
 
 		$this->authorize('store-comment', $talk);
 
+		$post = Post::where([
+			'talk_id' => $talk->id,
+			'user_id' => auth()->id(),
+			'type' => $request->type
+		])->first();
+
+		if ($post) {
+			$post->body = $request->body;
+			$post->budget = $request->budget;
+			$post->read_at = null;
+
+			$post->save();
+		} else {
+			$post = new Post;
+			$post->body = $request->body;
+			$post->budget = $request->budget;
+			$post->read_at = null;
+			$post->talk_id = $talk->id;
+			$post->user_id = auth()->id();
+			$post->type = $request->type;
+
+			$post->save();
+
+			$post->talk->question->user->notify(new QuestionCommented($post));
+		}
+
 		$post = Post::updateOrCreate(
 			[
 				'talk_id' => $talk->id,
@@ -69,8 +95,6 @@ class CommentController extends Controller
 		broadcast(new PrivateCreatedTalks($post))->toOthers();
 		broadcast(new PrivateCommentSent($post))->toOthers();
 		broadcast(new PrivatePostSent($post))->toOthers();
-
-		$post->talk->question->user->notify(new QuestionCommented($post));
 
 		return response(['post' => $post]);
 	}

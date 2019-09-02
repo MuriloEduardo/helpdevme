@@ -39,7 +39,6 @@ class QuestionController extends Controller
 		 * Traz as questões que o usuário logado pode responder
 		 */
 		$questions = Question::with(['talks', 'comments', 'tags'])->where('status', Question::status['analyzing'])
-			->where('user_id', '!=', auth()->id())
 			->orderBy('updated_at', 'DESC')
 			->get();
 
