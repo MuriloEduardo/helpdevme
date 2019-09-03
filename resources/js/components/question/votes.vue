@@ -1,9 +1,13 @@
 <template>
-  <div class="d-flex flex-column align-items-center justify-content-center">
-    <button class="btn btn-sm btn-link" @click="upvote">Up</button>
-    <input type="number" readonly class="form-control-plaintext py-0 text-center" v-model="votes" />
-    <button class="btn btn-sm btn-link" @click="downvote">Down</button>
-  </div>
+	<div class="d-flex flex-column align-items-center justify-content-center">
+		<button class="btn btn-link" @click="upvote">
+			<small>Up</small>
+		</button>
+		<input type="number" readonly class="form-control-plaintext py-0 text-center" v-model="votes" />
+		<button class="btn btn-link" @click="downvote">
+			<small>Down</small>
+		</button>
+	</div>
 </template>
 
 <script>

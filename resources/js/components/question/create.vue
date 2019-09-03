@@ -2,6 +2,9 @@
 	<form action="/questions" method="POST">
 		<input type="hidden" name="_token" :value="csrf" />
 		<input type="hidden" name="body" :value="body" />
+		<select multiple="multiple" name="tags[]" class="d-none">
+			<option v-for="tag in tags" :value="tag.id" :key="tag.id" selected>{{ tag.title }}</option>
+		</select>
 		<div class="form-group">
 			<input
 				type="text"
@@ -15,29 +18,8 @@
 		</div>
 		<div class="form-group">
 			<div class="card card-body">
-				<quill-editor
-					ref="myTextEditor"
-					v-model="body"
-					:options="editorOption"
-					@blur="onEditorBlur($event)"
-					@focus="onEditorFocus($event)"
-					@ready="onEditorReady($event)"
-				></quill-editor>
+				<quill-editor ref="myTextEditor" v-model="body" :options="editorOption"></quill-editor>
 			</div>
-			<!-- <b-card no-body>
-				<b-tabs card>
-					<b-tab title="Escrever" active>
-						<b-card-text></b-card-text>
-					</b-tab>
-					<b-tab title="Visualizar">
-						<b-card-text>
-							<div class="quill-code">
-								<code class="hljs" v-html="contentCode"></code>
-							</div>
-						</b-card-text>
-					</b-tab>
-				</b-tabs>
-			</b-card>-->
 		</div>
 		<div class="form-group">
 			<multiselect
@@ -75,7 +57,6 @@
 </template>
 
 <script>
-// import { mapActions } from 'vuex';
 import Multiselect from 'vue-multiselect';
 
 import hljs from 'highlight.js';
@@ -109,10 +90,6 @@ export default {
 				}
 			}
 		},
-		// toastErrorTexts: {
-		// 	title: 'Ops!',
-		// 	body: 'Tente novamente de uma forma diferente!'
-		// },
 		channel: Echo.private('newquestions')
 	}),
 	computed: {
@@ -124,26 +101,9 @@ export default {
 		}
 	},
 	methods: {
-		onEditorBlur(editor) {
-			console.log('editor blur!', editor);
-		},
-		onEditorFocus(editor) {
-			console.log('editor focus!', editor);
-		},
-		onEditorReady(editor) {
-			console.log('editor ready!', editor);
-		},
-		// ...mapActions('questions', ['addQuestion']),
 		onTyping: _.debounce(function() {
 			this.channel.whisper('typing', this.user);
 		}, 1000),
-		// resetForm() {
-		// 	this.$bvModal.hide('modal-create-question');
-
-		// 	this.title = undefined;
-		// 	this.body = undefined;
-		// 	this.tags = [];
-		// },
 		addTag(newTag) {
 			axios
 				.post('/api/tags', {
@@ -161,44 +121,6 @@ export default {
 				this.options = response.data.tags;
 			});
 		}
-		// onSubmit() {
-		// 	this.loading = true;
-
-		// 	this.addQuestion({
-		// 		title: this.title,
-		// 		body: this.body,
-		// 		tags: this.tags.map(tag => tag.id)
-		// 	})
-		// 		.then(response => {
-		// 			this.loading = false;
-		// 			this.resetForm();
-
-		// 			this.$bvToast.toast('Sua pergunta foi criada!', {
-		// 				title: 'Sucesso!',
-		// 				variant: 'success',
-		// 				solid: true
-		// 			});
-		// 		})
-		// 		.catch(error => {
-		// 			const { response } = error;
-
-		// 			this.loading = false;
-
-		// 			if (response.status === 500) {
-		// 				if (response.data.message.includes('SQLSTATE[23000]')) {
-		// 					this.toastErrorTexts.body =
-		// 						'Já existe uma pergunta com esta título!';
-		// 				}
-		// 			}
-
-		// 			this.$bvToast.toast(this.toastErrorTexts.body, {
-		// 				title: this.toastErrorTexts.title,
-		// 				variant: 'danger',
-		// 				solid: true
-		// 			});
-		// 		});
-		// },
-		// stopTyping() {}
 	},
 	mounted() {
 		this.listTags();

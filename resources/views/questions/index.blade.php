@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Perguntas - Help Dev')
+@section('title', $title . ' - Help Dev')
 
 @section('content')
 <div class="row">
@@ -24,30 +24,30 @@
 <div class="row">
 	<div class="col">
 		<div class="mb-5">
-			<h1>Fique de olho!</h1>
+			<h1>{{ $title }}</h1>
 			<p class="lead">Aqui abaixo ficarão os pedidos de ajuda de outros programadores</p>
 		</div>
-		@if ($tags->count())
-		{{-- <h4 class="font-weight-light mb-3">Tag's</h4> --}}
-		<div class="row mb-5">
-			@foreach ($tags as $tag)
-			<div class="col-lg-2">
-				<div class="card card-body">
-					<div class="d-flex align-items-center justify-content-between">
-						<a href="{{ url('tags/' . $tag->slug) }}">
-							<span>
-								<i class="{{ $tag->image }} colored fa-lg mr-2"></i>
-								<span>{{ $tag->title }}</span>
-							</span>
-						</a>
-						<span class="badge badge-primary badge-pill">{{ $tag->questions->count() }}</span>
-					</div>
-				</div>
-			</div>
-			@endforeach
-		</div>
-		@endif
 		<div class="row">
+			@if ($tags->count())
+			<div class="col-lg-2">
+				<h4 class="font-weight-light">Linguagens</h4>
+				<ul class="list-group list-group-flush">
+					@foreach ($tags as $tag)
+					<li class="list-group-item">
+						<div class="d-flex align-items-center justify-content-between">
+							<a href="{{ url('tags/' . $tag->slug) }}">
+								<span>
+									<i class="{{ $tag->image }} colored fa-lg mr-2"></i>
+									<span>{{ $tag->title }}</span>
+								</span>
+							</a>
+							<span class="badge badge-primary badge-pill">{{ $tag->questions->count() }}</span>
+						</div>
+					</li>
+					@endforeach
+			</div>
+			</ul>
+			@endif
 			<div class="col">
 				<list-new-questions></list-new-questions>
 				@foreach($questions as $question)

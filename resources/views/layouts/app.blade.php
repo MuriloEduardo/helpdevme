@@ -130,7 +130,7 @@
 								</form>
 							</div>
 						</li>
-						<list-chat></list-chat>
+						<list-item></list-item>
 						@endguest
 					</ul>
 				</div>

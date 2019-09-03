@@ -6,13 +6,13 @@
 
 @section('content')
 <div class="row justify-content-center">
-	<div class="col-lg-10">
+	<div class="col">
 		@if(session()->get('success'))
 		<div class="alert alert-success">
 			{{ session()->get('success') }}
 		</div>
 		@endif
-		<h1>{{ $talk->question->title }}</h1>
+		<h1 class="d-none">{{ $talk->question->title }}</h1>
 		<private-chat :user="{{ auth()->user() }}" :talk_id="{{ $talk->id }}" :opposite="{{ $opposite }}">
 		</private-chat>
 	</div>

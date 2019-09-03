@@ -1,171 +1,183 @@
 <template>
-	<section v-if="talk">
-		<output-posts :talk_id="talk.id" @whisper="onWhisper"></output-posts>
-		<div class="d-flex align-items-center py-3">
-			<p class="lead">
-				<span>Conversa com</span>
-				<a :href="'/users/' + opposite.slug" class="badge badge-secondary">
-					<i :class="opposite_online ? 'text-success' : ''" class="fas fa-circle fa-xs"></i>
-					<span>{{ opposite.name }}</span>
-				</a>
-			</p>
-			<!-- Finalização da Questão -->
-			<div class="form-group px-4" v-if="!finished && talk.question.status == 2">
-				<b-button @click="$bvModal.show(`modal-scoped${talk.id}`)" variant="success">Finalizar Questão</b-button>
-
-				<!-- Modal -->
-				<b-modal :id="`modal-scoped${talk.id}`">
-					<template slot="modal-header" slot-scope="{ close }">
-						<h5 class="modal-title mr-3">Tem certeza disso?</h5>
-						<b-button @click="close()" class="close" variant="link">
-							<span aria-hidden="true">&times;</span>
-						</b-button>
-					</template>
-
-					<template slot="default">
-						<p class="font-weight-bold">Você está prestes a finalizar uma questão!</p>
-						<span>Após finalizada, ela não pode ser reaberta até que ambas as partes à finalizem. Ainda pode ser solicitado à arbitragem como medida de segurança.</span>
-					</template>
-
-					<template slot="modal-footer" slot-scope="{ cancel }">
-						<b-button variant="light" @click="cancel()">Cancelar</b-button>
-						<a :href="`/${talk.question.slug}/finalize`" class="btn btn-success">Aceitar</a>
-					</template>
-				</b-modal>
+	<div class="row">
+		<div class="col-lg-3">
+			<div class="sticky-top list-talks">
+				<list></list>
 			</div>
 		</div>
-		<div v-if="alertFinished && !conclusion">
-			<div class="card text-white bg-warning mb-3">
+		<div class="col-lg-8" v-if="talk">
+			<output-posts :talk_id="talk.id" @whisper="onWhisper"></output-posts>
+			<div class="d-flex align-items-center">
+				<header class="mb-4">
+					<h1>{{ talk.question.title }}</h1>
+					<p class="lead">
+						<span>Conversa com</span>
+						<a :href="'/users/' + opposite.slug" class="badge badge-secondary">
+							<i :class="opposite_online ? 'text-success' : ''" class="fas fa-circle fa-xs"></i>
+							<span>{{ opposite.name }}</span>
+						</a>
+					</p>
+				</header>
+				<!-- Finalização da Questão -->
+				<div class="form-group px-4" v-if="!finished && talk.question.status == 2">
+					<b-button @click="$bvModal.show(`modal-scoped${talk.id}`)" variant="success">Finalizar Questão</b-button>
+
+					<!-- Modal -->
+					<b-modal :id="`modal-scoped${talk.id}`">
+						<template slot="modal-header" slot-scope="{ close }">
+							<h5 class="modal-title mr-3">Tem certeza disso?</h5>
+							<b-button @click="close()" class="close" variant="link">
+								<span aria-hidden="true">&times;</span>
+							</b-button>
+						</template>
+
+						<template slot="default">
+							<p class="font-weight-bold">Você está prestes a finalizar uma questão!</p>
+							<span>Após finalizada, ela não pode ser reaberta até que ambas as partes à finalizem. Ainda pode ser solicitado à arbitragem como medida de segurança.</span>
+						</template>
+
+						<template slot="modal-footer" slot-scope="{ cancel }">
+							<b-button variant="light" @click="cancel()">Cancelar</b-button>
+							<a :href="`/${talk.question.slug}/finalize`" class="btn btn-success">Aceitar</a>
+						</template>
+					</b-modal>
+				</div>
+			</div>
+			<div v-if="alertFinished && !conclusion">
+				<div class="card text-white bg-warning mb-3">
+					<div class="card-body">
+						<h5 class="card-title">Alguém finalizou essa questão!</h5>
+						<p
+							class="card-text"
+						>Esperamos que tudo esteja bem e {{ opposite.name }} também finalize. Caso contrário ambos poderão solicitiar o processo de arbitragem.</p>
+					</div>
+					<div class="card-footer">
+						<button type="button" class="btn btn-sm btn-outline-light">Solicitar Arbitragem</button>
+						<!-- <button type="button" class="btn btn-sm btn-success">Continuar Trabalhando</button> -->
+					</div>
+				</div>
+			</div>
+			<!-- Fim da Finalização da Questão -->
+			<div class="card">
 				<div class="card-body">
-					<h5 class="card-title">Alguém finalizou essa questão!</h5>
-					<p
-						class="card-text"
-					>Esperamos que tudo esteja bem e {{ opposite.name }} também finalize. Caso contrário ambos poderão solicitiar o processo de arbitragem.</p>
-				</div>
-				<div class="card-footer">
-					<button type="button" class="btn btn-sm btn-outline-light">Solicitar Arbitragem</button>
-					<!-- <button type="button" class="btn btn-sm btn-success">Continuar Trabalhando</button> -->
-				</div>
-			</div>
-		</div>
-		<!-- Fim da Finalização da Questão -->
-		<div class="card">
-			<div class="card-body">
-				<div class="row">
-					<div class="col">
-						<div id="privateMessageBox">
-							<div class="d-flex flex-column">
-								<div v-for="(post, index) in talk.posts" :key="index" class="mb-2">
-									<div v-if="post.body">
-										<!-- Proposta Recusada -->
-										<div v-if="post.type==2 && post.status==1" class="text-center">
-											<span class="badge badge-pill py-2 px-5 badge-danger">{{ post.body }}</span>
-										</div>
-										<!-- Proposta Aceita -->
-										<div v-if="post.type==2 && post.status==2" class="text-center">
-											<span class="badge badge-pill py-2 px-5 badge-info">{{ post.body }}</span>
-										</div>
-										<!-- Pagamento Efetuado -->
-										<div v-if="post.type==2 && post.status==3" class="text-center">
-											<span class="badge badge-pill py-2 px-5 badge-success">{{ post.body }}</span>
-										</div>
-										<!-- Questão Finalizada -->
-										<div v-if="post.type==2 && post.status==4" class="text-center">
-											<span class="badge badge-pill py-2 px-5 badge-warning">{{ post.body }}</span>
-										</div>
-										<!-- Proposta -->
-										<div v-if="post.type!=2 && post.budget" class="card bg-light mb-5">
-											<div class="card-body">
-												<p class="card-text">
-													{{ post.body }}
-													<span class="text-success">{{ post.budget | currency }}</span>
-												</p>
+					<div class="row">
+						<div class="col">
+							<div id="privateMessageBox">
+								<div class="d-flex flex-column">
+									<div v-for="(post, index) in talk.posts" :key="index" class="mb-2">
+										<div v-if="post.body">
+											<!-- Proposta Recusada -->
+											<div v-if="post.type==2 && post.status==1" class="text-center">
+												<span class="badge badge-pill py-2 px-5 badge-danger">{{ post.body }}</span>
 											</div>
-											<!-- Não exibir se for quem enviou a proposta -->
-											<!-- Só mostrar se o usuario for quem recebeu a proposta, quem efetuou essa proposta não verá -->
-											<!-- Se for post de recusado esconde footer com ações do alerta de proposta -->
+											<!-- Proposta Aceita -->
+											<div v-if="post.type==2 && post.status==2" class="text-center">
+												<span class="badge badge-pill py-2 px-5 badge-info">{{ post.body }}</span>
+											</div>
+											<!-- Pagamento Efetuado -->
+											<div v-if="post.type==2 && post.status==3" class="text-center">
+												<span class="badge badge-pill py-2 px-5 badge-success">{{ post.body }}</span>
+											</div>
+											<!-- Questão Finalizada -->
+											<div v-if="post.type==2 && post.status==4" class="text-center">
+												<span class="badge badge-pill py-2 px-5 badge-warning">{{ post.body }}</span>
+											</div>
+											<!-- Proposta -->
+											<div v-if="post.type!=2 && post.budget" class="card bg-light mb-5">
+												<div class="card-body">
+													<p class="card-text">
+														{{ post.body }}
+														<span class="text-success">{{ post.budget | currency }}</span>
+													</p>
+												</div>
+												<!-- Não exibir se for quem enviou a proposta -->
+												<!-- Só mostrar se o usuario for quem recebeu a proposta, quem efetuou essa proposta não verá -->
+												<!-- Se for post de recusado esconde footer com ações do alerta de proposta -->
+												<div
+													class="card-footer"
+													v-if="user.id == talk.receiver_id && (post.status < 3 && post.status != 1)"
+												>
+													<!-- Proposta NÃO aceita ainda -->
+													<a
+														v-if="post.status==0"
+														:href="'/posts/accept/' + post.id"
+														class="btn btn-success"
+													>Aceitar</a>
+													<!-- Proposta aceita -->
+													<a v-if="post.status==2" :href="'/payments/' + post.id" class="btn btn-success">Pagar</a>
+													<!-- Proposta aceita OU proposta em analise -->
+													<a
+														v-if="post.status!=1"
+														:href="'/posts/refused/' + post.id"
+														class="btn btn-link btn-sm text-secondary"
+													>Recusar</a>
+												</div>
+											</div>
+											<!-- Post -->
 											<div
-												class="card-footer"
-												v-if="user.id == talk.receiver_id && (post.status < 3 && post.status != 1)"
+												v-if="post.type!=2 && !post.budget"
+												:class="user.id==post.user_id ? 'justify-content-end' : ''"
+												class="d-flex align-items-center"
 											>
-												<!-- Proposta NÃO aceita ainda -->
-												<a
-													v-if="post.status==0"
-													:href="'/posts/accept/' + post.id"
-													class="btn btn-success"
-												>Aceitar</a>
-												<!-- Proposta aceita -->
-												<a v-if="post.status==2" :href="'/payments/' + post.id" class="btn btn-success">Pagar</a>
-												<!-- Proposta aceita OU proposta em analise -->
-												<a
-													v-if="post.status!=1"
-													:href="'/posts/refused/' + post.id"
-													class="btn btn-link btn-sm text-secondary"
-												>Recusar</a>
+												<span v-if="user.id!=post.user_id">
+													<img
+														v-if="opposite.avatar_url"
+														width="25"
+														class="img-fluid avatar"
+														:src="opposite.avatar_url"
+														v-bind:alt="opposite.name"
+														v-bind:title="opposite.name"
+													/>
+													<i v-else class="fas fa-user-circle fa-lg"></i>
+												</span>
+												<span
+													class="badge badge-pill py-2 px-3 default ml-1 font-weight-normal"
+													:class="(user.id!==post.user_id)?'badge-secondary':'badge-primary'"
+												>{{ post.body }}</span>
 											</div>
-										</div>
-										<!-- Post -->
-										<div
-											v-if="post.type!=2 && !post.budget"
-											:class="user.id==post.user_id ? 'justify-content-end' : ''"
-											class="d-flex align-items-center"
-										>
-											<span v-if="user.id!=post.user_id">
-												<img
-													v-if="opposite.avatar_url"
-													width="25"
-													class="img-fluid avatar"
-													:src="opposite.avatar_url"
-													v-bind:alt="opposite.name"
-													v-bind:title="opposite.name"
-												/>
-												<i v-else class="fas fa-user-circle fa-lg"></i>
-											</span>
-											<span
-												class="badge badge-pill py-2 px-3 default ml-1 font-weight-normal"
-												:class="(user.id!==post.user_id)?'badge-secondary':'badge-primary'"
-											>{{ post.body }}</span>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div v-if="typing" class="text-muted d-flex">
-								{{ opposite.name }} está digitando
-								<span class="ellipsis"></span>
+								<div v-if="typing" class="text-muted d-flex">
+									{{ opposite.name }} está digitando
+									<span class="ellipsis"></span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div v-if="talk.status != 1" class="card-footer">
-				<form @submit.prevent="sendMessage">
-					<div class="input-group">
-						<textarea
-							class="form-control"
-							placeholder="Digite uma mensagem..."
-							v-model="body"
-							@keydown="onTyping"
-							required
-						></textarea>
-						<div class="input-group-append">
-							<button type="submit" class="btn btn-primary">
-								<i class="fas fa-paper-plane"></i>
-							</button>
+				<div v-if="talk.status != 1" class="card-footer">
+					<form @submit.prevent="sendMessage">
+						<div class="input-group">
+							<textarea
+								class="form-control"
+								placeholder="Digite uma mensagem..."
+								v-model="body"
+								@keydown="onTyping"
+								required
+							></textarea>
+							<div class="input-group-append">
+								<button type="submit" class="btn btn-primary">
+									<i class="fas fa-paper-plane"></i>
+								</button>
+							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
-	</section>
+	</div>
 </template>
 
 <script>
 import OutputPosts from './output-posts';
+import List from './list';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
 	components: {
-		OutputPosts
+		OutputPosts,
+		List
 	},
 
 	props: ['user', 'talk_id', 'opposite'],

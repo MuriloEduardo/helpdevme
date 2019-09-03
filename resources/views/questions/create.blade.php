@@ -5,6 +5,24 @@
 @section('content')
 <div class="row justify-content-center">
 	<div class="col-lg-9">
+		@if ($errors->any())
+		<div class="alert alert-danger">
+			<div class="d-flex justify-content-between">
+				<ul class="nav flex-column">
+					@foreach ($errors->all() as $error)
+					<li class="nav-item">{{ $error }}</li>
+					@endforeach
+				</ul>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+		@endif
+	</div>
+</div>
+<div class="row justify-content-center">
+	<div class="col-lg-9">
 		<div class="mb-5">
 			<h1>Solucione sua dúvida sobre programação!</h1>
 			<p class="lead">Faça seu pedido de ajuda, fique por dentro das perguntas e tag's que mais estão bombando

@@ -53,6 +53,7 @@ Vue.component('CComments', require('./components/comments'));
 Vue.component('OnlineUsers', require('./components/online-users'));
 
 Vue.component('Notifications', require('./components/notifications'));
+Vue.component('ListItem', require('./components/chat/list-item'));
 
 const app = new Vue({
 	store,

@@ -35,6 +35,8 @@ class QuestionController extends Controller
 	 */
 	public function index()
 	{
+		$title = 'Perguntas';
+
 		/**
 		 * Traz as questões que o usuário logado pode responder
 		 */
@@ -50,7 +52,7 @@ class QuestionController extends Controller
 				->where('user_id', '!=', auth()->id());
 		})->get();
 
-		return view('questions.index', compact('questions', 'tags'));
+		return view('questions.index', compact('questions', 'tags', 'title'));
 	}
 
 	/**
@@ -72,7 +74,7 @@ class QuestionController extends Controller
 	public function store(Request $request)
 	{
 		$request->validate([
-			'title' => 'required',
+			'title' => 'required|unique:questions',
 			'body' => 'required'
 		]);
 

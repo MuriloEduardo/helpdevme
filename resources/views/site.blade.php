@@ -11,20 +11,16 @@
 					<header class="header-site mb-5 p-5 bg-success shadow-sm w-100">
 						<div class="row">
 							<div class="col-lg-8 text-white">
-								<h1 class="display-4 pb-3">Help Dev - Compartilhando Conhecimento</h1>
-								<p class="lead py-3">Quantas vezes n&oacute;s Dev's ficamos desesperados
-									atr&aacute;s de uma
-									solu&ccedil;&atilde;o para uma d&uacute;vida?</p>
+								<h1 class="display-4 pb-3">Ganhe dinheiro e receba ajuda de outros dev's</h1>
+								<p class="lead py3">Consiga respotas rápidas e qualificadas naqueles momentos de sufoco
+									que todo desenvolvedor passa, ganhe recompensas por ajudar outros programadores em
+									apuros. Bem-vindo ao Help Dev, um jeito novo de contribuir financeiramente com a
+									comunidade.</p>
 								<div class="row">
-									<div class="col-lg-3">
-										<b-button @click="$bvModal.show('modal-create-question')" variant="link"
-											class="btn btn-light btn-block my-1 shadow">Pedir
-											Ajuda</b-button>
-									</div>
-									<div class="col-lg-4">
-										<a class="btn btn-primary btn-block my-1 shadow"
-											href="{{ route('questions.index') }}">Ajude
-											Alguém!</a>
+									<div class="col-lg-5">
+										<a class="btn btn-primary btn-block my-3 shadow"
+											href="{{ route('questions.index') }}">Ajude outros
+											programadores</a>
 									</div>
 								</div>
 							</div>
@@ -37,6 +33,12 @@
 				<div class="row">
 					<div class="col-lg-10 offset-1">
 						<article>
+							<div class="row flex-row-reverse">
+								<div class="row flex-row-reversecol-lg-6 py-4">Quantas vezes n&oacute;s Dev's ficamos
+									desesperados
+									atr&aacute;s de uma
+									solu&ccedil;&atilde;o para uma d&uacute;vida?</div>
+							</div>
 							<div class="row">
 								<div class="col-lg-6 py-4">No stackoverflow n&atilde;o encontramos algo
 									espec&iacute;fico e para fazer a
