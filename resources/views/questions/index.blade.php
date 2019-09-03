@@ -23,11 +23,7 @@
 </div>
 <div class="row">
 	<div class="col">
-		<div class="mb-5">
-			<h1>{{ $title }}</h1>
-			<p class="lead">Aqui abaixo ficarão os pedidos de ajuda de outros programadores</p>
-		</div>
-		<div class="row">
+		<div class="row justify-content-center">
 			@if ($tags->count())
 			<div class="col-lg-2">
 				<ul class="list-group list-group-flush">
@@ -44,10 +40,14 @@
 						</div>
 					</li>
 					@endforeach
+				</ul>
 			</div>
-			</ul>
 			@endif
 			<div class="col-lg-9">
+				<div class="mb-5">
+					<h1>{{ $title }}</h1>
+					<p class="lead">Aqui abaixo ficarão os pedidos de ajuda de outros programadores</p>
+				</div>
 				<list-new-questions></list-new-questions>
 				@foreach($questions as $question)
 				@include('shared.questions.item', ['question' => $question])
