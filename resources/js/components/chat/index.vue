@@ -12,7 +12,7 @@
 					<h1>{{ talk.question.title }}</h1>
 					<p class="lead">
 						<span>Conversa com</span>
-						<a :href="'/users/' + opposite.slug" class="badge badge-secondary">
+						<a :href="'/users/' + opposite.id" class="badge badge-secondary">
 							<i :class="opposite_online ? 'text-success' : ''" class="fas fa-circle fa-xs"></i>
 							<span>{{ opposite.name }}</span>
 						</a>
@@ -153,12 +153,14 @@
 								class="form-control"
 								placeholder="Digite uma mensagem..."
 								v-model="body"
-								@keydown="onTyping"
+								@keydown.exact="onTyping"
+								@keydown.enter.shift.exact="sendMessage"
 								required
 							></textarea>
 							<div class="input-group-append">
-								<button type="submit" class="btn btn-primary">
-									<i class="fas fa-paper-plane"></i>
+								<button type="submit" class="btn btn-primary" :disabled="loading">
+									<i v-if="!loading" class="fas fa-paper-plane"></i>
+									<span v-else class="ellipsis"></span>
 								</button>
 							</div>
 						</div>
@@ -186,7 +188,8 @@ export default {
 		return {
 			body: null,
 			timeOut: undefined,
-			typing: false
+			typing: false,
+			loading: false
 		};
 	},
 
@@ -238,15 +241,23 @@ export default {
 			this.$emit('typing');
 		},
 		sendMessage() {
+			this.loading = true;
+
 			this.sendPost({
 				type: 0, // message
 				body: this.body,
 				talk_id: this.talk.id,
 				question_id: this.talk.question.id,
 				receiver_id: this.talk.question.user_id
-			}).then(response => {
-				this.body = null;
-			});
+			})
+				.then(response => {
+					this.body = null;
+
+					this.loading = false;
+				})
+				.catch(() => {
+					this.loading = false;
+				});
 		}
 	}
 };

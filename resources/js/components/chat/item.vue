@@ -2,7 +2,7 @@
 	<div>
 		<a
 			class="list-group-item list-group-item-action flex-column align-items-start"
-			:class="getUnreadsTalk(talk.id) ? 'list-group-item-dark': ''"
+			:class="getUnreadsTalk(talk.id) ? 'list-group-item-unread': ''"
 			:href="'/talks/' + talk.id"
 		>
 			<output-posts :talk_id="talk.id" @receivedPost="onReceivedPost"></output-posts>

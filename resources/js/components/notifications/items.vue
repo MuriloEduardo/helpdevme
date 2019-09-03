@@ -3,13 +3,17 @@
 		<a
 			v-for="(notification, index) in notifications"
 			:key="index"
-			class="list-group-item list-group-item-action flex-column align-items-start"
+			class="list-group-item list-group-item-action flex-column align-items-start list-group-item-unread"
+			:class="notification.read_at ? 'list-group-item-unread': ''"
 			:set="post = notification.data.post"
 		>
 			<div class="d-flex justify-content-between align-items-center">
 				<a :href="'/' + post.talk.question.slug">
-					Novo comentário em
-					<b>{{ post.talk.question.title }}</b>
+					<span>
+						Novo comentário em
+						<b>{{ post.talk.question.title }}</b>
+						por {{ post.talk.user.name }}
+					</span>
 					<div v-if="post.budget" class="badge badge-success">{{ post.budget | currency }}</div>
 				</a>
 				<b-button

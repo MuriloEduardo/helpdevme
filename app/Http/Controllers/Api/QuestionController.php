@@ -108,19 +108,7 @@ class QuestionController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		Vote::updateOrCreate(
-			[
-				'question_id' => $id,
-				'user_id' => auth()->id()
-			],
-			[
-				'vote' => $request->vote
-			]
-		);
-
-		$votes = Vote::where('question_id', $id)->where('vote', 1)->count();
-
-		return response(['votes' => $votes]);
+		//
 	}
 
 	/**
@@ -132,5 +120,29 @@ class QuestionController extends Controller
 	public function destroy($id)
 	{
 		//
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function vote(Request $request, $id)
+	{
+		Vote::updateOrCreate(
+			[
+				'question_id' => $id,
+				'user_id' => auth()->id()
+			],
+			[
+				'vote' => $request->vote
+			]
+		);
+
+		$votes = Vote::where('question_id', $id)->where('vote', 1)->get();
+
+		return response(['votes' => $votes]);
 	}
 }

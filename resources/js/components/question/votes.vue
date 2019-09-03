@@ -1,12 +1,14 @@
 <template>
 	<div class="d-flex flex-column align-items-center justify-content-center">
-		<button class="btn btn-link" @click="upvote">
-			<small>Up</small>
+		<button class="btn btn-link" @click="vote">
+			<i class="far fa-heart"></i>
 		</button>
-		<input type="number" readonly class="form-control-plaintext py-0 text-center" v-model="votes" />
-		<button class="btn btn-link" @click="downvote">
-			<small>Down</small>
-		</button>
+		<input
+			type="number"
+			readonly
+			class="form-control-plaintext py-0 text-center"
+			v-model="votes.length"
+		/>
 	</div>
 </template>
 
@@ -19,15 +21,12 @@ export default {
 		};
 	},
 	methods: {
-		upvote() {
-			this.request(1);
-		},
-		downvote() {
-			this.request(0);
+		vote() {
+			this.request(1); // or 0
 		},
 		request(vote) {
 			axios
-				.patch('/api/questions/' + this.question.id, {
+				.patch('/api/questions/vote/' + this.question.id, {
 					vote: vote
 				})
 				.then(response => {

@@ -30,7 +30,6 @@
 		<div class="row">
 			@if ($tags->count())
 			<div class="col-lg-2">
-				<h4 class="font-weight-light">Linguagens</h4>
 				<ul class="list-group list-group-flush">
 					@foreach ($tags as $tag)
 					<li class="list-group-item">
@@ -48,7 +47,7 @@
 			</div>
 			</ul>
 			@endif
-			<div class="col">
+			<div class="col-lg-9">
 				<list-new-questions></list-new-questions>
 				@foreach($questions as $question)
 				@include('shared.questions.item', ['question' => $question])

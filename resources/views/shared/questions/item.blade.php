@@ -2,7 +2,7 @@
 	<div class="card-body">
 		<div class="row mb-4">
 			<div class="col flex-grow-0">
-				<votes-question :initi-votes="{{ count($question->votes) }}" :question="{{ $question }}">
+				<votes-question :initi-votes="{{ $question->votes }}" :question="{{ $question }}">
 				</votes-question>
 				<div class="p-1 mt-2 d-flex flex-column align-items-center">
 					<span>{{ $question->views->count() }}</span>

@@ -18,6 +18,7 @@ Route::resource('comments', 'Api\CommentController');
 Route::resource('tags', 'Api\TagController');
 
 Route::resource('questions', 'Api\QuestionController');
+Route::patch('questions/vote/{question_id}', 'Api\QuestionController@vote');
 
 Route::get('talks/all-read', 'Api\TalkController@markAllAsRead')->name('talks.allread');
 Route::resource('talks', 'Api\TalkController');

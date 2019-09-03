@@ -14,3 +14,7 @@
 .list-talks {
 	top: $nav-height + 48px;
 }
+
+.list-group-item-unread {
+	background-color: $gray-200;
+}
