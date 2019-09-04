@@ -30,6 +30,8 @@
 
 	<!-- User ID -->
 	<meta name="user-id" content="{{ Auth::id() }}">
+	
+	<meta name="google-site-verification" content="j4hiGSNESeVRy3lUqig5WHNGsa4DWGNLz5nkh2clCcg" />
 
 	<title>@yield('title')</title>
 
