@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Spatie\Sitemap\SitemapGenerator;
+use Spatie\Crawler\Crawler;
 
 class GenerateSitemap extends Command
 {
@@ -30,6 +31,9 @@ class GenerateSitemap extends Command
 	{
 		// modify this to your own needs
 		SitemapGenerator::create(config('app.url'))
+			->configureCrawler(function (Crawler $crawler) {
+				$crawler->ignoreRobots();
+			})
 			->writeToFile(public_path('sitemap.xml'));
 	}
 }

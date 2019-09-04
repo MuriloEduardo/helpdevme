@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Ganhe dinheiro e receba ajuda de outros dev's')
+@section('title', 'Ganhe dinheiro e receba ajuda de outros dev\'s')
 
 @section('main')
 <section>
