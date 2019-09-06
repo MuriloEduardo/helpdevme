@@ -29,7 +29,9 @@ class QuestionController extends Controller
 	 */
 	public function index()
 	{
-		$questions = Question::with(['talks', 'comments', 'tags'])
+		$questions = Question::with(['talks', 'comments', 'tags', 'votes' => function ($vote) {
+			$vote->where('vote', 1);
+		}])
 			->where('status', Question::status['analyzing'])
 			->orderBy('updated_at', 'DESC')
 			->get();

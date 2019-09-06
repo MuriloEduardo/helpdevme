@@ -63,6 +63,20 @@ const SET_TYPING_COMMENT = (state, { question, user_id }) => {
 	});
 };
 
+/**
+ * Votes
+ */
+const SET_VOTE = (state, { votes, question_id }) => {
+	['list', 'news'].forEach(type => {
+		state[type] = state[type].map(question => {
+			if (question.id == question_id) {
+				question.votes = votes;
+			}
+			return question;
+		});
+	});
+};
+
 export default {
 	ADD_QUESTION,
 	SET_QUESTIONS,
@@ -71,5 +85,6 @@ export default {
 	STOP_TYPING_QUESTION,
 	ADD_COMMENT,
 	SET_COMMENT,
-	SET_TYPING_COMMENT
+	SET_TYPING_COMMENT,
+	SET_VOTE
 };

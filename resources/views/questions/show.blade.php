@@ -8,11 +8,11 @@
 		<article>
 			<header class="row mb-4">
 				<div class="col flex-grow-0">
-					<votes-question :initi-votes="{{ count($question->votes) }}" :question="{{ $question }}">
+					<votes-question :question_id="{{ $question->id }}">
 					</votes-question>
-					<div class="p-1 mt-2 border border-info text-info rounded d-flex flex-column align-items-center">
+					<div class="p-1 mt-2 d-flex flex-column align-items-center">
 						<span>{{ $question->views->count() }}</span>
-						<small>views</small>
+						<small>Visualizaç{{ $question->views->count() == 1 ? 'ão' : 'ões' }}</small>
 					</div>
 				</div>
 				<div class="col">
