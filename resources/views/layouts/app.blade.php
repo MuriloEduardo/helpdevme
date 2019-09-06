@@ -30,16 +30,18 @@
 
 	<!-- User ID -->
 	<meta name="user-id" content="{{ Auth::id() }}">
-	
+
 	<meta name="google-site-verification" content="j4hiGSNESeVRy3lUqig5WHNGsa4DWGNLz5nkh2clCcg" />
 
 	<title>@yield('title')</title>
 
 	<!-- Scripts -->
-	<script src="{{ asset('js/app.js') }}" defer></script>
+	<script src="{{ mix('js/manifest.js') }}" defer></script>
+	<script src="{{ mix('js/vendor.js') }}" defer></script>
+	<script src="{{ mix('js/app.js') }}" defer></script>
 
 	<!-- Styles -->
-	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body class="bg-light h-100">
