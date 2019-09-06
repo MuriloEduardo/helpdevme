@@ -1,11 +1,6 @@
 /**
  * Question
  */
-
-const getQuestion = async ({ commit }, obj) => {
-	console.log('getQuestion');
-};
-
 const addQuestion = async ({ commit }, obj) => {
 	const question = await axios.post('/api/questions', obj);
 
@@ -53,8 +48,18 @@ const setComment = ({ commit }, obj) => commit('SET_COMMENT', obj);
 const setTypingComment = ({ commit }, payload) =>
 	commit('SET_TYPING_COMMENT', payload);
 
+/**
+ * Votes
+ */
+const setVote = async ({ commit }, { question_id, vote }) => {
+	const votes = (await axios.patch(`/api/questions/vote/${question_id}`, {
+		vote
+	})).data.votes;
+
+	commit('SET_VOTE', { votes, question_id });
+};
+
 export default {
-	getQuestion,
 	addQuestion,
 	setQuestions,
 	setQuestion,
@@ -62,5 +67,6 @@ export default {
 	stopTypingQuestion,
 	addComment,
 	setComment,
-	setTypingComment
+	setTypingComment,
+	setVote
 };
