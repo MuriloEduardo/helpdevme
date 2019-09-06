@@ -40,9 +40,13 @@ class QuestionController extends Controller
 		/**
 		 * Traz as questões que o usuário logado pode responder
 		 */
-		$questions = Question::with(['talks', 'comments', 'tags'])->where('status', Question::status['analyzing'])
+		$questions = Question::with(['talks', 'comments', 'tags'])
+			->where('status', Question::status['analyzing'])
 			->orderBy('updated_at', 'DESC')
-			->get();
+			->get()
+			->sortByDesc(function ($question) {
+				return $question->comments->count();
+			});
 
 		/**
 		 * Traz as tags bombando

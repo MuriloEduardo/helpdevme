@@ -12,7 +12,7 @@
 						<div class="row">
 							<div class="col-lg-8 text-white">
 								<h1 class="display-4 pb-3">Ganhe dinheiro e receba ajuda de outros dev's</h1>
-								<p class="lead py3">Consiga respotas rápidas e qualificadas naqueles momentos de sufoco
+								<p class="lead py3">Consiga respostas rápidas e qualificadas naqueles momentos de sufoco
 									que todo desenvolvedor passa, ganhe recompensas por ajudar outros programadores em
 									apuros. Bem-vindo ao Help Dev, um jeito novo de contribuir financeiramente com a
 									comunidade.</p>
