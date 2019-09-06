@@ -40,7 +40,7 @@ class QuestionController extends Controller
 		/**
 		 * Traz as questões que o usuário logado pode responder
 		 */
-		$questions = Question::with(['talks', 'comments', 'tags'])
+		$questions = Question::with(['talks', 'comments', 'tags', 'votes', 'views'])
 			->where('status', Question::status['analyzing'])
 			->orderBy('updated_at', 'DESC')
 			->get()
@@ -92,7 +92,7 @@ class QuestionController extends Controller
 
 		$question->tags()->sync($request->tags);
 
-		$question->load('comments', 'tags', 'user');
+		$question->load('comments', 'tags', 'user', 'votes', 'views');
 
 		broadcast(new NewQuestionsEvent($question))->toOthers();
 
