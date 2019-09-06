@@ -8,7 +8,7 @@
 		<div class="form-group">
 			<input
 				type="text"
-				class="form-control form-control-lg"
+				class="form-control"
 				name="title"
 				v-model="title"
 				placeholder="Qual sua dúvida sobre programação?"
@@ -24,14 +24,11 @@
 		<div class="form-group">
 			<multiselect
 				v-model="tags"
-				tag-placeholder="Adicione isto como nova tag"
-				placeholder="Pesquise ou adicione uma tag"
+				placeholder="Sobre qual linguagem de programação é seu pedido de ajuda?"
 				label="title"
 				track-by="id"
 				:options="options"
 				:multiple="true"
-				:taggable="true"
-				@tag="addTag"
 			>
 				<template slot="option" slot-scope="props">
 					<div class="d-flex align-items-center">
@@ -45,7 +42,7 @@
 		</div>
 		<div class="form-row justify-content-end mt-5">
 			<div class="col-lg-3">
-				<button type="submit" class="btn btn-success btn-lg btn-block">
+				<button type="submit" class="btn btn-success btn-block">
 					<div class="d-flex justify-content-center">
 						<span v-if="!loading">Enviar</span>
 						<span v-else class="ellipsis"></span>
@@ -71,7 +68,7 @@ export default {
 		csrf: document
 			.querySelector('meta[name="csrf-token"]')
 			.getAttribute('content'),
-		title: undefined,
+		title: '',
 		body: '',
 		loading: false,
 		tags: [],
@@ -90,7 +87,7 @@ export default {
 				}
 			}
 		},
-		channel: Echo.private('newquestions')
+		channel: undefined
 	}),
 	computed: {
 		editor() {
@@ -104,18 +101,6 @@ export default {
 		onTyping: _.debounce(function() {
 			this.channel.whisper('typing', this.user);
 		}, 1000),
-		addTag(newTag) {
-			axios
-				.post('/api/tags', {
-					title: newTag
-				})
-				.then(response => {
-					let tag = response.data.tag;
-
-					this.options.push(tag);
-					this.tags.push(tag);
-				});
-		},
 		listTags() {
 			axios.get('/api/tags').then(response => {
 				this.options = response.data.tags;
@@ -124,10 +109,7 @@ export default {
 	},
 	mounted() {
 		this.listTags();
-
-		this.$root.$on('bv::modal::hidden', () =>
-			this.channel.whisper('stop-typing', this.user)
-		);
+		this.channel = Echo.private('newquestions');
 	}
 };
 </script>
