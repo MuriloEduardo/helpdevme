@@ -1,7 +1,7 @@
 import store from './store';
 
 Echo.join('online')
-	.here(users => store.dispatch('users/SET_PRESENCE', users))
+	.here(users => store.dispatch('users/setPresence', users))
 	.joining(user => store.dispatch('users/JOINING_PRESENCE', user))
 	.leaving(user => store.dispatch('users/LEAVING_PRESENCE', user));
 

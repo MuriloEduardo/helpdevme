@@ -1,4 +1,4 @@
-const SET_PRESENCE = ({ commit }, users) => commit('SET_PRESENCE', users);
+const setPresence = ({ commit }, users) => commit('SET_PRESENCE', users);
 
 const LEAVING_PRESENCE = ({ commit }, user) => commit('LEAVING_PRESENCE', user);
 
@@ -21,7 +21,7 @@ const openChat = ({ commit }, receiver_id) => {
 };
 
 export default {
-	SET_PRESENCE,
+	setPresence,
 	LEAVING_PRESENCE,
 	JOINING_PRESENCE,
 	openChat

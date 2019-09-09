@@ -35,11 +35,6 @@
 
 	<title>@yield('title')</title>
 
-	<!-- Scripts -->
-	<script src="{{ mix('js/manifest.js') }}" defer></script>
-	<script src="{{ mix('js/vendor.js') }}" defer></script>
-	<script src="{{ mix('js/app.js') }}" defer></script>
-
 	<!-- Styles -->
 	<link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
@@ -82,19 +77,18 @@
 						<!-- Authentication Links -->
 						@guest
 						<li class="nav-item">
+							<a class="btn text-white btn-success px-5 my-1 mx-3"
+								href="{{ route('questions.create') }}">Publique uma questão</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" href="{{ route('login') }}">@lang('layouts.navbar.login')</a>
 						</li>
 						<li class="nav-item">
 							@if (Route::has('register'))
-							<a class="btn text-white btn-success shadow px-5 my-1 mx-3"
-								href="{{ route('register') }}">@lang('layouts.navbar.register')</a>
+							<a class="nav-link" href="{{ route('register') }}">@lang('layouts.navbar.register')</a>
 							@endif
 						</li>
 						@else
-						<li class="nav-item">
-							<a class="btn text-white btn-success px-5 my-1 mx-3"
-								href="{{ route('questions.create') }}">Pedir Ajuda</a>
-						</li>
 						<notifications></notifications>
 						<li class="nav-item dropdown">
 							<a id="navbarDropdown"
@@ -153,5 +147,10 @@
 		</footer>
 	</div>
 </body>
+
+<!-- Scripts -->
+<script src="{{ mix('js/manifest.js') }}" defer></script>
+<script src="{{ mix('js/vendor.js') }}" defer></script>
+<script src="{{ mix('js/app.js') }}" defer></script>
 
 </html>

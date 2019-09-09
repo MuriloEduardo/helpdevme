@@ -32,10 +32,7 @@ class QuestionController extends Controller
 		$questions = Question::with(['talks', 'comments', 'tags', 'votes', 'views'])
 			->where('status', Question::status['analyzing'])
 			->orderBy('updated_at', 'DESC')
-			->get()
-			->sortByDesc(function ($question) {
-				return $question->comments->count();
-			});
+			->get();
 
 		return response(['questions' => $questions]);
 	}
