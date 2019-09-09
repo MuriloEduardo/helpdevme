@@ -1,7 +1,7 @@
 <template>
-	<div class="d-flex flex-column align-items-center justify-content-center">
+	<div class="d-flex flex-column align-items-center justify-content-center" v-if="votes">
 		<button class="btn btn-link" @click="vote">
-			<i class="far fa-heart"></i>
+			<i class="fa-heart" :class="user_vote.length ? 'fas' : 'far'"></i>
 		</button>
 		<input
 			type="number"
@@ -13,25 +13,27 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
-	props: ['question', 'initi-votes'],
-	data() {
-		return {
-			votes: this.initiVotes
-		};
-	},
+	props: ['question_id'],
+
 	methods: {
 		vote() {
-			this.request(1); // or 0
+			this.setVote({
+				question_id: this.question_id,
+				vote: this.user_vote.length ? 0 : 1
+			});
 		},
-		request(vote) {
-			axios
-				.patch('/api/questions/vote/' + this.question.id, {
-					vote: vote
-				})
-				.then(response => {
-					this.votes = response.data.votes;
-				});
+		...mapActions('questions', ['setVote'])
+	},
+	computed: {
+		...mapGetters('questions', ['getVotes', 'getUserVote']),
+		votes: function() {
+			return this.getVotes(this.question_id);
+		},
+		user_vote: function() {
+			return this.getUserVote(this.question_id);
 		}
 	}
 };

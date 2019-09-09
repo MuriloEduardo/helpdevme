@@ -2,11 +2,11 @@
 	<div class="card-body">
 		<div class="row mb-4">
 			<div class="col flex-grow-0">
-				<votes-question :initi-votes="{{ $question->votes }}" :question="{{ $question }}">
+				<votes-question :question_id="{{ $question->id }}">
 				</votes-question>
 				<div class="p-1 mt-2 d-flex flex-column align-items-center">
 					<span>{{ $question->views->count() }}</span>
-					<small>Visualizações</small>
+					<small>Visualizaç{{ $question->views->count() == 1 ? 'ão' : 'ões' }}</small>
 				</div>
 			</div>
 			<div class="col">

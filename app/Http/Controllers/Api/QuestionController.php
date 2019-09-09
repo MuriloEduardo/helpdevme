@@ -29,10 +29,13 @@ class QuestionController extends Controller
 	 */
 	public function index()
 	{
-		$questions = Question::with(['talks', 'comments', 'tags'])
+		$questions = Question::with(['talks', 'comments', 'tags', 'votes', 'views'])
 			->where('status', Question::status['analyzing'])
 			->orderBy('updated_at', 'DESC')
-			->get();
+			->get()
+			->sortByDesc(function ($question) {
+				return $question->comments->count();
+			});
 
 		return response(['questions' => $questions]);
 	}
@@ -70,7 +73,7 @@ class QuestionController extends Controller
 
 		$question->tags()->sync($request->tags);
 
-		$question->load('comments', 'tags', 'user');
+		$question->load('comments', 'tags', 'user', 'votes', 'views');
 
 		broadcast(new NewQuestionsEvent($question))->toOthers();
 

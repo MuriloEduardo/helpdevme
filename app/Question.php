@@ -96,7 +96,8 @@ class Question extends Model
 
 	public function votes()
 	{
-		return $this->hasMany('App\Vote');
+		return $this->hasMany('App\Vote')
+			->where('vote', 1);
 	}
 
 	public function views()
