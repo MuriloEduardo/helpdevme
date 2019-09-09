@@ -557,13 +557,13 @@
             "authors": [
                 {
                     "name": "Neuman Vong",
-                    "role": "Developer",
-                    "email": "neuman+pear@twilio.com"
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
                 },
                 {
                     "name": "Anant Narayanan",
-                    "role": "Developer",
-                    "email": "anant@php.net"
+                    "email": "anant@php.net",
+                    "role": "Developer"
                 }
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
@@ -1638,15 +1638,15 @@
             "authors": [
                 {
                     "name": "Alex Bilbie",
-                    "role": "Developer",
                     "email": "hello@alexbilbie.com",
-                    "homepage": "http://www.alexbilbie.com"
+                    "homepage": "http://www.alexbilbie.com",
+                    "role": "Developer"
                 },
                 {
                     "name": "Andy Millington",
-                    "role": "Developer",
                     "email": "andrew@noexceptions.io",
-                    "homepage": "https://www.noexceptions.io"
+                    "homepage": "https://www.noexceptions.io",
+                    "role": "Developer"
                 }
             ],
             "description": "A lightweight and powerful OAuth 2.0 authorization and resource server library with support for all the core specification grants. This library will allow you to secure your API with OAuth and allow your applications users to approve apps that want to access their data from your API.",
@@ -2928,26 +2928,26 @@
         },
         {
             "name": "spatie/browsershot",
-            "version": "3.26.0",
+            "version": "3.32.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/browsershot.git",
-                "reference": "42dd2120577d9a4c6937773d7a233fffe72a06c7"
+                "reference": "6aa8750308a0473d1e3cc079e698b78f9495e6d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/browsershot/zipball/42dd2120577d9a4c6937773d7a233fffe72a06c7",
-                "reference": "42dd2120577d9a4c6937773d7a233fffe72a06c7",
+                "url": "https://api.github.com/repos/spatie/browsershot/zipball/6aa8750308a0473d1e3cc079e698b78f9495e6d7",
+                "reference": "6aa8750308a0473d1e3cc079e698b78f9495e6d7",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1",
-                "spatie/image": "^1.4",
+                "spatie/image": "^1.5.3",
                 "spatie/temporary-directory": "^1.1",
-                "symfony/process": "^3.0|^4.0"
+                "symfony/process": "^4.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.1|^7.0",
+                "phpunit/phpunit": "^6.1|^7.5",
                 "spatie/phpunit-snapshot-assertions": "^1.0"
             },
             "type": "library",
@@ -2980,7 +2980,7 @@
                 "screenshot",
                 "webpage"
             ],
-            "time": "2018-10-18T17:24:07+00:00"
+            "time": "2019-08-16T08:36:39+00:00"
         },
         {
             "name": "spatie/crawler",
@@ -3043,20 +3043,21 @@
         },
         {
             "name": "spatie/image",
-            "version": "1.5.2",
+            "version": "1.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/image.git",
-                "reference": "d4cb6afff1b98fd6e17396d91e0e584c3d91bb23"
+                "reference": "19ed0a6322e3f700d40d5b84b05c76b58323385c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image/zipball/d4cb6afff1b98fd6e17396d91e0e584c3d91bb23",
-                "reference": "d4cb6afff1b98fd6e17396d91e0e584c3d91bb23",
+                "url": "https://api.github.com/repos/spatie/image/zipball/19ed0a6322e3f700d40d5b84b05c76b58323385c",
+                "reference": "19ed0a6322e3f700d40d5b84b05c76b58323385c",
                 "shasum": ""
             },
             "require": {
-                "league/glide": "^1.2",
+                "ext-exif": "*",
+                "league/glide": "^1.4",
                 "php": "^7.0",
                 "spatie/image-optimizer": "^1.0",
                 "spatie/temporary-directory": "^1.0.0",
@@ -3091,7 +3092,7 @@
                 "image",
                 "spatie"
             ],
-            "time": "2018-05-05T21:44:52+00:00"
+            "time": "2019-08-28T12:40:25+00:00"
         },
         {
             "name": "spatie/image-optimizer",
@@ -3189,9 +3190,9 @@
             "authors": [
                 {
                     "name": "Freek Van der Herten",
+                    "role": "Developer",
                     "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
+                    "homepage": "https://spatie.be"
                 }
             ],
             "description": "Create and generate sitemaps with ease",
@@ -3282,9 +3283,9 @@
             "authors": [
                 {
                     "name": "Alex Vanderbist",
+                    "role": "Developer",
                     "email": "alex@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
+                    "homepage": "https://spatie.be"
                 }
             ],
             "description": "Easily create, use and destroy temporary directories",
@@ -5503,18 +5504,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "role": "Developer",
-                    "email": "sebastian@phpeople.de"
+                    "email": "sebastian@phpeople.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "Developer",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "Developer"
                 }
             ],
             "description": "Library for handling version information and constraints",
@@ -5785,8 +5786,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -6670,8 +6671,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",

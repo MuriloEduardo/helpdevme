@@ -1,6 +1,6 @@
 <template>
 	<div class="py-3 border-top comment" :set="question = comment.talk.question">
-		<a :href="`/users/${comment.user.slug}`">
+		<a :href="`/users/${comment.user.id}`">
 			<span class="mr-2">
 				<img
 					v-if="comment.user.avatar_url"
