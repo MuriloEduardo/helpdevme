@@ -8,7 +8,7 @@ use App\Vote;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Events\NewQuestionsEvent;
+use Illuminate\Support\Facades\Storage;
 
 class QuestionController extends Controller
 {
@@ -125,5 +125,18 @@ class QuestionController extends Controller
 		$votes = Vote::where('question_id', $id)->where('vote', 1)->get();
 
 		return response(['votes' => $votes]);
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function uploadImages(Request $request)
+	{
+		$path = $request->file('image')->storePublicly('questions');
+
+		return response(['path' => Storage::url($path)]);
 	}
 }

@@ -17,6 +17,21 @@ const setQuestions = async ({ commit }) => {
 
 const setQuestion = ({ commit }, question) => commit('SET_QUESTION', question);
 
+const uploadImages = ({ commit }, form) => {
+	return new Promise((resolve, reject) => {
+		axios
+			.post('/api/questions/upload-images', form, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			})
+			.then(
+				response => resolve(response.data.path),
+				error => reject(error)
+			);
+	});
+};
+
 /**
  * Comments
  */
@@ -57,6 +72,7 @@ export default {
 	addQuestion,
 	setQuestions,
 	setQuestion,
+	uploadImages,
 	openFormComment,
 	addComment,
 	setComment,

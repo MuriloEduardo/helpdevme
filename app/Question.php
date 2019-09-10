@@ -11,7 +11,8 @@ class Question extends Model
 {
 	protected $appends = [
 		'published',
-		'status_transform'
+		'status_transform',
+		'image_url'
 	];
 
 	protected $fillable = [
@@ -62,6 +63,9 @@ class Question extends Model
 			'text' => __('questions.status.' . $status)
 		];
 	}
+
+	public function getImageUrlAttribute()
+	{ }
 
 	public function getPublishedAttribute()
 	{

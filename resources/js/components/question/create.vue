@@ -2,7 +2,8 @@
 	<form action="/questions" method="POST">
 		<input type="hidden" name="_token" :value="csrf" />
 		<input type="hidden" name="body" :value="body" />
-		<select multiple="multiple" name="tags[]" class="d-none">
+		<input type="file" id="getFile" @change="uploadFunction($event)" hidden />
+		<select multiple="multiple" name="tags[]" hidden>
 			<option v-for="tag in tags" :value="tag.id" :key="tag.id" selected>{{ tag.title }}</option>
 		</select>
 		<div class="form-group pb-3">
@@ -17,7 +18,7 @@
 		</div>
 		<div class="form-group">
 			<div class="card card-body">
-				<quill-editor ref="myTextEditor" v-model="body" :options="editorOption"></quill-editor>
+				<quill-editor ref="bodyEditor" v-model="body" :options="editorOption"></quill-editor>
 			</div>
 		</div>
 		<div class="row">
@@ -67,6 +68,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Multiselect from 'vue-multiselect';
 
 import hljs from 'highlight.js';
@@ -89,12 +91,20 @@ export default {
 		editorOption: {
 			placeholder: 'De mais informações sobre sua perguntas',
 			modules: {
-				toolbar: [
-					['bold', 'italic', 'underline', 'strike'],
-					['blockquote', 'code-block'],
-					[{ list: 'ordered' }, { list: 'bullet' }],
-					['link', 'image']
-				],
+				toolbar: {
+					container: [
+						['bold', 'italic', 'underline', 'strike'],
+						['blockquote', 'code-block'],
+						[{ list: 'ordered' }, { list: 'bullet' }],
+						['link', 'image'],
+						['clean']
+					],
+					handlers: {
+						image: function() {
+							document.getElementById('getFile').click();
+						}
+					}
+				},
 				syntax: {
 					highlight: text => hljs.highlightAuto(text).value
 				}
@@ -104,17 +114,54 @@ export default {
 	}),
 	computed: {
 		editor() {
-			return this.$refs.myTextEditor.quill;
+			return this.$refs.bodyEditor.quill;
 		},
 		contentCode() {
 			return hljs.highlightAuto(this.body).value;
 		}
 	},
 	methods: {
+		...mapActions('questions', ['uploadImages']),
 		listTags() {
 			axios.get('/api/tags').then(response => {
 				this.options = response.data.tags;
 			});
+		},
+		uploadFunction(e) {
+			const quill = this.$refs.bodyEditor.quill;
+			const image = e.target.files[0];
+
+			let form = new FormData();
+			form.append('image', image);
+
+			// Save current cursor state
+			const range = quill.getSelection(true);
+
+			// Insert temporary loading placeholder image
+			quill.insertEmbed(range.index, 'image', '/images/preloader.svg');
+
+			// Move cursor to right side of image (easier to continue typing)
+			quill.setSelection(range.index + 1);
+
+			// Upload image to server
+			this.uploadImages(form)
+				.then(path => {
+					// Remove placeholder image
+					quill.deleteText(range.index, 1);
+
+					// Insert uploaded image
+					quill.insertEmbed(range.index, 'image', path);
+				})
+				.catch(e => {
+					this.$bvToast.toast(
+						'Tente novamente de uma forma diferente!',
+						{
+							title: 'Algo deu errado!',
+							variant: 'danger',
+							solid: true
+						}
+					);
+				});
 		}
 	},
 	mounted() {
