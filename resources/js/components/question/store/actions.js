@@ -39,6 +39,9 @@ const addComment = ({ commit }, obj) => {
 
 const setComment = ({ commit }, obj) => commit('SET_COMMENT', obj);
 
+const openFormComment = ({ commit }, question_id) =>
+	commit('OPEN_FORM_COMMENT', question_id);
+
 /**
  * Votes
  */
@@ -54,6 +57,7 @@ export default {
 	addQuestion,
 	setQuestions,
 	setQuestion,
+	openFormComment,
 	addComment,
 	setComment,
 	setVote

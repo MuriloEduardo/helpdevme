@@ -1,11 +1,11 @@
 <template>
-	<form @submit.prevent="onSubmit">
+	<form @submit.prevent="onSubmit" v-if="formComments">
 		<b-input-group class="border rounded-pill p-1 bg-white">
 			<b-form-input
-				@keydown="onTyping"
 				class="border-0"
 				placeholder="Oi, eu sei solucionar isso!"
 				v-model="body"
+				autofocus
 				required
 			></b-form-input>
 
@@ -18,18 +18,16 @@
 					slot="append"
 				>
 					<template slot="button-content">
-						<i v-if="!budget" class="fas fa-dollar-sign"></i>
+						<div v-if="!budget" class="d-flex align-items-center">
+							<i class="fas fa-dollar-sign mr-2"></i>
+							<small>Proposta</small>
+						</div>
 						<span v-else>{{ budget | currency }}</span>
 					</template>
 					<b-dropdown-form>
 						<b-form-group label="Orçamento" label-for="dropdown-form-budget" @submit.stop.prevent>
 							<b-input-group prepend="R$">
-								<b-form-input
-									id="dropdown-form-budget"
-									v-model="budget"
-									@keydown="onTyping"
-									placeholder="2,50"
-								></b-form-input>
+								<b-form-input id="dropdown-form-budget" v-model="budget" placeholder="2,50"></b-form-input>
 							</b-input-group>
 						</b-form-group>
 					</b-dropdown-form>
@@ -43,24 +41,18 @@
 	</form>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
 	props: ['question'],
 	data() {
 		return {
 			loading: false,
-			body: undefined,
-			budget: undefined
+			body: '',
+			budget: ''
 		};
 	},
 	methods: {
-		onTyping: _.debounce(function() {
-			Echo.private('comments').whisper('typing', {
-				question: this.question,
-				user_id: this.$userId
-			});
-		}, 1000),
 		resetForm() {
 			this.body = undefined;
 			this.budget = undefined;
@@ -99,6 +91,14 @@ export default {
 				});
 		},
 		...mapActions('questions', ['addComment'])
+	},
+	computed: {
+		...mapGetters({
+			getFormComments: 'questions/getFormComments'
+		}),
+		formComments: function() {
+			return this.getFormComments(this.question.id);
+		}
 	}
 };
 </script>

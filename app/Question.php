@@ -52,7 +52,7 @@ class Question extends Model
 				$class = 'badge-success';
 				break;
 			default:
-				$class = 'badge-secondary';
+				$class = 'badge-warning';
 				break;
 		}
 

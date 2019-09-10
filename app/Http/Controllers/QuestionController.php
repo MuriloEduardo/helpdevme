@@ -35,7 +35,7 @@ class QuestionController extends Controller
 	 */
 	public function index()
 	{
-		$title = 'Perguntas';
+		$title = 'Principais Perguntas';
 
 		/**
 		 * Traz as questões que o usuário logado pode responder
@@ -45,15 +45,7 @@ class QuestionController extends Controller
 			->orderBy('updated_at', 'DESC')
 			->get();
 
-		/**
-		 * Traz as tags bombando
-		 */
-		$tags = Tag::whereHas('questions', function ($query) {
-			$query->where('status', Question::status['analyzing'])
-				->where('user_id', '!=', auth()->id());
-		})->get();
-
-		return view('questions.index', compact('questions', 'tags', 'title'));
+		return view('questions.index', compact('questions', 'title'));
 	}
 
 	/**

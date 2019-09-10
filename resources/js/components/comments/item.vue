@@ -1,23 +1,27 @@
 <template>
 	<div class="py-3 border-top comment" :set="question = comment.talk.question">
-		<a :href="`/users/${comment.user.id}`">
-			<span class="mr-2">
-				<img
-					v-if="comment.user.avatar_url"
-					width="25"
-					class="img-fluid avatar"
-					:src="comment.user.avatar_url"
-					v-bind:alt="comment.user.name"
-					v-bind:title="comment.user.name"
-				/>
-				<i v-else class="fas fa-user-circle fa-2x"></i>
-			</span>
-			<span>{{ comment.user.name }}</span>
-		</a>
-		<span>{{ comment.body }}</span>
-		<span v-if="comment.budget" class="badge badge-success">{{ comment.budget | currency }}</span>
+		<div class="d-flex align-items-center small">
+			<a :href="`/users/${comment.user.id}`">
+				<div class="d-flex align-items-center mr-1">
+					<span class="mr-2">
+						<img
+							v-if="comment.user.avatar_url"
+							width="25"
+							class="img-fluid avatar"
+							:src="comment.user.avatar_url"
+							v-bind:alt="comment.user.name"
+							v-bind:title="comment.user.name"
+						/>
+						<i v-else class="fas fa-user-circle fa-2x"></i>
+					</span>
+					<span>{{ comment.user.name }}</span>
+				</div>
+			</a>
+			<span>{{ comment.body }}</span>
+			<span v-if="comment.budget" class="ml-1 badge badge-success">{{ comment.budget | currency }}</span>
+		</div>
 		<!-- Só pode aceitar se for dono da pergunta -->
-		<div class="d-flex pt-3" v-if="comment.talk.status != 1">
+		<div class="d-flex pt-2" v-if="comment.talk.status != 1">
 			<div v-if="$userId == question.user_id">
 				<div v-if="comment.budget && $userId == question.user_id">
 					<div v-if="question.status == 0">

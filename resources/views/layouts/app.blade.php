@@ -73,11 +73,11 @@
 						</li>
 					</ul>
 					<!-- Right Side Of Navbar -->
-					<ul class="navbar-nav ml-auto text-center">
+					<ul class="navbar-nav ml-auto text-center align-items-center">
 						<!-- Authentication Links -->
 						<li class="nav-item">
-							<a class="btn text-white btn-success px-5 my-1 mx-3"
-								href="{{ route('questions.create') }}">Publique uma questão</a>
+							<a class="btn text-white btn-success mx-3" href="{{ route('questions.create') }}">Publicar
+								Questão</a>
 						</li>
 						@guest
 						<li class="nav-item">

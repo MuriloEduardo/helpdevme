@@ -24,25 +24,6 @@
 <div class="row">
 	<div class="col">
 		<div class="row justify-content-center">
-			@if ($tags->count())
-			<div class="col-lg-2">
-				<ul class="list-group list-group-flush">
-					@foreach ($tags as $tag)
-					<li class="list-group-item">
-						<div class="d-flex align-items-center justify-content-between">
-							<a href="{{ url('tags/' . $tag->slug) }}">
-								<span>
-									<i class="{{ $tag->image }} colored fa-lg mr-2"></i>
-									<span>{{ $tag->title }}</span>
-								</span>
-							</a>
-							<span class="badge badge-primary badge-pill">{{ $tag->questions->count() }}</span>
-						</div>
-					</li>
-					@endforeach
-				</ul>
-			</div>
-			@endif
 			<div class="col-lg-9">
 				<div class="mb-5">
 					<h1>{{ $title }}</h1>

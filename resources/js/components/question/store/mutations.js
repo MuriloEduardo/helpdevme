@@ -38,6 +38,17 @@ const ADD_COMMENT = (state, comment) => updateOrCreateComment(state, comment);
 
 const SET_COMMENT = (state, comment) => updateOrCreateComment(state, comment);
 
+const OPEN_FORM_COMMENT = (state, question_id) => {
+	['list', 'news'].forEach(type => {
+		state[type] = state[type].map(question => {
+			if (question.id == question_id) {
+				question.openFormComment = true;
+			}
+			return question;
+		});
+	});
+};
+
 /**
  * Votes
  */
@@ -56,6 +67,7 @@ export default {
 	ADD_QUESTION,
 	SET_QUESTIONS,
 	SET_QUESTION,
+	OPEN_FORM_COMMENT,
 	ADD_COMMENT,
 	SET_COMMENT,
 	SET_VOTE

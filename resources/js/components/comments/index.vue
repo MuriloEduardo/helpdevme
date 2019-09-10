@@ -1,6 +1,5 @@
 <template>
 	<div v-if="question">
-		<p class="small">{{ comments.length }} {{ comments.length == 1 ? 'proposta' : 'propostas' }}</p>
 		<List :question="question" :comments="comments" />
 		<Create v-if="$userId != question.user_id && question.status == 0" :question="question" />
 	</div>

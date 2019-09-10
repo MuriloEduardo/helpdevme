@@ -45,10 +45,12 @@ Vue.component('ListChat', require('./components/chat/list'));
 
 Vue.component('CreateQuestion', require('./components/question/create'));
 Vue.component('VotesQuestion', require('./components/question/votes'));
+Vue.component('ActionsQuestion', require('./components/question/actions'));
 
 Vue.component('ListNewQuestions', require('./components/question/list'));
 
 Vue.component('CComments', require('./components/comments'));
+Vue.component('CountComments', require('./components/comments/count-comments'));
 
 Vue.component('OnlineUsers', require('./components/online-users'));
 
