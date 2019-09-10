@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
 			$table->string('title');
 			$table->string('slug')->unique();
 			$table->text('body');
+			$table->float('budget')->nullable();
 			$table->integer('user_id')->unsigned();
 			$table->tinyInteger('status')->default(0);
 			$table->tinyInteger('user_ended')->default(0);

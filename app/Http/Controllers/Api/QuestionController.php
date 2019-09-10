@@ -55,26 +55,7 @@ class QuestionController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$request->validate([
-			'title' => 'required',
-			'body' => 'required'
-		]);
-
-		$question = new Question;
-		$question->title = $request->title;
-		$question->slug = str_slug($request->title);
-		$question->body = $request->body;
-		$question->user_id = auth()->id();
-
-		$question->save();
-
-		$question->tags()->sync($request->tags);
-
-		$question->load('comments', 'tags', 'user', 'votes', 'views');
-
-		broadcast(new NewQuestionsEvent($question))->toOthers();
-
-		return response(['question' => $question]);
+		//
 	}
 
 	/**

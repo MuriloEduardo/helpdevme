@@ -18,6 +18,7 @@ class Question extends Model
 		'title',
 		'slug',
 		'body',
+		'budget',
 		'user_id',
 		'status',
 		'user_ended',

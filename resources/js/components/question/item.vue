@@ -1,6 +1,12 @@
 <template>
 	<div class="card mb-4 question">
 		<div class="card-body">
+			<div class="float-right">
+				<div class="text-success d-flex align-items-center flex-column">
+					<h5>{{ question.budget | currency }}</h5>
+					<small>Orçamento Médio</small>
+				</div>
+			</div>
 			<!-- Title, body, tags, user -->
 			<h3 class="h5">
 				<a :href="'/' + question.slug">{{ question.title }}</a>
@@ -50,7 +56,7 @@
 					visualizaç{{ question.views.length == 1 ? 'ão' : 'ões' }}
 				</small>
 
-				<count-comments :question_id="question.id"></count-comments>
+				<count-comments :question="question"></count-comments>
 			</div>
 			<actions-question class="py-3 border-top" :question_id="question.id"></actions-question>
 			<!-- Create Comment -->

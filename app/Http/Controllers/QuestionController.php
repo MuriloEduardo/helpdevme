@@ -75,6 +75,7 @@ class QuestionController extends Controller
 		$question->title = $request->title;
 		$question->slug = str_slug($request->title);
 		$question->body = $request->body;
+		$question->budget = $request->budget;
 		$question->user_id = auth()->id();
 
 		$question->save();

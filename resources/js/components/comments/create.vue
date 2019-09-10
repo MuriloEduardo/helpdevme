@@ -34,7 +34,7 @@
 				</b-dropdown>
 				<b-button variant="primary" type="submit" class="rounded-pill" v-b-tooltip.hover title="Enviar">
 					<i v-if="!loading" class="fas fa-paper-plane"></i>
-					<span v-else class="ellipsis"></span>
+					<b-spinner v-else small type="grow"></b-spinner>
 				</b-button>
 			</b-input-group-append>
 		</b-input-group>

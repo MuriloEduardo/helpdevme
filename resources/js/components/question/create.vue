@@ -5,7 +5,7 @@
 		<select multiple="multiple" name="tags[]" class="d-none">
 			<option v-for="tag in tags" :value="tag.id" :key="tag.id" selected>{{ tag.title }}</option>
 		</select>
-		<div class="form-group">
+		<div class="form-group pb-3">
 			<input
 				type="text"
 				class="form-control"
@@ -20,28 +20,43 @@
 				<quill-editor ref="myTextEditor" v-model="body" :options="editorOption"></quill-editor>
 			</div>
 		</div>
-		<div class="form-group">
-			<multiselect
-				v-model="tags"
-				placeholder="Sobre qual linguagem de programação é seu pedido de ajuda?"
-				label="title"
-				track-by="id"
-				:options="options"
-				:multiple="true"
-			>
-				<template slot="option" slot-scope="props">
-					<div class="d-flex align-items-center">
-						<i :class="props.option.image" class="option__image"></i>
-						<div class="option__desc">
-							<span class="option__title">{{ props.option.title }}</span>
-						</div>
-					</div>
-				</template>
-			</multiselect>
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="form-group">
+					<h5 class="pt-4 pb-3">Tamanho da recompensa</h5>
+					<select name="budget" v-model="budget" id class="form-control">
+						<option value="3.75" selected>R$ 2,50 - 5,00</option>
+						<option value="10">R$ 5,00 - 15,00</option>
+						<option value="32.5">R$ 15,00 - 50,00</option>
+					</select>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<h5 class="pt-4 pb-3">Linguagens de programação envolvidas</h5>
+					<multiselect
+						v-model="tags"
+						placeholder="Sobre qual linguagem de programação é seu pedido de ajuda?"
+						label="title"
+						track-by="id"
+						:options="options"
+						:multiple="true"
+					>
+						<template slot="option" slot-scope="props">
+							<div class="d-flex align-items-center">
+								<i :class="props.option.image" class="option__image"></i>
+								<div class="option__desc">
+									<span class="option__title">{{ props.option.title }}</span>
+								</div>
+							</div>
+						</template>
+					</multiselect>
+				</div>
+			</div>
 		</div>
 		<div class="form-row justify-content-end mt-5">
-			<div class="col-lg-3">
-				<button type="submit" class="btn btn-success btn-block">
+			<div class="col-lg-2">
+				<button type="submit" class="btn btn-lg btn-success btn-block">
 					<div class="d-flex justify-content-center">
 						<span>Enviar</span>
 					</div>
@@ -68,6 +83,7 @@ export default {
 			.getAttribute('content'),
 		title: '',
 		body: '',
+		budget: 3.75,
 		tags: [],
 		options: [],
 		editorOption: {

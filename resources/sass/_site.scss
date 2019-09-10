@@ -5,3 +5,6 @@
 .bg-success-opacity {
 	background-color: rgba($success, 0.2);
 }
+.sticky-top-navbar-height {
+	top: $nav-height + 48px;
+}

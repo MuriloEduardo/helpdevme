@@ -6,7 +6,11 @@
 				<small class="ml-2">Curtir</small>
 			</div>
 		</button>
-		<button class="btn btn-outline-success" @click="openFormComment(question_id)">
+		<button
+			v-if="$userId != question.user_id && question.status == 0"
+			class="btn btn-outline-success"
+			@click="openFormComment(question.id)"
+		>
 			<div class="d-flex align-items-center">
 				<i class="fas fa-comments-dollar"></i>
 				<small class="ml-2">Fazer Proposta</small>
@@ -18,11 +22,11 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-	props: ['question_id'],
+	props: ['question'],
 	methods: {
 		vote() {
 			this.setVote({
-				question_id: this.question_id,
+				question_id: this.question.id,
 				vote: this.user_vote.length ? 0 : 1
 			});
 		},
@@ -31,7 +35,7 @@ export default {
 	computed: {
 		...mapGetters('questions', ['getUserVote']),
 		user_vote: function() {
-			return this.getUserVote(this.question_id);
+			return this.getUserVote(this.question.id);
 		}
 	}
 };

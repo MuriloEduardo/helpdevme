@@ -19672,6 +19672,10 @@ readers do not read off random characters that represent icons */
   background-color: rgba(65, 184, 131, 0.2);
 }
 
+.sticky-top-navbar-height {
+  top: 109px;
+}
+
 .quill-editor .ql-toolbar.ql-snow {
   border: none;
   padding: 0;

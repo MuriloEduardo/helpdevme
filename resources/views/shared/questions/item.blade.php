@@ -1,5 +1,11 @@
 <div class="card mb-4 question">
 	<div class="card-body">
+		<div class="float-right">
+			<div class="text-success d-flex align-items-center flex-column">
+				<h5>{{  'R$ ' . number_format($question->budget, 2, ',', '.') }}</h5>
+				<small>Orçamento Médio</small>
+			</div>
+		</div>
 		<!-- Title, body, tags, user -->
 		<h3 class="h5">
 			<a href="{{ route('questions.show', $question) }}">{{ $question->title }}</a>
@@ -39,7 +45,7 @@
 				visualizaç{{ $question->views->count() == 1 ? 'ão' : 'ões' }}</small>
 			<count-comments :question_id="{{ $question->id }}"></count-comments>
 		</div>
-		<actions-question class="py-3 border-top" :question_id="{{ $question->id }}"></actions-question>
+		<actions-question class="py-3 border-top" :question="{{ $question }}"></actions-question>
 		<!-- Create Comment -->
 		<c-comments :question_id="{{ $question->id }}"></c-comments>
 	</div>
