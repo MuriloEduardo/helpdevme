@@ -1,14 +1,14 @@
 @extends('layouts.public')
 
 @php
-$title = 'Se você é programador esse conteúdo é para você!';
+$title = 'Se você é programador esse conteúdo é para você';
 $description = 'Saca só, juntamos o útil ao agradável para acabar com as dúvidas que
 nunca conseguimos achar solução prática e ficamos em sérios apuros. Juntamos isso
 com uma recompensa por essas ajudas para os Dev\'s. Nada absurdo, e você estará
 ajudando quem te ajuda...';
 @endphp
 
-@section('title', $title)
+@section('title', $title . ' - Help Dev')
 @section('description', $description)
 @section('keywords', 'programadores, dev\'s, desenvolvedores, developers, desenvolvimento, software, programador,
 ajuda, stackoverflow, solução de bugs, bugs')
