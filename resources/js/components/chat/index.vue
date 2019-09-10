@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<div class="col-lg-8" v-if="talk">
-			<output-posts :talk_id="talk.id" @whisper="onWhisper"></output-posts>
+			<output-posts :talk_id="talk.id"></output-posts>
 			<div class="d-flex align-items-center">
 				<header class="mb-4">
 					<h1>{{ talk.question.title }}</h1>
@@ -137,10 +137,6 @@
 											</div>
 										</div>
 									</div>
-								</div>
-								<div v-if="typing" class="text-muted d-flex">
-									{{ opposite.name }} está digitando
-									<span class="ellipsis"></span>
 								</div>
 							</div>
 						</div>

@@ -5,30 +5,16 @@ export default {
 
 	data() {
 		return {
-			channel: Echo.private(`posts.${this.talk_id}.private`)
+			channel: undefined
 		};
 	},
 
 	created() {
-		this.$parent.$on('typing', this.typing);
+		this.channel = Echo.private(`posts.${this.talk_id}.private`);
 
-		this.channel
-			.listen('PrivatePostSent', response => {
-				this.$emit('receivedPost', response.post);
-			})
-			.listenForWhisper('typing', e => {
-				this.$emit('whisper', e.typing);
-			});
-	},
-
-	methods: {
-		typing() {
-			setTimeout(() => {
-				this.channel.whisper('typing', {
-					typing: true
-				});
-			}, 300);
-		}
+		this.channel.listen('PrivatePostSent', response => {
+			this.$emit('receivedPost', response.post);
+		});
 	}
 };
 </script>

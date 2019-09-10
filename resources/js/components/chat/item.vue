@@ -23,9 +23,8 @@
 					></i>
 				</picture>
 				<div class="ml-3 text-truncate flex-grow-1">
-					<h6 class="mb-1">Conversa com {{ opposite.name }}</h6>
+					<h6 class="m-0">{{ opposite.name }}</h6>
 					<small>
-						Em:
 						<b>{{ talk.question.title }}</b>
 					</small>
 					<div
