@@ -35,6 +35,9 @@
 
 	<title>@yield('title')</title>
 
+	<meta name="description" content="@yield('description')">
+	<meta name="keywords" content="@yield('keywords')">
+
 	<!-- Styles -->
 	<link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>

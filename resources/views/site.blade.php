@@ -1,6 +1,17 @@
 @extends('layouts.public')
 
-@section('title', 'Ganhe dinheiro e receba ajuda de outros dev\'s')
+@php
+$title = 'Se você é programador esse conteúdo é para você!';
+$description = 'Saca só, juntamos o útil ao agradável para acabar com as dúvidas que
+nunca conseguimos achar solução prática e ficamos em sérios apuros. Juntamos isso
+com uma recompensa por essas ajudas para os Dev\'s. Nada absurdo, e você estará
+ajudando quem te ajuda...';
+@endphp
+
+@section('title', $title)
+@section('description', $description)
+@section('keywords', 'programadores, dev\'s, desenvolvedores, developers, desenvolvimento, software, programador,
+ajuda')
 
 @section('main')
 <section>
@@ -11,11 +22,8 @@
 					<header class="header-site mb-5 p-5 bg-success shadow-sm w-100">
 						<div class="row">
 							<div class="col-lg-8 text-white">
-								<h1 class="display-4 pb-3">Ganhe dinheiro e receba ajuda de outros dev's</h1>
-								<p class="lead py3">Consiga respostas rápidas e qualificadas naqueles momentos de sufoco
-									que todo desenvolvedor passa, ganhe recompensas por ajudar outros programadores em
-									apuros. Bem-vindo ao Help Dev, um jeito novo de contribuir financeiramente com a
-									comunidade.</p>
+								<h1 class="display-4 pb-3">{{ $title }}</h1>
+								<p class="lead py3">{{ $description }}</p>
 								<div class="row">
 									<div class="col-lg-5">
 										<a class="btn btn-primary btn-block my-3 shadow"
