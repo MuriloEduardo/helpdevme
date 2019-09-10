@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Talk;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class TalkController extends Controller
 {
@@ -123,5 +124,18 @@ class TalkController extends Controller
 		}
 
 		return response()->json(compact('talks'));
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function uploadImages(Request $request)
+	{
+		$path = $request->file('image')->storePublicly('questions');
+
+		return response(['path' => Storage::url($path)]);
 	}
 }

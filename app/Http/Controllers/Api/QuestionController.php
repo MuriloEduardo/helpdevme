@@ -7,7 +7,6 @@ use App\Vote;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Support\Facades\Storage;
 
 class QuestionController extends Controller

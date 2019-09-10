@@ -33,11 +33,27 @@ const markAllAsRead = async ({ commit }) => {
 	commit('MARK_ALL_AS_READ', response.talks);
 };
 
+const uploadImages = ({ commit }, form) => {
+	return new Promise((resolve, reject) => {
+		axios
+			.post('/api/talks/upload-images', form, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			})
+			.then(
+				response => resolve(response.data.path),
+				error => reject(error)
+			);
+	});
+};
+
 export default {
 	setTalks,
 	setPost,
 	sendPost,
 	setTalk,
 	markAsRead,
-	markAllAsRead
+	markAllAsRead,
+	uploadImages
 };

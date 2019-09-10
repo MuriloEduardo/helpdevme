@@ -21,8 +21,9 @@ Route::resource('questions', 'Api\QuestionController');
 Route::patch('questions/vote/{question_id}', 'Api\QuestionController@vote');
 Route::post('questions/upload-images', 'Api\QuestionController@uploadImages');
 
-Route::get('talks/all-read', 'Api\TalkController@markAllAsRead')->name('talks.allread');
 Route::resource('talks', 'Api\TalkController');
+Route::get('talks/all-read', 'Api\TalkController@markAllAsRead')->name('talks.allread');
+Route::post('talks/upload-images', 'Api\TalkController@uploadImages');
 
 Route::get('user', 'Api\UserController@current');
 

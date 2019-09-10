@@ -131,9 +131,10 @@
 													<i v-else class="fas fa-user-circle fa-lg"></i>
 												</span>
 												<span
+													v-html="post.body"
 													class="badge badge-pill py-2 px-3 default ml-1 font-weight-normal"
 													:class="(user.id!==post.user_id)?'badge-secondary':'badge-primary'"
-												>{{ post.body }}</span>
+												></span>
 											</div>
 										</div>
 									</div>
@@ -144,15 +145,12 @@
 				</div>
 				<div v-if="talk.status != 1" class="card-footer">
 					<form @submit.prevent="sendMessage">
-						<div class="input-group">
-							<textarea class="form-control" placeholder="Digite uma mensagem..." v-model="body" required></textarea>
-							<div class="input-group-append">
-								<button type="submit" class="btn btn-primary" :disabled="loading">
-									<i v-if="!loading" class="fas fa-paper-plane"></i>
-									<span v-else class="ellipsis"></span>
-								</button>
-							</div>
-						</div>
+						<input type="file" id="getFile" @change="uploadFunction($event)" hidden />
+						<quill-editor ref="bodyEditor" v-model="body" :options="editorOption"></quill-editor>
+						<button type="submit" class="btn btn-primary float-right" :disabled="loading">
+							<i v-if="!loading" class="fas fa-paper-plane"></i>
+							<b-spinner v-else small type="grow"></b-spinner>
+						</button>
 					</form>
 				</div>
 			</div>
@@ -165,6 +163,9 @@ import OutputPosts from './output-posts';
 import List from './list';
 import { mapActions, mapGetters } from 'vuex';
 
+import hljs from 'highlight.js';
+import 'highlight.js/styles/monokai-sublime.css';
+
 export default {
 	components: {
 		OutputPosts,
@@ -176,7 +177,30 @@ export default {
 	data() {
 		return {
 			body: '',
-			loading: false
+			loading: false,
+			editorOption: {
+				placeholder:
+					'Escreva respostas claras e com o objetivo de concluir a questão deste usuário.',
+				modules: {
+					toolbar: {
+						container: [
+							['bold', 'italic', 'underline', 'strike'],
+							['blockquote', 'code-block'],
+							[{ list: 'ordered' }, { list: 'bullet' }],
+							['link', 'image'],
+							['clean']
+						],
+						handlers: {
+							image: function() {
+								document.getElementById('getFile').click();
+							}
+						}
+					},
+					syntax: {
+						highlight: text => hljs.highlightAuto(text).value
+					}
+				}
+			}
 		};
 	},
 
@@ -214,8 +238,10 @@ export default {
 	},
 
 	methods: {
-		...mapActions('talks', ['sendPost']),
+		...mapActions('talks', ['sendPost', 'uploadImages']),
 		sendMessage() {
+			if (!this.body) return;
+
 			this.loading = true;
 
 			this.sendPost({
@@ -232,6 +258,42 @@ export default {
 				})
 				.catch(() => {
 					this.loading = false;
+				});
+		},
+		uploadFunction(e) {
+			const quill = this.$refs.bodyEditor.quill;
+			const image = e.target.files[0];
+
+			let form = new FormData();
+			form.append('image', image);
+
+			// Save current cursor state
+			const range = quill.getSelection(true);
+
+			// Insert temporary loading placeholder image
+			quill.insertEmbed(range.index, 'image', '/images/preloader.svg');
+
+			// Move cursor to right side of image (easier to continue typing)
+			quill.setSelection(range.index + 1);
+
+			// Upload image to server
+			this.uploadImages(form)
+				.then(path => {
+					// Remove placeholder image
+					quill.deleteText(range.index, 1);
+
+					// Insert uploaded image
+					quill.insertEmbed(range.index, 'image', path);
+				})
+				.catch(e => {
+					this.$bvToast.toast(
+						'Tente novamente de uma forma diferente!',
+						{
+							title: 'Algo deu errado!',
+							variant: 'danger',
+							solid: true
+						}
+					);
 				});
 		}
 	}

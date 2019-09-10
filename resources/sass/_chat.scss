@@ -4,6 +4,7 @@
 	.badge {
 		&.default {
 			white-space: initial;
+			overflow: hidden;
 		}
 	}
 }
