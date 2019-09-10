@@ -58,7 +58,7 @@
 
 				<count-comments :question="question"></count-comments>
 			</div>
-			<actions-question class="py-3 border-top" :question_id="question.id"></actions-question>
+			<actions-question class="py-3 border-top" :question="question"></actions-question>
 			<!-- Create Comment -->
 			<c-comments :question_id="question.id"></c-comments>
 		</div>
