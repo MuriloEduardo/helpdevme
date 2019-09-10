@@ -1,17 +1,38 @@
 <div class="card mb-4 question">
 	<div class="card-body">
-		<div class="float-right">
-			<div class="text-success d-flex align-items-center flex-column">
-				<h5>{{  'R$ ' . number_format($question->budget, 2, ',', '.') }}</h5>
-				<small>Orçamento Médio</small>
+		<div class="row">
+			<div class="col">
+				<!-- Title, body, tags, user -->
+				@if (isset($tag) && $tag == 'h1')
+				<h1 class="mb-5">{{ $question->title }}</h1>
+				@else
+				<h3 class="h4">
+					<a href="{{ route('questions.show', $question) }}">{{ $question->title }}</a>
+				</h3>
+				@endif
+				<!-- Status -->
+				@include('shared.questions.status', ['question' => $question])
 			</div>
+			<div class="col-lg-2">
+				<div class="text-success d-flex align-items-end flex-column">
+					<h5>{{  'R$ ' . number_format($question->budget, 2, ',', '.') }}</h5>
+					<small>Orçamento Médio</small>
+				</div>
+			</div>
+			@if ($question->user_id == auth()->id())
+			<div class="col flex-grow-0">
+				<b-dropdown right variant="link">
+					<template v-slot:button-content>
+						<i class="fas fa-ellipsis-v"></i>
+					</template>
+					<b-dropdown-item href="{{ route('questions.edit', $question) }}">Editar</b-dropdown-item>
+				</b-dropdown>
+			</div>
+			@endif
 		</div>
-		<!-- Title, body, tags, user -->
-		<h3 class="h5">
-			<a href="{{ route('questions.show', $question) }}">{{ $question->title }}</a>
-		</h3>
-		@include('shared.questions.status', ['question' => $question])
+		<!-- Body -->
 		<article class="pt-3">{!! $question->body !!}</article>
+		<!-- Tags, User -->
 		<div class="d-flex justify-content-between py-3">
 			<!-- Tags -->
 			<div>
@@ -45,6 +66,7 @@
 				visualizaç{{ $question->views->count() == 1 ? 'ão' : 'ões' }}</small>
 			<count-comments :question_id="{{ $question->id }}"></count-comments>
 		</div>
+		<!-- Ações -->
 		<actions-question class="py-3 border-top" :question="{{ $question }}"></actions-question>
 		<!-- Create Comment -->
 		<c-comments :question_id="{{ $question->id }}"></c-comments>

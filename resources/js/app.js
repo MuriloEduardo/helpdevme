@@ -44,6 +44,7 @@ Vue.component('PrivateChat', require('./components/chat'));
 Vue.component('ListChat', require('./components/chat/list'));
 
 Vue.component('CreateQuestion', require('./components/question/create'));
+Vue.component('EditQuestion', require('./components/question/edit'));
 Vue.component('VotesQuestion', require('./components/question/votes'));
 Vue.component('ActionsQuestion', require('./components/question/actions'));
 

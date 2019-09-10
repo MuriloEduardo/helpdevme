@@ -106,24 +106,50 @@ class QuestionController extends Controller
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  strin  $slug
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($id)
+	public function edit($slug)
 	{
-		//
+		$question = Question::with('tags')
+			->where('slug', $slug)
+			->firstOrFail();
+
+		$this->authorize('update', $question);
+
+		return view('questions.edit', compact('question'));
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
+	 * @param  string  $slug
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id)
+	public function update(Request $request, $slug)
 	{
-		//
+		$request->validate([
+			'title' => 'required',
+			'body' => 'required'
+		]);
+
+		$question = Question::where('slug', $slug)
+			->firstOrFail();
+
+		$this->authorize('update', $question);
+
+		$question->title = $request->title;
+		$question->slug = str_slug($request->title);
+		$question->body = $request->body;
+		$question->budget = $request->budget;
+
+		$question->save();
+
+		$question->tags()->sync($request->tags);
+
+		return redirect()->route('questions.index')
+			->with('success', 'Pergunta Editada!');
 	}
 
 	/**

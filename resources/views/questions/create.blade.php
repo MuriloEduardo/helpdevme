@@ -27,11 +27,10 @@
 			<div class="col-lg-9">
 				<div class="mb-5">
 					<h1>Solucione sua dúvida sobre programação!</h1>
-					<p class="lead">Faça seu pedido de ajuda, fique por dentro das perguntas e tag's que mais estão
-						bombando
-						no momento.</p>
+					<p class="lead">Logo logo você receberá propostas de pessoas qualificadas para te
+						ajudar e acabar com sua dúvida.</p>
 				</div>
-				<create-question :user="{{ auth()->check() ? auth()->user() : '{}' }}"></create-question>
+				<create-question></create-question>
 			</div>
 			<div class="col">
 				<div class="card mt-5 mt-md-0 mb-3 sticky-top sticky-top-navbar-height">
