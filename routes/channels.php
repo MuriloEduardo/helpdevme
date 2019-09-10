@@ -39,7 +39,3 @@ Broadcast::channel('talks.user.{receiver_id}', function () {
 Broadcast::channel('posts.{talk_id}.private', function () {
 	return auth()->check();
 });
-
-Broadcast::channel('newquestions', function () {
-	return auth()->check();
-});

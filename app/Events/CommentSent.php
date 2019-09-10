@@ -5,12 +5,12 @@ namespace App\Events;
 use App\Post;
 
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class PrivateCommentSent implements ShouldBroadcastNow
+class CommentSent implements ShouldBroadcastNow
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -33,6 +33,6 @@ class PrivateCommentSent implements ShouldBroadcastNow
 	 */
 	public function broadcastOn()
 	{
-		return new PrivateChannel('comments');
+		return new Channel('comments');
 	}
 }

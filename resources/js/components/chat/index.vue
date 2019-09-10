@@ -149,14 +149,7 @@
 				<div v-if="talk.status != 1" class="card-footer">
 					<form @submit.prevent="sendMessage">
 						<div class="input-group">
-							<textarea
-								class="form-control"
-								placeholder="Digite uma mensagem..."
-								v-model="body"
-								@keydown.exact="onTyping"
-								@keydown.enter.shift.exact="sendMessage"
-								required
-							></textarea>
+							<textarea class="form-control" placeholder="Digite uma mensagem..." v-model="body" required></textarea>
 							<div class="input-group-append">
 								<button type="submit" class="btn btn-primary" :disabled="loading">
 									<i v-if="!loading" class="fas fa-paper-plane"></i>
@@ -186,9 +179,7 @@ export default {
 
 	data() {
 		return {
-			body: null,
-			timeOut: undefined,
-			typing: false,
+			body: '',
 			loading: false
 		};
 	},
@@ -227,19 +218,7 @@ export default {
 	},
 
 	methods: {
-		onWhisper(typing) {
-			this.typing = typing;
-
-			clearTimeout(this.timeOut);
-
-			this.timeOut = setTimeout(() => {
-				this.typing = false;
-			}, 900);
-		},
 		...mapActions('talks', ['sendPost']),
-		onTyping() {
-			this.$emit('typing');
-		},
 		sendMessage() {
 			this.loading = true;
 

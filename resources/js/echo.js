@@ -5,24 +5,13 @@ Echo.join('online')
 	.joining(user => store.dispatch('users/JOINING_PRESENCE', user))
 	.leaving(user => store.dispatch('users/LEAVING_PRESENCE', user));
 
-Echo.private('comments')
-	.listen('PrivateCommentSent', response =>
-		store.dispatch('questions/setComment', response.post)
-	)
-	.listenForWhisper('typing', payload =>
-		store.dispatch('questions/setTypingComment', payload)
-	);
+Echo.channel('comments').listen('CommentSent', response =>
+	store.dispatch('questions/setComment', response.post)
+);
 
-Echo.private('newquestions')
-	.listen('NewQuestionsEvent', response =>
-		store.dispatch('questions/setQuestion', response.question)
-	)
-	.listenForWhisper('typing', user =>
-		store.dispatch('questions/startTypingQuestion', user)
-	)
-	.listenForWhisper('stop-typing', user =>
-		store.dispatch('questions/stopTypingQuestion', user)
-	);
+Echo.channel('newquestions').listen('NewQuestionsEvent', response =>
+	store.dispatch('questions/setQuestion', response.question)
+);
 
 Echo.private(`App.User.${window.$userId}`).notification(notification => {
 	if (notification.type == 'App\\Notifications\\QuestionCommented') {

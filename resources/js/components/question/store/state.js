@@ -1,5 +1,4 @@
 export default {
 	list: [],
-	news: [],
-	typings: []
+	news: []
 };

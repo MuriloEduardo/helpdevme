@@ -12,7 +12,6 @@
 				name="title"
 				v-model="title"
 				placeholder="Qual sua dúvida sobre programação?"
-				@keydown="onTyping"
 				required
 			/>
 		</div>
@@ -44,8 +43,7 @@
 			<div class="col-lg-3">
 				<button type="submit" class="btn btn-success btn-block">
 					<div class="d-flex justify-content-center">
-						<span v-if="!loading">Enviar</span>
-						<span v-else class="ellipsis"></span>
+						<span>Enviar</span>
 					</div>
 				</button>
 			</div>
@@ -70,7 +68,6 @@ export default {
 			.getAttribute('content'),
 		title: '',
 		body: '',
-		loading: false,
 		tags: [],
 		options: [],
 		editorOption: {
@@ -98,9 +95,6 @@ export default {
 		}
 	},
 	methods: {
-		onTyping: _.debounce(function() {
-			this.channel.whisper('typing', this.user);
-		}, 1000),
 		listTags() {
 			axios.get('/api/tags').then(response => {
 				this.options = response.data.tags;
@@ -109,7 +103,8 @@ export default {
 	},
 	mounted() {
 		this.listTags();
-		this.channel = Echo.private('newquestions');
+
+		this.channel = Echo.channel('newquestions');
 	}
 };
 </script>

@@ -8,7 +8,7 @@ use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Events\PrivateCommentSent;
+use App\Events\CommentSent;
 use App\Events\PrivatePostSent;
 use App\Events\PrivateCreatedTalks;
 use App\Notifications\QuestionCommented;
@@ -93,7 +93,7 @@ class CommentController extends Controller
 		 * Dispara para o echo (resources/js/echo.js)
 		 */
 		broadcast(new PrivateCreatedTalks($post))->toOthers();
-		broadcast(new PrivateCommentSent($post))->toOthers();
+		broadcast(new CommentSent($post))->toOthers();
 		broadcast(new PrivatePostSent($post))->toOthers();
 
 		return response(['post' => $post]);

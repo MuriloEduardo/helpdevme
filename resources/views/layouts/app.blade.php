@@ -75,11 +75,11 @@
 					<!-- Right Side Of Navbar -->
 					<ul class="navbar-nav ml-auto text-center">
 						<!-- Authentication Links -->
-						@guest
 						<li class="nav-item">
 							<a class="btn text-white btn-success px-5 my-1 mx-3"
 								href="{{ route('questions.create') }}">Publique uma questão</a>
 						</li>
+						@guest
 						<li class="nav-item">
 							<a class="nav-link" href="{{ route('login') }}">@lang('layouts.navbar.login')</a>
 						</li>

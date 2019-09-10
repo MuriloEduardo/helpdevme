@@ -17,12 +17,6 @@ const setQuestions = async ({ commit }) => {
 
 const setQuestion = ({ commit }, question) => commit('SET_QUESTION', question);
 
-const startTypingQuestion = ({ commit }, user) =>
-	commit('START_TYPING_QUESTION', user);
-
-const stopTypingQuestion = ({ commit }, user) =>
-	commit('STOP_TYPING_QUESTION', user);
-
 /**
  * Comments
  */
@@ -45,9 +39,6 @@ const addComment = ({ commit }, obj) => {
 
 const setComment = ({ commit }, obj) => commit('SET_COMMENT', obj);
 
-const setTypingComment = ({ commit }, payload) =>
-	commit('SET_TYPING_COMMENT', payload);
-
 /**
  * Votes
  */
@@ -63,10 +54,7 @@ export default {
 	addQuestion,
 	setQuestions,
 	setQuestion,
-	startTypingQuestion,
-	stopTypingQuestion,
 	addComment,
 	setComment,
-	setTypingComment,
 	setVote
 };
