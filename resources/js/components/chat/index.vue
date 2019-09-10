@@ -62,7 +62,7 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col">
-							<div id="privateMessageBox">
+							<div id="privateMessageBox" v-chat-scroll>
 								<div class="d-flex flex-column">
 									<div v-for="(post, index) in talk.posts" :key="index" class="mb-2">
 										<div v-if="post.body">
