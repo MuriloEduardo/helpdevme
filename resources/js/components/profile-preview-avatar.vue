@@ -2,7 +2,7 @@
 	<div>
 		<div class="preview-image text-center" @click="openUploadIMage">
 			<img
-				v-if="user.avatar_url"
+				v-if="user.avatar_url || avatar_url"
 				class="img-fluid avatar"
 				:src="avatar_url ? avatar_url : user.avatar_url"
 				v-bind:alt="user.name"

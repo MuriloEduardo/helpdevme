@@ -18,7 +18,7 @@
 		</button>
 
 		<button
-			v-if="($userId != question.user_id && question.status == 0 && userCanComment)"
+			v-if="($userId != question.user_id && question.status == 0 && userCanComment && userCanComment.talk.status == 0)"
 			class="btn btn-outline-success"
 			@click="openFormEditComment(question.id)"
 		>
