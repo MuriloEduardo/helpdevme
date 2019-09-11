@@ -15,11 +15,11 @@
 							<div class="col flex-grow-0">
 								@include('shared.avatar', ['user' => $user, 'icon_class' => 'fa-4x mb-4 m-lg-0'])
 							</div>
-							<div class="col">
-								<h5 class="card-title">
+							<div class="col text-truncate">
+								<h5 class="card-title text-truncate">
 									<a href="{{ route('users.show', $user) }}">{{ $user->name }}</a>
 								</h5>
-								<p class="card-text">{{ $user->email }}</p>
+								<p class="card-text text-truncate">{{ $user->email }}</p>
 							</div>
 						</div>
 						<div class="mt-4">

@@ -18,7 +18,8 @@
 							</div>
 						</a>
 						<div class="card-text">
-							<small class="text-muted">Usada em {{ $tag->questions->count() }} pergunta(s)</small>
+							<small class="text-muted">Usada em
+								{{ $tag->questions->count() . ' ' . str_plural('pergunta', $tag->questions->count()) }}</small>
 						</div>
 					</div>
 				</div>

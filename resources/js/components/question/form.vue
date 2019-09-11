@@ -42,6 +42,9 @@
 						track-by="id"
 						:options="options"
 						:multiple="true"
+						selectLabel="Pressione enter para selecionar"
+						selectedLabel="Selecionado"
+						deselectLabel="Pressione enter para remover"
 					>
 						<template slot="option" slot-scope="props">
 							<div class="d-flex align-items-center">
@@ -51,6 +54,7 @@
 								</div>
 							</div>
 						</template>
+						<template slot="noResult">Nenhum resultado encontrado. Considere alterar o termo de pesquisa.</template>
 					</multiselect>
 				</div>
 			</div>
