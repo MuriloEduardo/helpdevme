@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="w-100">
 		<form @submit.prevent="onSubmit">
 			<b-input-group class="border rounded-pill p-1 bg-white">
 				<b-form-input

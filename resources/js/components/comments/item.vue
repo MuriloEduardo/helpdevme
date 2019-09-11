@@ -1,6 +1,6 @@
 <template>
 	<div class="py-3 border-top comment" :set="question = comment.talk.question">
-		<div class="d-flex align-items-center">
+		<div class="d-flex">
 			<a :href="`/users/${comment.user.id}`">
 				<span class="mr-2">
 					<img
