@@ -49,13 +49,13 @@ export default {
 		return {
 			loading: false,
 			body: '',
-			budget: ''
+			budget: 2.5
 		};
 	},
 	methods: {
 		resetForm() {
 			this.body = undefined;
-			this.budget = undefined;
+			this.budget = 2.5;
 		},
 		onSubmit() {
 			this.loading = true;
@@ -66,20 +66,17 @@ export default {
 				budget: this.budget,
 				question_id: this.question.id,
 				receiver_id: this.question.user_id
-			})
-				.then(response => {
-					this.loading = false;
-					this.resetForm();
+			}).then(response => {
+				this.loading = false;
+				this.resetForm();
 
+				if (response.status === 200) {
 					this.$bvToast.toast('Comentário enviado!', {
 						title: 'Sucesso!',
 						variant: 'success',
 						solid: true
 					});
-				})
-				.catch(error => {
-					this.loading = false;
-
+				} else {
 					this.$bvToast.toast(
 						'Tente novamente de uma forma diferente!',
 						{
@@ -88,7 +85,8 @@ export default {
 							solid: true
 						}
 					);
-				});
+				}
+			});
 		},
 		...mapActions('questions', ['addComment'])
 	},

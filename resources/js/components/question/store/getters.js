@@ -24,6 +24,26 @@ const getFormComments = state => question_id => {
 	if (returnQuestion) return returnQuestion.openFormComment;
 };
 
+const getFormEditComments = state => question_id => {
+	const returnQuestion = question(state, question_id);
+
+	if (returnQuestion) return returnQuestion.openFormEditComment;
+};
+
+const canComment = state => question_id => {
+	const returnQuestion = question(state, question_id);
+
+	if (returnQuestion) {
+		const userComment = returnQuestion.comments.find(comment => {
+			if (comment.user_id == window.$userId) {
+				return comment;
+			}
+		});
+
+		return userComment;
+	}
+};
+
 /**
  * Votes
  */
@@ -47,6 +67,8 @@ export default {
 	getQuestion,
 	getComments,
 	getFormComments,
+	getFormEditComments,
 	getVotes,
-	getUserVote
+	getUserVote,
+	canComment
 };

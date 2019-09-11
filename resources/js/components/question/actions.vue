@@ -7,13 +7,24 @@
 			</div>
 		</button>
 		<button
-			v-if="$userId != question.user_id && question.status == 0"
+			v-if="($userId != question.user_id && question.status == 0 && !userCanComment)"
 			class="btn btn-outline-success"
 			@click="openFormComment(question.id)"
 		>
 			<div class="d-flex align-items-center">
 				<i class="fas fa-comments-dollar"></i>
 				<small class="ml-2">Fazer Proposta</small>
+			</div>
+		</button>
+
+		<button
+			v-if="($userId != question.user_id && question.status == 0 && userCanComment)"
+			class="btn btn-outline-success"
+			@click="openFormEditComment(question.id)"
+		>
+			<div class="d-flex align-items-center">
+				<i class="fas fa-comments-dollar"></i>
+				<small class="ml-2">Melhorar Proposta</small>
 			</div>
 		</button>
 	</div>
@@ -30,12 +41,19 @@ export default {
 				vote: this.user_vote.length ? 0 : 1
 			});
 		},
-		...mapActions('questions', ['setVote', 'openFormComment'])
+		...mapActions('questions', [
+			'setVote',
+			'openFormComment',
+			'openFormEditComment'
+		])
 	},
 	computed: {
-		...mapGetters('questions', ['getUserVote']),
+		...mapGetters('questions', ['getUserVote', 'canComment']),
 		user_vote: function() {
 			return this.getUserVote(this.question.id);
+		},
+		userCanComment: function() {
+			return this.canComment(this.question.id);
 		}
 	}
 };

@@ -57,6 +57,12 @@ const setComment = ({ commit }, obj) => commit('SET_COMMENT', obj);
 const openFormComment = ({ commit }, question_id) =>
 	commit('OPEN_FORM_COMMENT', question_id);
 
+const openFormEditComment = ({ commit }, question_id) =>
+	commit('OPEN_FORM_EDIT_COMMENT', question_id);
+
+const closetFormEditComment = ({ commit }, question_id) =>
+	commit('CLOSE_FORM_EDIT_COMMENT', question_id);
+
 /**
  * Votes
  */
@@ -74,6 +80,8 @@ export default {
 	setQuestion,
 	uploadImages,
 	openFormComment,
+	openFormEditComment,
+	closetFormEditComment,
 	addComment,
 	setComment,
 	setVote

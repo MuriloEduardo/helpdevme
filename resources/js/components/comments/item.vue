@@ -1,24 +1,25 @@
 <template>
 	<div class="py-3 border-top comment" :set="question = comment.talk.question">
-		<div class="d-flex align-items-center small">
+		<div class="d-flex align-items-center">
 			<a :href="`/users/${comment.user.id}`">
-				<div class="d-flex align-items-center mr-1">
-					<span class="mr-2">
-						<img
-							v-if="comment.user.avatar_url"
-							width="25"
-							class="img-fluid avatar"
-							:src="comment.user.avatar_url"
-							v-bind:alt="comment.user.name"
-							v-bind:title="comment.user.name"
-						/>
-						<i v-else class="fas fa-user-circle fa-2x"></i>
-					</span>
-					<span>{{ comment.user.name }}</span>
-				</div>
+				<span class="mr-2">
+					<img
+						v-if="comment.user.avatar_url"
+						width="25"
+						class="img-fluid avatar"
+						:src="comment.user.avatar_url"
+						v-bind:alt="comment.user.name"
+						v-bind:title="comment.user.name"
+					/>
+					<i v-else class="fas fa-user-circle fa-2x"></i>
+				</span>
 			</a>
-			<span>{{ comment.body }}</span>
-			<span v-if="comment.budget" class="ml-1 badge badge-success">{{ comment.budget | currency }}</span>
+			<div class="d-flex align-items-center small" v-if="!formEditComment">
+				<a :href="`/users/${comment.user.id}`" class="mr-1">{{ comment.user.name }}</a>
+				<span>{{ comment.body }}</span>
+				<span v-if="comment.budget" class="ml-1 badge badge-success">{{ comment.budget | currency }}</span>
+			</div>
+			<edit-comment v-else :comment="comment" :question="comment.talk.question" />
 		</div>
 		<!-- Só pode aceitar se for dono da pergunta -->
 		<div class="d-flex pt-2" v-if="comment.talk.status != 1">
@@ -64,7 +65,19 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+import EditComment from './edit';
+
 export default {
-	props: ['comment']
+	components: {
+		EditComment
+	},
+	props: ['comment'],
+	computed: {
+		...mapGetters('questions', ['getFormEditComments']),
+		formEditComment() {
+			return this.getFormEditComments(this.comment.talk.question_id);
+		}
+	}
 };
 </script>

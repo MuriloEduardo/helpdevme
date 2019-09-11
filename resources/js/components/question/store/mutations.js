@@ -49,6 +49,28 @@ const OPEN_FORM_COMMENT = (state, question_id) => {
 	});
 };
 
+const OPEN_FORM_EDIT_COMMENT = (state, question_id) => {
+	['list', 'news'].forEach(type => {
+		state[type] = state[type].map(question => {
+			if (question.id == question_id) {
+				question.openFormEditComment = true;
+			}
+			return question;
+		});
+	});
+};
+
+const CLOSE_FORM_EDIT_COMMENT = (state, question_id) => {
+	['list', 'news'].forEach(type => {
+		state[type] = state[type].map(question => {
+			if (question.id == question_id) {
+				question.openFormEditComment = false;
+			}
+			return question;
+		});
+	});
+};
+
 /**
  * Votes
  */
@@ -68,6 +90,8 @@ export default {
 	SET_QUESTIONS,
 	SET_QUESTION,
 	OPEN_FORM_COMMENT,
+	OPEN_FORM_EDIT_COMMENT,
+	CLOSE_FORM_EDIT_COMMENT,
 	ADD_COMMENT,
 	SET_COMMENT,
 	SET_VOTE
