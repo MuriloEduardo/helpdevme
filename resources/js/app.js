@@ -60,6 +60,11 @@ Vue.component('OnlineUsers', require('./components/online-users'));
 Vue.component('Notifications', require('./components/notifications'));
 Vue.component('ListItem', require('./components/chat/list-item'));
 
+Vue.component(
+	'ProfilePreviewAvatar',
+	require('./components/profile-preview-avatar')
+);
+
 const app = new Vue({
 	store,
 	el: '#app',

@@ -1,0 +1,30 @@
+.preview-image {
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+	border-radius: 100%;
+	&:after {
+		content: 'Alterar';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background-color: rgba($primary, 0.8);
+		text-align: center;
+		color: $white;
+		padding: 0.25rem;
+		font-size: 0.8rem;
+		visibility: hidden;
+	}
+	&:hover {
+		&:after {
+			visibility: visible;
+		}
+	}
+	& img {
+		width: 100px;
+		height: 100px;
+	}
+}

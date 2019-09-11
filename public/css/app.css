@@ -19695,6 +19695,38 @@ readers do not read off random characters that represent icons */
   max-width: 100%;
 }
 
+.preview-image {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+
+.preview-image:after {
+  content: 'Alterar';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(53, 73, 94, 0.8);
+  text-align: center;
+  color: #fff;
+  padding: 0.25rem;
+  font-size: 0.8rem;
+  visibility: hidden;
+}
+
+.preview-image:hover:after {
+  visibility: visible;
+}
+
+.preview-image img {
+  width: 100px;
+  height: 100px;
+}
+
 .top-navbar-height {
   top: 77px;
 }

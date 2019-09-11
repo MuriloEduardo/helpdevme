@@ -30,9 +30,15 @@
 					<p class="lead">Aqui abaixo ficarão os pedidos de ajuda de outros programadores</p>
 				</div>
 				<list-new-questions></list-new-questions>
-				@foreach($questions as $question)
+				@forelse($questions as $question)
 				@include('shared.questions.item', ['question' => $question])
-				@endforeach
+				@empty
+				<div class="d-flex flex-column align-items-center w-100">
+					<span>Não existem perguntas cadastradas</span>
+					<a class="mt-4 btn text-white btn-success px-5 my-1 mx-3"
+						href="{{ route('questions.create') }}">Publicar Questão</a>
+				</div>
+				@endforelse
 			</div>
 		</div>
 	</div>

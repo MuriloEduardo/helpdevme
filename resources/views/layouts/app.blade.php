@@ -78,10 +78,12 @@
 					<!-- Right Side Of Navbar -->
 					<ul class="navbar-nav ml-auto text-center align-items-center">
 						<!-- Authentication Links -->
+						@if (\Request::route()->getName() !== 'questions.create')
 						<li class="nav-item">
 							<a class="btn text-white btn-success mx-3" href="{{ route('questions.create') }}">Publicar
 								Questão</a>
 						</li>
+						@endif
 						@guest
 						<li class="nav-item">
 							<a class="nav-link" href="{{ route('login') }}">@lang('layouts.navbar.login')</a>

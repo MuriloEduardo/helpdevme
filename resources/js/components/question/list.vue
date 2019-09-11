@@ -1,6 +1,9 @@
 <template>
 	<section>
-		<h6 class="pb-3 text-muted">{{ total_questions }} pergunta(s)</h6>
+		<h6
+			class="pb-3 text-muted"
+			v-if="total_questions.length"
+		>{{ total_questions }} pergunta{{ total_questions.length !== 1 ? 's' : '' }}</h6>
 		<Item v-for="(question, index) in news" :question="question" :key="index" />
 	</section>
 </template>
