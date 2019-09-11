@@ -31,6 +31,7 @@ class TalkController extends Controller
 		$talks = Talk::where('user_id', auth()->id())
 			->orWhere('receiver_id', auth()->id())
 			->with(['user', 'receiver', 'question', 'posts'])
+			->orderBy('updated_at', 'DESC')
 			->get();
 
 		return response(['talks' => $talks]);
