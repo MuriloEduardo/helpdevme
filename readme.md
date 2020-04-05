@@ -18,7 +18,6 @@
     - PAYPAL_LIVE_SECRET
     - PAYPAL_MODE
 - `php artisan key:generate`
-- `php artisan storage:link`
 - `php artisan migrate:refresh --seed`
 - `php artisan passport:install`
 
@@ -26,8 +25,8 @@
 
 ## New Commands 2020
 
+- docker-compose exec app php artisan storage:link
 - docker-compose exec app php artisan key:generate
 - docker-compose exec app php artisan config:cache
-- docker-compose exec db bash
 - docker-compose exec app php artisan migrate
 
