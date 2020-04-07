@@ -5,11 +5,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
-    image: digitalocean.com/php
     container_name: app
-    restart: unless-stopped
-    tty: true
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
@@ -24,11 +20,8 @@ services:
   webserver:
     image: nginx:alpine
     container_name: webserver
-    restart: unless-stopped
-    tty: true
     ports:
-      - "80:80"
-      - "443:443"
+      - "3001:80"
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
@@ -39,8 +32,6 @@ services:
   db:
     image: mysql:5.7.22
     container_name: db
-    restart: unless-stopped
-    tty: true
     ports:
       - "3306:3306"
     environment:
@@ -58,6 +49,7 @@ services:
 networks:
   app-network:
     driver: bridge
+
 #Volumes
 volumes:
   dbdata:
