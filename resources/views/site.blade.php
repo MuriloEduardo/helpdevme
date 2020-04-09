@@ -19,9 +19,7 @@ bugs') @section('main')
 					<h3 class="display-4 mb-5">
 						Nos ajude a avaliar esse projeto?
 					</h3>
-					<a href="https://forms.gle/aEctUivZ2yBWr6EV8" target="_blank" class="btn btn-primary"
-						>Responder Google Forms</a
-					>
+					@include('auth.register-form')
 				</div>
 			</div>
 		</div>

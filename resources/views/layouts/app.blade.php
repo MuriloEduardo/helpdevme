@@ -146,7 +146,7 @@
 			<div class="container">
 				<div class="d-flex w-100 border-top py-3 justify-content-center align-items-center">
 					@svg('logo-secondary-helpdev')
-					<span class="ml-3">© 2019 Help Dev</span>
+					<span class="ml-3">© 2019 - 2020 Help Dev</span>
 				</div>
 			</div>
 		</footer>
