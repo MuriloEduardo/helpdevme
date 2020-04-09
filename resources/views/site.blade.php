@@ -76,7 +76,7 @@ bugs') @section('main')
 			</div>
 			<div class="col-sm py-3">
 				<span class="h2 mr-3 text-success">4</span>O valor da recompensa
-				fica guardado, até que o problema seja resolvido ou extornado.
+				fica guardado, até que o problema seja resolvido ou estornado.
 			</div>
 			<div class="col-sm py-3">
 				<span class="h2 mr-3 text-success">5</span>Vocês trabalham
@@ -136,13 +136,13 @@ bugs') @section('main')
 				</h3>
 				<p>
 					A plataforma poderá atuar com um processo humano de
-					arbitragem, que pode ser solicitada por ambos os lados a
+					arbitragem, que pode ser solicitado por ambos os lados a
 					qualquer momento.
 				</p>
 			</li>
 			<li class="list-group-item">
 				<h3 class="font-weight-strong">
-					Como vou saber o fim daquela ajuda? E se a solulçao for
+					Como vou saber o fim daquela ajuda? E se a soluçao for
 					muito maior que a esperada por ambos?
 				</h3>
 				<p>
