@@ -80,7 +80,7 @@
 						<!-- Authentication Links -->
 						@if (\Request::route()->getName() !== 'questions.create')
 						<li class="nav-item">
-							<a class="btn text-white btn-success mx-3" href="{{ route('questions.create') }}">Publicar
+							<a class="{{ !Auth::check() ? 'nav-link' : 'btn text-white btn-success' }}" href="{{ route('questions.create') }}">Publicar
 								Questão</a>
 						</li>
 						@endif
@@ -90,7 +90,7 @@
 						</li>
 						<li class="nav-item">
 							@if (Route::has('register'))
-							<a class="nav-link" href="{{ route('register') }}">@lang('layouts.navbar.register')</a>
+							<a class="{{ Auth::check() ? 'nav-link' : 'btn text-white btn-success' }}" href="{{ route('register') }}">@lang('layouts.navbar.register')</a>
 							@endif
 						</li>
 						@else
