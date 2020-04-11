@@ -122,8 +122,8 @@
 
 								<small class="px-4 text-muted">Minhas Atividades</small>
 
-								<a class="dropdown-item" href="{{ route('activities.client') }}">Como Cliente</a>
-								<a class="dropdown-item" href="{{ route('activities.freelancer') }}">Como Freelancer</a>
+								<a class="dropdown-item" href="{{ route('activities.client') }}">Como Aprendiz</a>
+								<a class="dropdown-item" href="{{ route('activities.freelancer') }}">Como Mentor</a>
 
 								<div class="dropdown-divider"></div>
 

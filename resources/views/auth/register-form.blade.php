@@ -45,6 +45,11 @@
 	</div>
 
 	<div class="form-group">
+		<label>Linguagens de programação que domina</label>
+		<select-tags></select-tags>
+	</div>
+
+	<div class="form-group">
 		<label for="password">{{ __('Password') }}</label>
 
 		<div>
