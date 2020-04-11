@@ -91,7 +91,7 @@ class QuestionController extends Controller
 		$usersCandidates = $question->answerCandidates();
 		Notification::send($usersCandidates, new QuestionCreated($question));
 
-		return redirect()->route('questions.index')
+		return redirect()->route('questions.index', ['meta'=>'pedido-ajuda'])
 			->with('success', 'Pergunta criada!');
 	}
 
