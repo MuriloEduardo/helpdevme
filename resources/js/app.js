@@ -65,6 +65,11 @@ Vue.component(
 	require('./components/profile-preview-avatar')
 );
 
+Vue.component(
+	'SelectTags',
+	require('./components/shared/select-tags')
+);
+
 const app = new Vue({
 	store,
 	el: '#app',

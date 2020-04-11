@@ -20,5 +20,10 @@ class Tag extends Model
     public function questions()
     {
         return $this->belongsToMany('App\Question');
+	}
+
+	public function users()
+    {
+        return $this->belongsToMany('App\User');
     }
 }

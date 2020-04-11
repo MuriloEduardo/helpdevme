@@ -61,4 +61,9 @@ class User extends Authenticatable
 	{
 		return $this->hasMany('App\Finance');
 	}
+
+	public function tags()
+	{
+		return $this->belongsToMany('App\Tag')->withTimestamps();
+	}
 }

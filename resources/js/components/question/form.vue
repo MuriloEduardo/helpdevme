@@ -3,9 +3,6 @@
 		<input type="hidden" name="_token" :value="csrf" />
 		<input type="hidden" name="body" :value="body" />
 		<input type="file" id="getFile" @change="uploadFunction($event)" hidden />
-		<select multiple="multiple" name="tags[]" hidden>
-			<option v-for="tag in tags" :value="tag.id" :key="tag.id" selected>{{ tag.title }}</option>
-		</select>
 		<div class="form-group pb-3">
 			<input
 				type="text"
@@ -35,27 +32,7 @@
 			<div class="col">
 				<div class="form-group">
 					<h5 class="pt-4 pb-3">Linguagens de programação envolvidas</h5>
-					<multiselect
-						v-model="tags"
-						placeholder="Sobre qual linguagem de programação é seu pedido de ajuda?"
-						label="title"
-						track-by="id"
-						:options="options"
-						:multiple="true"
-						selectLabel="Pressione enter para selecionar"
-						selectedLabel="Selecionado"
-						deselectLabel="Pressione enter para remover"
-					>
-						<template slot="option" slot-scope="props">
-							<div class="d-flex align-items-center">
-								<i :class="props.option.image" class="option__image"></i>
-								<div class="option__desc">
-									<span class="option__title">{{ props.option.title }}</span>
-								</div>
-							</div>
-						</template>
-						<template slot="noResult">Nenhum resultado encontrado. Considere alterar o termo de pesquisa.</template>
-					</multiselect>
+					<select-tags :list="question ? question.tags : []"></select-tags>
 				</div>
 			</div>
 		</div>
@@ -78,16 +55,12 @@
 
 <script>
 import { mapActions } from 'vuex';
-import Multiselect from 'vue-multiselect';
 
 import hljs from 'highlight.js';
 import 'highlight.js/styles/monokai-sublime.css';
 
 export default {
 	props: ['question'],
-	components: {
-		Multiselect
-	},
 	data: () => ({
 		csrf: document
 			.querySelector('meta[name="csrf-token"]')
@@ -96,8 +69,6 @@ export default {
 		body: '',
 		update: false,
 		budget: 3.75,
-		tags: [],
-		options: [],
 		editorOption: {
 			placeholder: 'De mais informações sobre sua perguntas',
 			modules: {
@@ -132,11 +103,6 @@ export default {
 	},
 	methods: {
 		...mapActions('questions', ['uploadImages']),
-		listTags() {
-			axios.get('/api/tags').then(response => {
-				this.options = response.data.tags;
-			});
-		},
 		uploadFunction(e) {
 			const quill = this.$refs.bodyEditor.quill;
 			const image = e.target.files[0];
@@ -172,25 +138,17 @@ export default {
 						}
 					);
 				});
-		},
-		setFormEdit() {
-			this.update = true;
-
-			const question = this.question;
-
-			this.title = question.title;
-			this.body = question.body;
-			this.budget = question.budget;
-			this.tags = question.tags;
 		}
 	},
 	mounted() {
-		this.listTags();
-
 		this.channel = Echo.channel('newquestions');
 
+
 		if (this.question) {
-			this.setFormEdit();
+			this.update = true;
+			this.title = this.question.title;
+			this.body = this.question.body;
+			this.budget = this.question.budget;
 		}
 	}
 };

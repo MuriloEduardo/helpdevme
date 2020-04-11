@@ -97,6 +97,8 @@ class UserController extends Controller
 
 		$user->update($request->all());
 
+		$user->tags()->sync($request->tags);
+
 		return back()->with('success', 'Perfil Editado!');
 	}
 

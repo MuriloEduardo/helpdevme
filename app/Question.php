@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Post;
+use App\User;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
@@ -108,5 +109,18 @@ class Question extends Model
 	public function views()
 	{
 		return $this->hasMany('App\View');
+	}
+
+	public function answerCandidates()
+	{
+		$candidates = User::where('id', '!=', auth()->id())
+			->with('tags')
+			->whereHas('tags', function($q) {
+				$tags = $this->tags->pluck('id')->toArray();
+				$q->whereIn('id', $tags);
+			})
+			->get();
+
+		return $candidates;
 	}
 }

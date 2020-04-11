@@ -59,6 +59,12 @@
 								</div>
 							</div>
 							<div class="form-group row">
+								<label class="col-md-4 col-form-label text-md-right">Linguagens de programação que domina</label>
+								<div class="col-md-6">
+									<select-tags :list="{{ auth()->user()->tags }}"></select-tags>
+								</div>
+							</div>
+							<div class="form-group row">
 								<label for="email"
 									class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 

@@ -15,6 +15,8 @@ use App\Events\PrivatePostSent;
 use Illuminate\Http\Request;
 
 use App\Events\NewQuestionsEvent;
+use App\Notifications\QuestionCreated;
+use Illuminate\Support\Facades\Notification;
 
 class QuestionController extends Controller
 {
@@ -85,6 +87,9 @@ class QuestionController extends Controller
 		$question->load('comments', 'tags', 'user', 'votes', 'views');
 
 		broadcast(new NewQuestionsEvent($question))->toOthers();
+
+		$usersCandidates = $question->answerCandidates();
+		Notification::send($usersCandidates, new QuestionCreated($question));
 
 		return redirect()->route('questions.index')
 			->with('success', 'Pergunta criada!');
