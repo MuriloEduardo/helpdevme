@@ -69,20 +69,6 @@
 		</div>
 	</div>
 
-	<div class="form-group">
-		<label for="password-confirm">{{ __('Confirm Password') }}</label>
-
-		<div>
-			<input
-				id="password-confirm"
-				type="password"
-				class="form-control"
-				name="password_confirmation"
-				required
-			/>
-		</div>
-	</div>
-
 	<div class="row">
 		<div class="col col-md-4">
 			<button type="submit" class="btn btn-primary btn-block">
