@@ -35,7 +35,7 @@
 				</div>
 				<list-new-questions></list-new-questions>
 				@forelse($questions as $question)
-				<div class="row py-3 align-items-center">
+				<div class="row py-3 align-items-center question">
 					<div class="col-lg-3">
 						<div class="row align-items-center">
 							<div class="col text-center">
@@ -74,7 +74,7 @@
 									<div class="d-flex align-items-center justify-content-end">
 										<span class="mr-2">{{ $question->user_id == auth()->id() ? 'Eu' : $question->user->name }}</span>
 										@include('shared.avatar', ['user' => $question->user, 'icon_class' =>
-										'fa-2x'])
+										''])
 									</div>
 								</a>
 							</div>
