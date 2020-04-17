@@ -6,17 +6,10 @@
 
 @section('content')
 <div class="row justify-content-center">
-	<div class="col-lg-10">
-
-		<ul class="nav nav-pills mb-5">
-			<li class="nav-item">
-				<a class="nav-link active" href="{{ route('profile.infos') }}">Informações Pessoais</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="{{ route('profile.password') }}">Senha</a>
-			</li>
-		</ul>
-
+	<div class="col-lg-2">
+		@include('profile.navigation')
+	</div>
+	<div class="col-lg">
 		@if(session()->get('success'))
 		<div class="alert alert-success">
 			{{ session()->get('success') }}

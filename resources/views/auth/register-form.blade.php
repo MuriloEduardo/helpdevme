@@ -2,7 +2,7 @@
 	@csrf
 
 	<div class="form-group">
-		<label for="name">{{ __('Name') }}</label>
+		<label for="name">Nome</label>
 
 		<div>
 			<input
@@ -24,7 +24,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="email">{{ __('E-Mail Address') }}</label>
+		<label for="email">Email</label>
 
 		<div>
 			<input
@@ -44,13 +44,13 @@
 		</div>
 	</div>
 
-	<div class="form-group">
+	<!-- <div class="form-group">
 		<label>Linguagens de programação que domina</label>
 		<select-tags></select-tags>
-	</div>
+	</div> -->
 
 	<div class="form-group">
-		<label for="password">{{ __('Password') }}</label>
+		<label for="password">Senha</label>
 
 		<div>
 			<input

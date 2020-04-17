@@ -6,15 +6,10 @@
 
 @section('content')
 <div class="row justify-content-center">
-	<div class="col-lg-10">
-		<ul class="nav nav-pills mb-5">
-			<li class="nav-item">
-				<a class="nav-link" href="{{ route('profile.infos') }}">Informações Pessoais</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link active" href="{{ route('profile.password') }}">Senha</a>
-			</li>
-		</ul>
+	<div class="col-lg-2">
+		@include('profile.navigation')
+	</div>
+	<div class="col-lg">
 		@if(session()->get('success'))
 		<div class="alert alert-success">
 			{{ session()->get('success') }}
@@ -36,28 +31,23 @@
 							@method('PATCH')
 
 							<div class="form-group row">
-								<label for="current_password"
-									class="col-md-4 col-form-label text-md-right">{{ __('Current Password') }}</label>
+								<label for="current_password" class="col-md-4 col-form-label text-md-right">{{ __('Current Password') }}</label>
 								<div class="col-md-6">
-									<input id="current_password" type="password" class="form-control"
-										name="current_password">
+									<input id="current_password" type="password" class="form-control" name="current_password">
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<label for="password"
-									class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+								<label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 								<div class="col-md-6">
 									<input id="password" type="password" class="form-control" name="password">
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<label for="password_confirmation"
-									class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+								<label for="password_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 								<div class="col-md-6">
-									<input id="password_confirmation" type="password" class="form-control"
-										name="password_confirmation">
+									<input id="password_confirmation" type="password" class="form-control" name="password_confirmation">
 								</div>
 							</div>
 

@@ -14,7 +14,7 @@
 							@csrf
 
 							<div class="form-group">
-								<label for="email">{{ __('E-Mail Address') }}</label>
+								<label for="email">Email</label>
 
 								<div>
 									<input id="email" type="email"
@@ -30,7 +30,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="password">{{ __('Password') }}</label>
+								<label for="password">Senha</label>
 
 								<div>
 									<input id="password" type="password"
@@ -51,7 +51,7 @@
 										{{ old('remember') ? 'checked' : '' }}>
 
 									<label class="form-check-label" for="remember">
-										{{ __('Remember Me') }}
+										Lembrar-me
 									</label>
 								</div>
 							</div>
@@ -64,7 +64,7 @@
 								</div>
 								<div class="col col-md-8">
 									<a class="btn btn-link" href="{{ route('password.request') }}">
-										{{ __('Forgot Your Password?') }}
+										Esqueceu sua senha?
 									</a>
 								</div>
 							</div>

@@ -17,7 +17,7 @@ class ActivityController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -97,15 +97,15 @@ class ActivityController extends Controller
     public function client()
     {
         $questions = Question::where('user_id', auth()->id())->get();
-        
-        return view('activities.client', compact('questions'));
+
+        return view('profile.activities.client', compact('questions'));
     }
-    
+
     public function freelancer()
     {
         $talks = Talk::where('user_id', auth()->id())
             ->get();
-        
-        return view('activities.freelancer', compact('talks'));
+
+        return view('profile.activities.freelancer', compact('talks'));
     }
 }

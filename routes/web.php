@@ -24,3 +24,5 @@ Route::resource('tags', 'TagController');
 Route::get('activities/client', 'ActivityController@client')->name('activities.client');
 
 Route::get('activities/freelancer', 'ActivityController@freelancer')->name('activities.freelancer');
+
+Route::view('/dashboard', 'dashboard')->name('dashboard');

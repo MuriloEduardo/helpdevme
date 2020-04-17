@@ -1,5 +1,9 @@
 <template>
-	<small v-if="votes">{{ votes.length }} curtida{{ votes.length != 1 ? 's' : '' }}</small>
+	<div>
+		<strong>{{ votes.length }}</strong>
+		<br>
+		<small v-if="votes">curtida{{ votes.length != 1 ? 's' : '' }}</small>
+	</div>
 </template>
 
 <script>

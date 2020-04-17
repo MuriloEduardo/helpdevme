@@ -143,7 +143,7 @@
 						</div>
 					</div>
 				</div>
-				<div v-if="talk.status != 1" class="card-footer">
+				<div v-if="talk.status != 1" class="card-footer bg-white">
 					<form @submit.prevent="sendMessage">
 						<input type="file" id="getFile" @change="uploadFunction($event)" hidden />
 						<quill-editor ref="bodyEditor" v-model="body" :options="editorOption"></quill-editor>

@@ -3,7 +3,7 @@
 @section('title', 'Verificação de Senha - Help Dev')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
 	<div class="py-5">
 		<div class="row">
 			<div class="col">
@@ -15,9 +15,8 @@
 						</div>
 						@endif
 
-						{{ __('Before proceeding, please check your email for a verification link.') }}
-						{{ __('If you did not receive the email') }}, <a
-							href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+						<p>Antes de prosseguir, verifique seu e-mail para um link de verificação.</p>
+						<p>Se você não recebeu o email, <a class="text-success" href="{{ route('verification.resend') }}">clique aqui</a> para solicitar outro.</p>
 					</div>
 				</div>
 			</div>

@@ -37,7 +37,7 @@ class QuestionController extends Controller
 	 */
 	public function index()
 	{
-		$title = 'Principais Perguntas';
+		$title = 'Explore nossas perguntas';
 
 		/**
 		 * Traz as questões que o usuário logado pode responder

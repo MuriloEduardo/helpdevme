@@ -4,24 +4,24 @@
 <head>
 
 	@if(env('APP_ENV') != 'local')
-		<!-- Google Tag Manager -->
-		<script>
-			(function(w, d, s, l, i) {
-				w[l] = w[l] || [];
-				w[l].push({
-					'gtm.start': new Date().getTime(),
-					event: 'gtm.js'
-				});
-				var f = d.getElementsByTagName(s)[0],
-					j = d.createElement(s),
-					dl = l != 'dataLayer' ? '&l=' + l : '';
-				j.async = true;
-				j.src =
-					'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-				f.parentNode.insertBefore(j, f);
-			})(window, document, 'script', 'dataLayer', 'GTM-NPNFJ97');
-		</script>
-		<!-- End Google Tag Manager -->
+	<!-- Google Tag Manager -->
+	<script>
+		(function(w, d, s, l, i) {
+			w[l] = w[l] || [];
+			w[l].push({
+				'gtm.start': new Date().getTime(),
+				event: 'gtm.js'
+			});
+			var f = d.getElementsByTagName(s)[0],
+				j = d.createElement(s),
+				dl = l != 'dataLayer' ? '&l=' + l : '';
+			j.async = true;
+			j.src =
+				'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+			f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-NPNFJ97');
+	</script>
+	<!-- End Google Tag Manager -->
 	@endif
 
 	<meta charset="utf-8">
@@ -47,30 +47,26 @@
 <body class="bg-light h-100">
 
 	@if(env('APP_ENV') != 'local')
-		<!-- Google Tag Manager (noscript) -->
-		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NPNFJ97" height="0" width="0"
-				style="display:none;visibility:hidden"></iframe></noscript>
-		<!-- End Google Tag Manager (noscript) -->
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NPNFJ97" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
 	@endif
 
 	<div id="app">
 		<nav class="navbar navbar-expand-md navbar-white bg-white fixed-top shadow-sm">
 			<div class="container-fluid">
-				<a class="navbar-brand d-flex align-items-center" href="{{ route('index') }}">
+				<a class="navbar-brand d-flex align-items-center" href="{{ auth()->check() ? route('dashboard') : route('index') }}">
 					@svg('logo-helpdev')
 					<span class="ml-2">{{ config('app.name', 'HelpDev.me') }}</span>
 				</a>
-				<button class="navbar-toggler btn btn-outline-primary" type="button" data-toggle="collapse"
-					data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="@lang('layouts.navbar.toggle_navigation')">
+				<button class="navbar-toggler btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="@lang('layouts.navbar.toggle_navigation')">
 					<i class="fas fa-bars"></i>
 				</button>
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav text-center">
 						<li class="nav-item">
-							<a class="nav-link"
-								href="{{ route('questions.index') }}">@lang('layouts.navbar.questions')</a>
+							<a class="nav-link" href="{{ route('questions.index') }}">@lang('layouts.navbar.questions')</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="{{ route('users.index') }}">@lang('layouts.navbar.users')</a>
@@ -82,12 +78,6 @@
 					<!-- Right Side Of Navbar -->
 					<ul class="navbar-nav ml-auto text-center align-items-center">
 						<!-- Authentication Links -->
-						@if (\Request::route()->getName() !== 'questions.create')
-						<li class="nav-item">
-							<a class="{{ !Auth::check() ? 'nav-link' : 'btn text-white btn-success' }}" href="{{ route('questions.create') }}">Publicar
-								Questão</a>
-						</li>
-						@endif
 						@guest
 						<li class="nav-item">
 							<a class="nav-link" href="{{ route('login') }}">@lang('layouts.navbar.login')</a>
@@ -99,14 +89,11 @@
 						</li>
 						@else
 						<notifications></notifications>
+						<list-item></list-item>
 						<li class="nav-item dropdown">
-							<a id="navbarDropdown"
-								class="nav-link dropdown-toggle d-flex flex-md-row-reverse justify-content-center align-items-center"
-								title="Minha Conta" href="#" role="button" v-b-tooltip.hover data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">
+							<a id="navbarDropdown" class="nav-link dropdown-toggle d-flex flex-md-row-reverse justify-content-center align-items-center" title="Minha Conta" href="#" role="button" v-b-tooltip.hover data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								@include('shared.avatar', ['user' => auth()->user(), 'icon_class' => 'fa-2x'])
-								<span class="pr-md-2 pr-0 pl-2 pl-md-0">Olá,
-									{{ strtok(Auth::user()->name, ' ') }}!</span>
+								<span class="pr-md-2 pr-0 pl-2 pl-md-0">{{ strtok(Auth::user()->name, ' ') }}</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
@@ -120,15 +107,8 @@
 
 								<div class="dropdown-divider"></div>
 
-								<small class="px-4 text-muted">Minhas Atividades</small>
-
-								<a class="dropdown-item" href="{{ route('activities.client') }}">Como Aprendiz</a>
-								<a class="dropdown-item" href="{{ route('activities.freelancer') }}">Como Mentor</a>
-
-								<div class="dropdown-divider"></div>
-
 								<a class="dropdown-item text-muted" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">
+																document.getElementById('logout-form').submit();">
 									@lang('layouts.navbar.logout')
 								</a>
 
@@ -137,7 +117,6 @@
 								</form>
 							</div>
 						</li>
-						<list-item></list-item>
 						@endguest
 					</ul>
 				</div>
@@ -146,11 +125,11 @@
 		<main role="main">
 			@yield('main')
 		</main>
-		<footer>
+		<footer class="bg-dark">
 			<div class="container">
-				<div class="d-flex w-100 border-top py-3 justify-content-center align-items-center">
+				<div class="d-flex w-100 py-3 justify-content-center align-items-center">
 					@svg('logo-secondary-helpdev')
-					<span class="ml-3">© 2019 - 2020 Help Dev</span>
+					<span class="ml-3 text-white">© 2019 - 2020 Help Dev</span>
 				</div>
 			</div>
 		</footer>

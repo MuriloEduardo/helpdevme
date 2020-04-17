@@ -1,5 +1,8 @@
 <template>
-	<small>{{ comments.length }} proposta{{ comments.length != 1 ? 's' : '' }}</small>
+	<div>
+		<strong>{{ comments.length }}</strong>
+		<small>proposta{{ comments.length != 1 ? 's' : '' }}</small>
+	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
