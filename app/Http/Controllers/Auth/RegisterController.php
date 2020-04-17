@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use App\Finance;
+
 class RegisterController extends Controller
 {
 	/*
@@ -55,6 +57,26 @@ class RegisterController extends Controller
 		]);
 	}
 
+	private function addPromotionalBalance($user, $budget)
+	{
+		$user = User::find($user)->first();
+
+		// Adicionar registro no extrato
+		$finance = $user->finances()->create([
+			'user_id' => $user->id,
+			'receiver_id' => $user->id,
+			'type' => Finance::types['fund'],
+			'budget' => number_format($budget, 2, '.', ''),
+			'confirmed' => 1
+		]);
+
+		/**
+		 * Update amount column user with balance
+		 */
+		$user->amount += $finance->budget;
+		$user->update();
+	}
+
 	/**
 	 * Create a new user instance after a valid registration.
 	 *
@@ -63,10 +85,15 @@ class RegisterController extends Controller
 	 */
 	protected function create(array $data)
 	{
-		return User::create([
+		$user = User::create([
 			'name' => $data['name'],
 			'email' => $data['email'],
 			'password' => Hash::make($data['password']),
 		]);
+
+		// R$ 5,00
+		$this->addPromotionalBalance($user, 5);
+
+		return $user;
 	}
 }
