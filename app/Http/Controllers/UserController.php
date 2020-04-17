@@ -6,6 +6,7 @@ use App\User;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use JD\Cloudder\Facades\Cloudder;
 
 class UserController extends Controller
 {
@@ -74,9 +75,17 @@ class UserController extends Controller
 	public function update(Request $request, User $user)
 	{
 		if ($request->has('avatar')) {
-			$path = $request->file('avatar')->storePublicly('avatars');
+			$this->validate($request, [
+				'avatar' => 'mimes:jpeg,bmp,jpg,png|between:1, 6000',
+			]);
 
-			$user->avatar = $path;
+			$image_name = $request->file('avatar')->getRealPath();
+
+			Cloudder::upload($image_name, null);
+
+			$resultUpload = Cloudder::getResult();
+
+			$user->avatar = $resultUpload['secure_url'];
 		}
 
 		if ($request->has('password')) {

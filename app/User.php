@@ -6,13 +6,10 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
 	use HasApiTokens, Notifiable;
-
-	protected $appends = ['avatar_url'];
 
 	/**
 	 * The attributes that are mass assignable.
@@ -31,11 +28,6 @@ class User extends Authenticatable implements MustVerifyEmail
 	protected $hidden = [
 		'password', 'remember_token',
 	];
-
-	public function getAvatarUrlAttribute()
-	{
-		return !$this->avatar ? $this->avatar : Storage::url($this->avatar);
-	}
 
 	public function questions()
 	{

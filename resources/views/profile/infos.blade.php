@@ -34,7 +34,7 @@
 								<label for="avatar"
 									class="col-md-4 col-form-label text-md-right">{{ __('Avatar') }}</label>
 								<div class="col-md-6">
-									<profile-preview-avatar :user="{{ auth()->user() }}"></profile-preview-avatar>
+									<profile-preview-avatar :user="{{ $user }}"></profile-preview-avatar>
 								</div>
 							</div>
 							<div class="form-group row">

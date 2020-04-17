@@ -2,9 +2,9 @@
 	<div>
 		<div class="preview-image text-center" @click="openUploadIMage">
 			<img
-				v-if="user.avatar_url || avatar_url"
+				v-if="user.avatar || avatar"
 				class="img-fluid avatar"
-				:src="avatar_url ? avatar_url : user.avatar_url"
+				:src="avatar ? avatar : user.avatar"
 				v-bind:alt="user.name"
 				v-bind:title="user.name"
 			/>
@@ -18,13 +18,13 @@ export default {
 	props: ['user'],
 	data() {
 		return {
-			avatar_url: undefined
+			avatar: undefined
 		};
 	},
 	methods: {
 		onFileChange(e) {
 			const file = e.target.files[0];
-			this.avatar_url = URL.createObjectURL(file);
+			this.avatar = URL.createObjectURL(file);
 		},
 		openUploadIMage() {
 			this.$refs.avatarFile.click();
