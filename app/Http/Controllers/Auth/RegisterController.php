@@ -59,8 +59,6 @@ class RegisterController extends Controller
 
 	private function addPromotionalBalance($user, $budget)
 	{
-		$user = User::find($user)->first();
-
 		// Adicionar registro no extrato
 		$finance = $user->finances()->create([
 			'user_id' => $user->id,
