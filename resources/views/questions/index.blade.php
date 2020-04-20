@@ -28,8 +28,7 @@
 				<div class="mb-5">
 					<div class="d-flex align-items-center justify-content-between">
 						<h1>{{ $title }}</h1>
-						<a class="btn btn-success" href="{{ route('questions.create') }}">Publicar
-							Questão</a>
+						<a class="btn btn-lg btn-success" href="{{ route('questions.create') }}">Pedir Ajuda</a>
 					</div>
 					<p class="lead">Aqui abaixo ficarão os pedidos de ajuda de outros programadores</p>
 				</div>

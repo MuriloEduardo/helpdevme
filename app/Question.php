@@ -55,7 +55,7 @@ class Question extends Model
 				$class = 'badge-success';
 				break;
 			default:
-				$class = 'badge-warning';
+				$class = 'badge-secondary';
 				break;
 		}
 

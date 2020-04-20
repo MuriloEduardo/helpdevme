@@ -4,7 +4,7 @@
 			<div class="col">
 				<!-- Title, body, tags, user -->
 				@if (isset($tag) && $tag == 'h1')
-				<h1 class="mb-5">{{ $question->title }}</h1>
+				<h1>{{ $question->title }}</h1>
 				@else
 				<h3 class="h4">
 					<a href="{{ route('questions.show', $question) }}">{{ $question->title }}</a>
