@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 use App\Finance;
+use App\Notifications\CreditsAdded;
 
 class RegisterController extends Controller
 {
@@ -73,6 +74,8 @@ class RegisterController extends Controller
 		 */
 		$user->amount += $finance->budget;
 		$user->update();
+
+		$user->notify(new CreditsAdded($finance));
 	}
 
 	/**

@@ -28,11 +28,6 @@
 				@auth
 				<div class="row mb-5">
 					<div class="col">
-						<div class="bg-success text-white p-3">
-							<h2>Parabéns! Você recebeu R$5,00 de saldo por se cadastrar!</h2>
-						</div>
-					</div>
-					<div class="col">
 						<h2>Complete seu perfil</h2>
 						<ul>
 							<li>Verficiar email</li>

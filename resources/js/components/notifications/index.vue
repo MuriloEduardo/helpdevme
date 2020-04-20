@@ -24,7 +24,7 @@
 		>
 			<div v-if="notifications.length">
 				<div class="d-flex justify-content-between align-items-center py-1">
-					<a href="/talks" class="btn btn-link">Ver Todas</a>
+					<a href="/profile/notifications" class="btn btn-link">Ver Todas</a>
 					<button class="btn btn-link" @click="markAllAsRead()">Limpar Notificações</button>
 				</div>
 				<Items :notifications="notifications"></Items>

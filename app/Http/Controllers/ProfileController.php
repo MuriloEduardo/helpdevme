@@ -64,5 +64,10 @@ class ProfileController extends Controller
     public function infos()
     {
         return view('profile.infos');
+	}
+
+    public function notifications()
+    {
+        return view('profile.notifications');
     }
 }

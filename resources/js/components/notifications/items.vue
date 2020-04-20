@@ -5,17 +5,19 @@
 			:key="index"
 			class="list-group-item list-group-item-action flex-column align-items-start list-group-item-unread"
 			:class="notification.read_at ? 'list-group-item-unread': ''"
-			:set="post = notification.data.post"
 		>
 			<div class="d-flex justify-content-between align-items-center">
-				<a :href="'/' + post.talk.question.slug">
+				<a :href="'/' + notification.data.post.talk.question.slug" v-if="notification.type === 'App\\Notifications\\QuestionCommented'">
 					<span>
 						Novo comentário em
-						<b>{{ post.talk.question.title }}</b>
-						por {{ post.talk.user.name }}
+						<b>{{ notification.data.post.talk.question.title }}</b>
+						por {{ notification.data.post.talk.user.name }}
 					</span>
-					<div v-if="post.budget" class="badge badge-success">{{ post.budget | currency }}</div>
+					<div v-if="notification.data.post.budget" class="badge badge-success">{{ notification.data.post.budget | currency }}</div>
 				</a>
+				<div v-if="notification.type === 'App\\Notifications\\CreditsAdded'">
+					Parabéns! Você recebeu {{ notification.data.budget | currency }} de saldo por se cadastrar!
+				</div>
 				<b-button
 					size="sm"
 					variant="link"
