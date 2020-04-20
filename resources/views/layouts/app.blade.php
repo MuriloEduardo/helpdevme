@@ -88,34 +88,20 @@
 							@endif
 						</li>
 						@else
+						<li class="nav-item">
+							<div class="h4 m-0">
+								<a href="{{ route('finances.index') }}" class="nav-link badge badge-pill badge-success text-white" title="Finanças" v-b-tooltip.hover aria-haspopup="true">
+									@include('shared.budget', ['budget' => auth()->user()->amount])
+								</a>
+							</div>
+						</li>
 						<notifications></notifications>
 						<list-item></list-item>
-						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle d-flex flex-md-row-reverse justify-content-center align-items-center" title="Minha Conta" href="#" role="button" v-b-tooltip.hover data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<li class="nav-item">
+							<a class="nav-link d-flex flex-md-row-reverse justify-content-center align-items-center" title="Minha Conta" href="{{ route('profile.infos') }}" v-b-tooltip.hover aria-haspopup="true">
 								@include('shared.avatar', ['user' => auth()->user(), 'icon_class' => 'fa-2x'])
 								<span class="pr-md-2 pr-0 pl-2 pl-md-0">{{ strtok(Auth::user()->name, ' ') }}</span>
 							</a>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-								<a class="dropdown-item" href="{{ route('profile.infos') }}">
-									@lang('layouts.navbar.profile')
-								</a>
-
-								<a class="dropdown-item" href="{{ route('finances.index') }}">
-									@lang('layouts.navbar.finances')
-								</a>
-
-								<div class="dropdown-divider"></div>
-
-								<a class="dropdown-item text-muted" href="{{ route('logout') }}" onclick="event.preventDefault();
-																document.getElementById('logout-form').submit();">
-									@lang('layouts.navbar.logout')
-								</a>
-
-								<form id="logout-form" class="d-none" action="{{ route('logout') }}" method="POST">
-									@csrf
-								</form>
-							</div>
 						</li>
 						@endguest
 					</ul>

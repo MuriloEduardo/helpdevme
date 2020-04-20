@@ -22,7 +22,7 @@
 		</div>
 		@endforeach
 
-		<h2 class="display-4 my-5">Informações Pessoais</h2>
+		<h2 class="display-4 mb-5">Informações Pessoais</h2>
 		<div class="row">
 			<div class="col">
 				<div class="card">

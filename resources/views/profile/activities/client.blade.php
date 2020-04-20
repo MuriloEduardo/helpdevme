@@ -8,7 +8,7 @@
 		@include('profile.navigation')
 	</div>
 	<div class="col-lg">
-		<h1 class="font-weight-light my-5">{{ $questions->count() . ' ' . str_plural('pedido', $questions->count()) }}
+		<h1 class="font-weight-light mb-5">{{ $questions->count() . ' ' . str_plural('pedido', $questions->count()) }}
 			de
 			socorro</h1>
 

@@ -33,10 +33,6 @@
 						</div>
 					</div>
 					<div class="col">
-						<h2>Saldo</h2>
-						<h3>@include('shared.budget', ['budget' => auth()->user()->amount])</h3>
-					</div>
-					<div class="col">
 						<h2>Complete seu perfil</h2>
 						<ul>
 							<li>Verficiar email</li>
