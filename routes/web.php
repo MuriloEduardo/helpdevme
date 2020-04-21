@@ -25,4 +25,4 @@ Route::get('activities/client', 'ActivityController@client')->name('activities.c
 
 Route::get('activities/freelancer', 'ActivityController@freelancer')->name('activities.freelancer');
 
-Route::view('/dashboard', 'dashboard')->name('dashboard');
+Route::view('/dashboard', 'dashboard')->name('dashboard')->middleware('auth');
