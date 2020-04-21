@@ -17,7 +17,11 @@ class UserController extends Controller
 	 */
 	public function index()
 	{
-		$users = User::all();
+		$users = User::withCount(['tags', 'questions', 'talks'])
+			->orderBy('questions_count', 'desc')
+			->orderBy('talks_count', 'desc')
+			->orderBy('tags_count', 'desc')
+			->get();
 
 		return view('users.index', compact('users'));
 	}

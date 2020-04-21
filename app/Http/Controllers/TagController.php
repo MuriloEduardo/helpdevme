@@ -14,8 +14,9 @@ class TagController extends Controller
 	 */
 	public function index()
 	{
-		$tags = Tag::withCount('questions')
+		$tags = Tag::withCount(['questions', 'users'])
 			->orderBy('questions_count', 'desc')
+			->orderBy('users_count', 'desc')
 			->get();
 
 		return view('tags.index', compact('tags'));

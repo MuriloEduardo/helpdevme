@@ -7,7 +7,7 @@
 	<div class="col-lg-10 offset-lg-1">
 		<h1 class="display-4 mb-4">Tags</h1>
 		<div class="tags-index row">
-			@forelse ($tags as $tag)
+			@foreach ($tags as $tag)
 			<div class="col-lg-3 py-3">
 				<div class="card">
 					<div class="card-body">
@@ -18,18 +18,13 @@
 							</div>
 						</a>
 						<div class="card-text">
-							<small class="text-muted">Usada em
-								{{ $tag->questions->count() . ' ' . str_plural('pergunta', $tag->questions->count()) }}</small>
+							<div class="text-muted">Usada em {{ $tag->questions->count() . ' ' . str_plural('pergunta', $tag->questions->count()) }}</div>
+							<div class="text-muted">{{ $tag->users->count() }} usuários dominam essa linguagem</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			@empty
-			<div class="d-flex flex-column align-items-center w-100">
-				<span>Não existem tags cadastradas</span>
-			</div>
-			@endforelse
+			@endforeach
 		</div>
 	</div>
-</div>
-@endsection
+	@endsection

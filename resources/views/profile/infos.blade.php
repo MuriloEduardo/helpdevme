@@ -30,7 +30,7 @@
 						<form method="POST" action="{{ route('users.update', $user) }}" enctype="multipart/form-data">
 							@csrf
 							@method('PATCH')
-							<div class="form-group row">
+							<div class="form-group row align-items-center">
 								<label for="avatar"
 									class="col-md-4 col-form-label text-md-right">{{ __('Avatar') }}</label>
 								<div class="col-md-6">
@@ -38,7 +38,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+								<label for="name" class="col-md-4 col-form-label text-md-right">Nome</label>
 								<div class="col-md-6">
 									<input id="name" type="text"
 										class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
@@ -52,14 +52,14 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-md-4 col-form-label text-md-right">Linguagens de programação que domina</label>
+								<label class="col-md-4 col-form-label text-md-right">Linguagens de programação</label>
 								<div class="col-md-6">
 									<select-tags :list="{{ auth()->user()->tags }}"></select-tags>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="email"
-									class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+									class="col-md-4 col-form-label text-md-right">Email</label>
 
 								<div class="col-md-6">
 									<input id="email" type="email"
