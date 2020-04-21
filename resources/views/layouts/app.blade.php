@@ -111,11 +111,11 @@
 		<main role="main">
 			@yield('main')
 		</main>
-		<footer class="bg-dark">
+		<footer>
 			<div class="container">
-				<div class="d-flex w-100 py-3 justify-content-center align-items-center">
+				<div class="d-flex w-100 py-3 justify-content-center align-items-center border-top">
 					@svg('logo-secondary-helpdev')
-					<span class="ml-3 text-white">© 2019 - 2020 Help Dev</span>
+					<span class="ml-3">© 2019 - 2020 Help Dev</span>
 				</div>
 			</div>
 		</footer>
