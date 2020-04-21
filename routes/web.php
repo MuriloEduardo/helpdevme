@@ -25,4 +25,22 @@ Route::get('activities/client', 'ActivityController@client')->name('activities.c
 
 Route::get('activities/freelancer', 'ActivityController@freelancer')->name('activities.freelancer');
 
-Route::view('/dashboard', 'dashboard')->name('dashboard')->middleware('auth');
+Route::get('/dashboard', function () {
+	$completes = [
+		!!auth()->user()->email_verified_at,
+		!!auth()->user()->tags->count(),
+		!!auth()->user()->avatar
+	];
+
+	$trueCompletes = array_filter($completes, function($complete) {
+		return $complete === true;
+	});
+
+	$numberCompletes = count($trueCompletes);
+
+	$percentBefore = ( $numberCompletes / 3 ) * 100;
+
+	$percent = round($percentBefore);
+
+	return view('dashboard', compact('percent'));
+})->name('dashboard')->middleware('auth');
