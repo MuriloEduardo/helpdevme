@@ -31,8 +31,7 @@
 							@csrf
 							@method('PATCH')
 							<div class="form-group row align-items-center">
-								<label for="avatar"
-									class="col-md-4 col-form-label text-md-right">{{ __('Avatar') }}</label>
+								<label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Avatar') }}</label>
 								<div class="col-md-6">
 									<profile-preview-avatar :user="{{ $user }}"></profile-preview-avatar>
 								</div>
@@ -40,9 +39,7 @@
 							<div class="form-group row">
 								<label for="name" class="col-md-4 col-form-label text-md-right">Nome</label>
 								<div class="col-md-6">
-									<input id="name" type="text"
-										class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
-										value="{{ $user->name }}" required>
+									<input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ $user->name }}" required>
 
 									@if ($errors->has('name'))
 									<span class="invalid-feedback" role="alert">
@@ -58,18 +55,22 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="email"
-									class="col-md-4 col-form-label text-md-right">Email</label>
+								<label for="email" class="col-md-4 col-form-label text-md-right">
+									Email
+									<i title="{{ $user->email_verified_at ? 'Email verificado' : 'Email não verificado' }}" v-b-tooltip.hover aria-haspopup="true" class="fas fa-check-circle {{ $user->email_verified_at ? 'text-success' : 'text-secondary' }}"></i>
+								</label>
 
 								<div class="col-md-6">
-									<input id="email" type="email"
-										class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-										name="email" value="{{ $user->email }}" required>
+									<input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $user->email }}" required>
 
 									@if ($errors->has('email'))
 									<span class="invalid-feedback" role="alert">
 										<strong>{{ $errors->first('email') }}</strong>
 									</span>
+									@endif
+
+									@if (!$user->email_verified_at)
+									<a class="btn btn-link btn-sm" href="{{ route('profile.sendEmailVerificationNotification') }}">Reenviar email de verificação</a>
 									@endif
 								</div>
 							</div>

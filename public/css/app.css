@@ -21083,12 +21083,6 @@ readers do not read off random characters that represent icons */
   font-weight: 400;
 }
 
-.avatar {
-  border-radius: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
 .nav-link .avatar {
   width: 30px;
   height: 30px;
