@@ -31,7 +31,7 @@ class RegisterController extends Controller
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = '/questions/create?meta=conta-criada';
+	protected $redirectTo = '/dashboard?meta=conta-criada';
 
 	/**
 	 * Create a new controller instance.
