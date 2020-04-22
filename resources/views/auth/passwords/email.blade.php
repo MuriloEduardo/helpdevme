@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Recuperar Senha - ')
+@section('title', 'Recuperar Senha - Help Dev')
 
 @section('content')
 <div class="container-fluid">
