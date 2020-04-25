@@ -6,7 +6,7 @@
 				<small class="ml-2">Curtir</small>
 			</div>
 		</button>
-		<button
+		<!-- <button
 			v-if="($userId != question.user_id && question.status == 0 && !userCanComment)"
 			class="btn btn-outline-success"
 			@click="openFormComment(question.id)"
@@ -15,7 +15,7 @@
 				<i class="fas fa-comments-dollar"></i>
 				<small class="ml-2">Fazer Proposta</small>
 			</div>
-		</button>
+		</button> -->
 
 		<button
 			v-if="($userId != question.user_id && question.status == 0 && userCanComment && userCanComment.talk.status == 0)"

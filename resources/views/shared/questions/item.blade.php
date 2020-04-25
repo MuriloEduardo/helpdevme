@@ -59,10 +59,20 @@
 				visualizaç{{ $question->views->count() == 1 ? 'ão' : 'ões' }}</small>
 			<count-comments :question_id="{{ $question->id }}"></count-comments>
 		</div>
-		<a href="{{ route('question.accept', $question) }}">Ajudar</a>
-		<!-- Ações -->
-		<actions-question class="py-3 border-top" :question="{{ $question }}"></actions-question>
-		<!-- Create Comment -->
-		<c-comments :question_id="{{ $question->id }}"></c-comments>
+		<div class="d-flex py-3 border-top align-items-center">
+			<!-- Ações -->
+			<actions-question :question="{{ $question }}"></actions-question>
+			@if(
+				auth()->id() !== $question->user_id &&
+				$question->status === 0
+			)
+			<a class="btn btn-lg btn-success" href="{{ route('question.accept', $question) }}">
+				<div class="d-flex align-items-center">
+					<i class="fas fa-comments-dollar"></i>
+					<small class="ml-2">Ajudar</small>
+				</div>
+			</a>
+			@endif
+		</div>
 	</div>
 </div>
