@@ -39,30 +39,39 @@ class Question extends Model
 		return 'slug';
 	}
 
-	public function getStatusTransformAttribute($status)
+	public function getStatusTransformAttribute()
 	{
-		if (is_null($status))
-			$status = 0;
+		$response = [
+			'class' => 'badge-secondary',
+			'icon' => 'fas fa-briefcase-medical',
+			'text' => __('questions.status.0'),
+		];
 
-		switch ($status) {
+		switch ($this->status) {
 			case 1:
-				$class = 'badge-primary';
+				$response = [
+					'class' => 'badge-primary',
+					'icon' => 'fas fa-address-card',
+					'text' => __('questions.status.' . $this->status),
+				];
 				break;
 			case 2:
-				$class = 'badge-info';
+				$response = [
+					'class' => 'badge-info',
+					'icon' => 'fas fa-money-bill-wave',
+					'text' => __('questions.status.' . $this->status),
+				];
 				break;
 			case 3:
-				$class = 'badge-success';
-				break;
-			default:
-				$class = 'badge-secondary';
+				$response = [
+					'class' => 'badge-success',
+					'icon' => 'fas fa-clipboard-check',
+					'text' => __('questions.status.' . $this->status),
+				];
 				break;
 		}
 
-		return [
-			'class' => $class,
-			'text' => __('questions.status.' . $status)
-		];
+		return $response;
 	}
 
 	public function getImageUrlAttribute()

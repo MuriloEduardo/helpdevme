@@ -2,20 +2,14 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col">
-				<!-- Title, body, tags, user -->
-				@if (isset($tag) && $tag == 'h1')
-				<h1>{{ $question->title }}</h1>
-				@else
-				<h3 class="h4">
-					<a href="{{ route('questions.show', $question) }}">{{ $question->title }}</a>
-				</h3>
-				@endif
-				<!-- Status -->
-				@include('shared.questions.status', ['question' => $question])
+				<a href="{{ route('questions.show', $question) }}" class="d-flex align-items-center">
+					@include('shared.questions.status', ['question' => $question])
+					<h1 class="ml-2 mb-0">{{ $question->title }}</h1>
+				</a>
 			</div>
 			<div class="col-lg-2">
 				<div class="text-success d-flex align-items-end flex-column">
-					<h5>{{  'R$ ' . number_format($question->budget, 2, ',', '.') }}</h5>
+					<h5>{{ 'R$ ' . number_format($question->budget, 2, ',', '.') }}</h5>
 					<small>Orçamento Médio</small>
 				</div>
 			</div>
@@ -50,8 +44,7 @@
 				<span>{{ $question->published }} por</span>
 				<a href="{{ route('users.show', $question->user) }}" class="d-inline-block">
 					<div class="d-flex align-items-center justify-content-end">
-						<span
-							class="mr-2">{{ $question->user_id == auth()->id() ? 'Eu' : $question->user->name }}</span>
+						<span class="mr-2">{{ $question->user_id == auth()->id() ? 'Eu' : $question->user->name }}</span>
 						@include('shared.avatar', ['user' => $question->user, 'icon_class' =>
 						'fa-2x'])
 					</div>

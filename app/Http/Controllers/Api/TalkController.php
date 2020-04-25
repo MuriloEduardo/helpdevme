@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Talk;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
+use JD\Cloudder\Facades\Cloudder;
 
 class TalkController extends Controller
 {
@@ -135,8 +135,12 @@ class TalkController extends Controller
 	 */
 	public function uploadImages(Request $request)
 	{
-		$path = $request->file('image')->storePublicly('questions');
+		$image_name = $request->file('image')->getRealPath();
 
-		return response(['path' => Storage::url($path)]);
+		Cloudder::upload($image_name, null);
+
+		$resultUpload = Cloudder::getResult();
+
+		return response(['path' => $resultUpload['secure_url']]);
 	}
 }
