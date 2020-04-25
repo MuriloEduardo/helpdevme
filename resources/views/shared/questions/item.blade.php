@@ -59,6 +59,7 @@
 				visualizaç{{ $question->views->count() == 1 ? 'ão' : 'ões' }}</small>
 			<count-comments :question_id="{{ $question->id }}"></count-comments>
 		</div>
+		<a href="{{ route('question.accept', $question) }}">Ajudar</a>
 		<!-- Ações -->
 		<actions-question class="py-3 border-top" :question="{{ $question }}"></actions-question>
 		<!-- Create Comment -->

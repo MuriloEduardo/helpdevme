@@ -7,7 +7,6 @@ use App\Post;
 use App\Finance;
 use App\User;
 use App\Talk;
-use App\Tag;
 
 use App\Events\ViewQuestion;
 use App\Events\PrivatePostSent;
@@ -242,5 +241,40 @@ class QuestionController extends Controller
 		}
 
 		return back();
+	}
+
+	/**
+	 * Acept Question
+	 *
+	 * @param  \App\Question  $question
+	 * @return \Illuminate\Http\Response
+	 */
+	public function accept(Question $question)
+	{
+		$this->authorize('accept-question', $question);
+
+		$question->status = Question::status['warranty'];
+		$question->update();
+
+		$talk = new Talk;
+		$talk->status = Talk::status['active'];
+		$talk->question_id = $question->id;
+		$talk->user_id = auth()->id();
+		$talk->receiver_id = $question->user_id;
+		$talk->save();
+
+		$post = new Post;
+		$post->talk_id = $talk->id;
+		$post->user_id = auth()->id();
+		$post->body = 'Proposta Aceita';
+		$post->type = Post::types['alert'];
+		$post->status = Post::status['accept'];
+		$post->save();
+
+
+		broadcast(new PrivatePostSent($post));
+
+		return redirect()->route('talks.show', $post->talk)
+			->with('success', 'Proposta aceita! Realize o deposito de garantia.');
 	}
 }

@@ -41,8 +41,8 @@ class AuthServiceProvider extends ServiceProvider
 			return $user->id == $talk->user_id && $talk->question->status === Question::status['analyzing'];
 		});
 
-		Gate::define('accept', function ($user, $post) {
-			return $user->id === $post->talk->receiver_id && $post->talk->question->status === Question::status['analyzing'];
+		Gate::define('accept-question', function ($user, $question) {
+			return $user->id !== $question->user_id && $question->status === Question::status['analyzing'];
 		});
 
 		Gate::define('refused', function ($user, $post) {

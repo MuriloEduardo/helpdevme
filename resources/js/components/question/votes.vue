@@ -14,7 +14,7 @@ export default {
 	computed: {
 		...mapGetters('questions', ['getVotes']),
 		votes: function() {
-			return this.getVotes(this.question_id);
+			return this.getVotes(this.question_id) || 0;
 		}
 	}
 };

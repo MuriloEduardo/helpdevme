@@ -121,44 +121,6 @@ class PostController extends Controller
 		//
 	}
 
-	/**
-	 * Update the status filed.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function accept(Request $request, $id)
-	{
-		$post = Post::findOrFail($id);
-
-		$this->authorize('accept', $post);
-
-		$question = $post->talk->question;
-		$question->status = Question::status['warranty'];
-		$question->update();
-
-		$post->status = Post::status['accept'];
-		$post->update();
-
-		$talk = $post->talk;
-		$talk->status = Talk::status['active'];
-		$talk->update();
-
-		$alert = new Post;
-		$alert->talk_id = $post->talk->id;
-		$alert->user_id = auth()->id();
-		$alert->body = 'Proposta Aceita';
-		$alert->type = Post::types['alert'];
-		$alert->status = Post::status['accept'];
-		$alert->save();
-
-		broadcast(new PrivatePostSent($alert));
-
-		return redirect()->route('talks.show', $post->talk)
-			->with('success', 'Proposta aceita! Realize o deposito de garantia.');
-	}
-
 	public function refused(Request $request, $id)
 	{
 		$post = Post::findOrFail($id);
