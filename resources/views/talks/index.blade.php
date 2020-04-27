@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-	<div class="col-lg-10 offset-1">
+	<div class="col">
 		<h1 class="display-4 mb-5">Conversas</h1>
 		<div class="list-group">
 			@forelse($talks as $talk)

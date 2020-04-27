@@ -3,8 +3,8 @@
 @section('title', 'Solucione sua dúvida sobre programação! - Help Dev')
 
 @section('content')
-<div class="row justify-content-center">
-	<div class="col-lg-9">
+<div class="row">
+	<div class="col">
 		@if ($errors->any())
 		<div class="alert alert-danger">
 			<div class="d-flex justify-content-between">
@@ -21,8 +21,8 @@
 		@endif
 	</div>
 </div>
-<div class="row justify-content-center">
-	<div class="col-lg-10">
+<div class="row">
+	<div class="col">
 		<div class="row">
 			<div class="col-lg-9">
 				<div class="mb-5">

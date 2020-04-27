@@ -3,8 +3,8 @@
 @section('title', 'Finanças - Help Dev')
 
 @section('content')
-<div class="row justify-content-center">
-	<div class="col-lg-10">
+<div class="row">
+	<div class="col">
 		@if(session()->get('success'))
 		<div class="alert alert-success">
 			{{ session()->get('success') }}

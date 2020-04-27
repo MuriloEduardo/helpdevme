@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-	<div class="col-lg-10 offset-lg-1">
+	<div class="col">
 		<h1 class="display-4 mb-4">Usuários</h1>
 		<div class="card-columns">
 			@forelse($users as $user)

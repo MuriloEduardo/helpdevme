@@ -3,8 +3,8 @@
 @section('title', 'Fazer uma Recarga - Help Dev')
 
 @section('content')
-<div class="row justify-content-center">
-	<div class="col-lg-10">
+<div class="row">
+	<div class="col">
 		<form action="{{ route('payments.paypal.fund') }}" method="POST">
 			<h1>Adicionar crédito a minha conta</h1>
 			<div class="card">

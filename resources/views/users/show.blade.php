@@ -1,7 +1,7 @@
 @extends('layouts.main') @section('title', $user->name . ' - Help Dev')
 @section('content')
 <div class="row">
-	<div class="col-lg-10 m-auto">
+	<div class="col">
 		<div class="row">
 			<div class="col-lg-4">
 				@include('shared.avatar', ['user' => $user, 'icon_class' => 'fa-4x', 'circle' => false])

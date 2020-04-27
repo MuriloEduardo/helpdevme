@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.public')
 
 @php ($opposite = auth()->id() === $talk->user->id ? $talk->receiver : $talk->user)
 

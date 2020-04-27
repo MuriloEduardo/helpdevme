@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-	<div class="col-lg-10 offset-lg-1">
+	<div class="col">
 		<h1 class="display-4 mb-4">Tags</h1>
 		<div class="tags-index row">
 			@foreach ($tags as $tag)

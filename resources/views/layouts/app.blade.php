@@ -65,6 +65,11 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav text-center">
+						@auth
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+						</li>
+						@endauth
 						<li class="nav-item">
 							<a class="nav-link" href="{{ route('questions.index') }}">@lang('layouts.navbar.questions')</a>
 						</li>

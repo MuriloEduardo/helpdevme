@@ -3,8 +3,8 @@
 @section('title', $tag->title . ' - Help Dev')
 
 @section('content')
-<div class="row justify-content-center">
-	<div class="col-lg-10">
+<div class="row">
+	<div class="col">
 		<div class="d-flex align-items-center mb-3">
 			<i class="{{ $tag->image }} colored fa-5x"></i>
 			<h1 class="display-4 my-0 mx-3">{{ $tag->title }}</h1>
