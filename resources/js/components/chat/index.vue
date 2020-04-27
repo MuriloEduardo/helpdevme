@@ -132,8 +132,8 @@
 												</span>
 												<span
 													v-html="post.body"
-													class="badge badge-pill py-2 px-3 default ml-1 font-weight-normal"
-													:class="(user.id!==post.user_id)?'badge-secondary':'badge-primary'"
+													class="badge py-2 px-3 default ml-1 font-weight-normal"
+													:class="(user.id!==post.user_id)?'badge-light':'badge-primary'"
 												></span>
 											</div>
 										</div>
