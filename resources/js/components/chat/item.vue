@@ -1,53 +1,54 @@
 <template>
-	<div>
-		<a
-			class="list-group-item list-group-item-action flex-column align-items-start"
-			:class="getUnreadsTalk(talk.id) ? 'list-group-item-unread': ''"
-			:href="'/talks/' + talk.id"
-		>
-			<output-posts :talk_id="talk.id" @receivedPost="onReceivedPost"></output-posts>
-			<div class="d-flex align-items-start">
-				<picture class="position-relative">
-					<img
-						class="img-fluid avatar avatar-list-item"
-						width="50px"
-						v-if="opposite.avatar_url"
-						:src="opposite.avatar_url"
-						:alt="opposite.name"
-						:title="opposite.name"
-					/>
-					<i v-else class="fas fa-user-circle fa-2x"></i>
-					<i
-						:class="opposite_online ? 'text-success' : ''"
-						class="fas fa-circle fa-xs position-absolute online-list-item"
-					></i>
-				</picture>
-				<div class="ml-3 text-truncate flex-grow-1">
-					<h6 class="m-0">{{ opposite.name }}</h6>
-					<small>
-						<b>{{ talk.question.title }}</b>
-					</small>
-					<div
-						class="d-flex justify-content-between"
-						v-if="talk.posts"
-						:set="post = talk.posts[talk.posts.length - 1]"
-					>
-						<small class="text-muted">{{ post.body }}</small>
-						<small class="text-muted pl-3">{{ post.published }}</small>
-					</div>
-				</div>
-				<b-button
-					size="sm"
-					variant="link"
-					@click.prevent="markAsRead(talk.id)"
-					v-b-tooltip.hover
-					title="Marcar como lido"
+	<a
+		class="list-group-item list-group-item-action flex-column align-items-start"
+		:class="getUnreadsTalk(talk.id) ? 'list-group-item-unread' : ''"
+		:href="'/talks/' + talk.id"
+	>
+		<output-posts
+			:talk_id="talk.id"
+			@receivedPost="onReceivedPost"
+		></output-posts>
+		<div class="d-flex align-items-start">
+			<picture class="position-relative">
+				<img
+					class="img-fluid avatar avatar-list-item"
+					width="50px"
+					v-if="opposite.avatar_url"
+					:src="opposite.avatar_url"
+					:alt="opposite.name"
+					:title="opposite.name"
+				/>
+				<i v-else class="fas fa-user-circle fa-2x"></i>
+				<i
+					:class="opposite_online ? 'text-success' : ''"
+					class="fas fa-circle fa-xs position-absolute online-list-item"
+				></i>
+			</picture>
+			<div class="ml-3 text-truncate flex-grow-1">
+				<h6 class="m-0">{{ opposite.name }}</h6>
+				<small>
+					<b>{{ talk.question.title }}</b>
+				</small>
+				<div
+					class="d-flex justify-content-between"
+					v-if="talk.posts"
+					:set="(post = talk.posts[talk.posts.length - 1])"
 				>
-					<i class="fas fa-check text-muted"></i>
-				</b-button>
+					<small class="text-muted">{{ post.body }}</small>
+					<small class="text-muted pl-3">{{ post.published }}</small>
+				</div>
 			</div>
-		</a>
-	</div>
+			<b-button
+				size="sm"
+				variant="link"
+				@click.prevent="markAsRead(talk.id)"
+				v-b-tooltip.hover
+				title="Marcar como lido"
+			>
+				<i class="fas fa-check text-muted"></i>
+			</b-button>
+		</div>
+	</a>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';

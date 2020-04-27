@@ -21179,12 +21179,12 @@ readers do not read off random characters that represent icons */
   overflow: hidden;
 }
 
-.online-list-item {
-  bottom: 0;
+#privateMessageBox .badge > p {
+  margin-bottom: 0;
 }
 
-.list-talks {
-  top: 109px;
+.online-list-item {
+  bottom: 0;
 }
 
 .list-group-item-unread {

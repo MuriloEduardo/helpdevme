@@ -1,11 +1,11 @@
 <template>
-	<div class="row">
+	<div class="row justify-content-center">
 		<div class="col-lg-3">
-			<div class="sticky-top list-talks">
+			<div class="h-100">
 				<list></list>
 			</div>
 		</div>
-		<div class="col-lg-8" v-if="talk">
+		<div class="col-lg-9" v-if="talk">
 			<output-posts :talk_id="talk.id"></output-posts>
 			<div class="d-flex align-items-center">
 				<header class="mb-4">
