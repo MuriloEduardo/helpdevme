@@ -1,56 +1,47 @@
-version: '3'
+version: '3.7'
 services:
+    app:
+        build:
+            args:
+                user: sammy
+                uid: 1000
+            context: ./
+            dockerfile: Dockerfile
+        image: helpdev
+        container_name: helpdev-app
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - helpdev
 
-  #PHP Service
-  app:
-    build:
-      context: .
-    container_name: app
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-    working_dir: /var/www
-    volumes:
-      - ./:/var/www
-      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    networks:
-      - app-network
+    db:
+        image: mysql:5.7
+        container_name: helpdev-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        networks:
+            - helpdev
 
-  #Nginx Service
-  webserver:
-    image: nginx:alpine
-    container_name: webserver
-    ports:
-      - "3001:80"
-    volumes:
-      - ./:/var/www
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
-    networks:
-      - app-network
+    nginx:
+        image: nginx:alpine
+        container_name: helpdev-nginx
+        restart: unless-stopped
+        ports:
+            - 8000:80
+        volumes:
+            - ./:/var/www
+            - ./nginx:/etc/nginx/conf.d/
+        networks:
+            - helpdev
 
-  #MySQL Service
-  db:
-    image: mysql:5.7.22
-    container_name: db
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: helpdev
-      MYSQL_ROOT_PASSWORD: root
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - dbdata:/var/lib/mysql/
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
-    networks:
-      - app-network
-
-#Docker Networks
 networks:
-  app-network:
-    driver: bridge
-
-#Volumes
-volumes:
-  dbdata:
-    driver: local
+    helpdev:
+        driver: bridge

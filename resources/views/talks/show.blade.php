@@ -12,7 +12,6 @@
 			{{ session()->get('success') }}
 		</div>
 		@endif
-		<h1 class="d-none">{{ $talk->question->title }}</h1>
 		<private-chat :user="{{ auth()->user() }}" :talk_id="{{ $talk->id }}" :opposite="{{ $opposite }}">
 		</private-chat>
 	</div>
