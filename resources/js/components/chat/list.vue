@@ -24,7 +24,7 @@ import { mapActions, mapState } from 'vuex';
 export default {
 	data() {
 		return {
-			insideChat: window.location.pathname.match(/(\/talks\/\d)/i),
+			insideChat: window.location.pathname.match(/(\/talks)/i),
 		};
 	},
 	components: {

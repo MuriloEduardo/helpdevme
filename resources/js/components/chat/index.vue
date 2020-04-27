@@ -155,6 +155,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-lg-9" v-else>
+			<div class="card card-body h-100 align-items-center justify-content-center">
+				<div class="h1 text-light">Selecione uma conversa</div>
+			</div>
+		</div>
 	</div>
 </template>
 
