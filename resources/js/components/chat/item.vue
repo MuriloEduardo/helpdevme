@@ -9,21 +9,7 @@
 			@receivedPost="onReceivedPost"
 		></output-posts>
 		<div class="d-flex align-items-start">
-			<picture class="position-relative">
-				<img
-					class="img-fluid avatar avatar-list-item"
-					width="50px"
-					v-if="opposite.avatar_url"
-					:src="opposite.avatar_url"
-					:alt="opposite.name"
-					:title="opposite.name"
-				/>
-				<i v-else class="fas fa-user-circle fa-2x"></i>
-				<i
-					:class="opposite_online ? 'text-success' : ''"
-					class="fas fa-circle fa-xs position-absolute online-list-item"
-				></i>
-			</picture>
+			<Avatar :person="opposite" :online="opposite_online" size="35" />
 			<div class="ml-3 text-truncate flex-grow-1">
 				<h6 class="m-0">{{ opposite.name }}</h6>
 				<small>
@@ -53,10 +39,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import OutputPosts from './output-posts';
+import Avatar from './avatar';
 
 export default {
 	components: {
-		OutputPosts
+		OutputPosts,
+		Avatar,
 	},
 	props: ['talk'],
 	methods: {
