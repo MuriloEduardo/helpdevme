@@ -20,7 +20,7 @@
 					v-if="talk.posts"
 					:set="(post = talk.posts[talk.posts.length - 1])"
 				>
-					<small class="text-muted">{{ post.body }}</small>
+					<small class="text-muted post-body" v-html="post.body"></small>
 					<small class="text-muted pl-3">{{ post.published }}</small>
 				</div>
 			</div>

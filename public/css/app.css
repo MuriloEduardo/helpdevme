@@ -21174,12 +21174,12 @@ readers do not read off random characters that represent icons */
   overflow-y: auto;
 }
 
-#privateMessageBox .badge.default {
+#privateMessageBox .default {
   white-space: initial;
   overflow: hidden;
 }
 
-#privateMessageBox .badge > p {
+#privateMessageBox .default > p {
   margin-bottom: 0;
 }
 
@@ -21189,6 +21189,10 @@ readers do not read off random characters that represent icons */
 
 .list-group-item-unread {
   background-color: #e9ecef;
+}
+
+#list-talks .list-group-item .post-body > p {
+  margin: 0;
 }
 
 @keyframes ellipsis {
@@ -21286,14 +21290,6 @@ readers do not read off random characters that represent icons */
   right: 0.5rem;
   bottom: 0.5rem;
   opacity: 0.2;
-}
-
-.top-navbar-height {
-  top: 77px;
-}
-
-body {
-  padding-top: 61px;
 }
 
 textarea {

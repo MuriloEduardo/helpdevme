@@ -1,97 +1,123 @@
 <template>
-	<div class="row justify-content-center">
+	<div class="row justify-content-center h-100 py-3">
 		<div class="col-2">
 			<div class="h-100">
 				<list></list>
 			</div>
 		</div>
 		<div class="col" v-if="talk">
-			<output-posts :talk_id="talk.id"></output-posts>
-			<div class="d-flex align-items-center">
-				<header class="mb-4">
-					<a :href="'/users/' + opposite.id" class="mr-3">
-						<Avatar :person="opposite" :online="opposite_online" size="25" />
+			<!-- Fim da Finalização da Questão -->
+			<div class="card h-100">
+				<div class="card-header">
+					<a :href="'/users/' + opposite.id">
+						<Avatar
+							:person="opposite"
+							:online="opposite_online"
+							size="50"
+						/>
+						<span class="ml-3">{{ opposite.name }}</span>
 					</a>
 					<span> - {{ talk.question.title }}</span>
-				</header>
-				<!-- Finalização da Questão -->
-				<div
-					class="form-group px-4"
-					v-if="!finished && talk.question.status == 2"
-				>
-					<b-button
-						@click="$bvModal.show(`modal-scoped${talk.id}`)"
-						variant="success"
-						>Finalizar Questão</b-button
-					>
-
-					<!-- Modal -->
-					<b-modal :id="`modal-scoped${talk.id}`">
-						<template slot="modal-header" slot-scope="{ close }">
-							<h5 class="modal-title mr-3">Tem certeza disso?</h5>
-							<b-button
-								@click="close()"
-								class="close"
-								variant="link"
-							>
-								<span aria-hidden="true">&times;</span>
-							</b-button>
-						</template>
-
-						<template slot="default">
-							<p class="font-weight-bold">
-								Você está prestes a finalizar uma questão!
-							</p>
-							<span
-								>Após finalizada, ela não pode ser reaberta até
-								que ambas as partes à finalizem. Ainda pode ser
-								solicitado à arbitragem como medida de
-								segurança.</span
-							>
-						</template>
-
-						<template slot="modal-footer" slot-scope="{ cancel }">
-							<b-button variant="light" @click="cancel()"
-								>Cancelar</b-button
-							>
-							<a
-								:href="`/${talk.question.slug}/finalize`"
-								class="btn btn-success"
-								>Aceitar</a
-							>
-						</template>
-					</b-modal>
 				</div>
-			</div>
-			<div v-if="alertFinished && !conclusion">
-				<div class="card text-white bg-warning mb-3">
-					<div class="card-body">
-						<h5 class="card-title">
-							Alguém finalizou essa questão!
-						</h5>
-						<p class="card-text">
-							Esperamos que tudo esteja bem e
-							{{ opposite.name }} também finalize. Caso contrário
-							ambos poderão solicitiar o processo de arbitragem.
-						</p>
-					</div>
-					<div class="card-footer">
-						<button
-							type="button"
-							class="btn btn-sm btn-outline-light"
-						>
-							Solicitar Arbitragem
-						</button>
-						<!-- <button type="button" class="btn btn-sm btn-success">Continuar Trabalhando</button> -->
-					</div>
-				</div>
-			</div>
-			<!-- Fim da Finalização da Questão -->
-			<div class="card">
 				<div class="card-body">
 					<div class="row">
+						<output-posts :talk_id="talk.id"></output-posts>
+						<div class="d-flex align-items-center">
+							<!-- Finalização da Questão -->
+							<div
+								class="form-group px-4"
+								v-if="!finished && talk.question.status == 2"
+							>
+								<b-button
+									@click="
+										$bvModal.show(`modal-scoped${talk.id}`)
+									"
+									variant="success"
+									>Finalizar Questão</b-button
+								>
+
+								<!-- Modal -->
+								<b-modal :id="`modal-scoped${talk.id}`">
+									<template
+										slot="modal-header"
+										slot-scope="{ close }"
+									>
+										<h5 class="modal-title mr-3">
+											Tem certeza disso?
+										</h5>
+										<b-button
+											@click="close()"
+											class="close"
+											variant="link"
+										>
+											<span aria-hidden="true"
+												>&times;</span
+											>
+										</b-button>
+									</template>
+
+									<template slot="default">
+										<p class="font-weight-bold">
+											Você está prestes a finalizar uma
+											questão!
+										</p>
+										<span
+											>Após finalizada, ela não pode ser
+											reaberta até que ambas as partes à
+											finalizem. Ainda pode ser solicitado
+											à arbitragem como medida de
+											segurança.</span
+										>
+									</template>
+
+									<template
+										slot="modal-footer"
+										slot-scope="{ cancel }"
+									>
+										<b-button
+											variant="light"
+											@click="cancel()"
+											>Cancelar</b-button
+										>
+										<a
+											:href="
+												`/${talk.question.slug}/finalize`
+											"
+											class="btn btn-success"
+											>Aceitar</a
+										>
+									</template>
+								</b-modal>
+							</div>
+						</div>
+						<div v-if="alertFinished && !conclusion">
+							<div class="card text-white bg-warning mb-3">
+								<div class="card-body">
+									<h5 class="card-title">
+										Alguém finalizou essa questão!
+									</h5>
+									<p class="card-text">
+										Esperamos que tudo esteja bem e
+										{{ opposite.name }} também finalize.
+										Caso contrário ambos poderão solicitiar
+										o processo de arbitragem.
+									</p>
+								</div>
+								<div class="card-footer">
+									<button
+										type="button"
+										class="btn btn-sm btn-outline-light"
+									>
+										Solicitar Arbitragem
+									</button>
+									<!-- <button type="button" class="btn btn-sm btn-success">Continuar Trabalhando</button> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col">
-							<div id="privateMessageBox" v-chat-scroll>
+							<div id="privateMessageBox">
 								<div class="d-flex flex-column">
 									<div
 										v-for="(post, index) in talk.posts"
@@ -180,7 +206,7 @@
 														user.id ==
 															talk.receiver_id &&
 															post.status < 3 &&
-																post.status != 1
+															post.status != 1
 													"
 												>
 													<!-- Proposta NÃO aceita ainda -->
@@ -233,32 +259,33 @@
 														user.id != post.user_id
 													"
 												>
-													<img
-														v-if="opposite.avatar"
-														width="25"
-														class="img-fluid avatar"
-														:src="opposite.avatar"
-														v-bind:alt="
-															opposite.name
-														"
-														v-bind:title="
-															opposite.name
-														"
+													<Avatar
+														:person="opposite"
+														:online="false"
+														size="25"
 													/>
-													<i
-														v-else
-														class="fas fa-user-circle fa-lg"
-													></i>
 												</span>
-												<span
-													v-html="post.body"
-													class="badge py-2 px-3 default ml-1 font-weight-normal"
-													:class="
-														user.id !== post.user_id
-															? 'badge-light'
-															: 'badge-primary'
-													"
-												></span>
+												<div
+													class="d-flex flex-column ml-1"
+												>
+													<span
+														v-html="post.body"
+														class="py-2 px-3 rounded-pill default font-weight-normal"
+														:class="
+															user.id !==
+															post.user_id
+																? 'bg-light'
+																: 'bg-primary text-white'
+														"
+													></span>
+													<small
+														class="text-muted ml-3"
+														>{{
+															post.created_at
+																| moment
+														}}</small
+													>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -268,35 +295,42 @@
 					</div>
 				</div>
 				<div v-if="talk.status != 1" class="card-footer bg-white">
-					<form @submit.prevent="sendMessage">
+					<form
+						@keydown.enter.exact.prevent
+						@keydown.enter.shift.exact="sendMessage"
+					>
 						<input
 							type="file"
 							id="getFile"
 							@change="uploadFunction($event)"
 							hidden
 						/>
-						<quill-editor
-							ref="bodyEditor"
-							v-model="body"
-							:options="editorOption"
-						></quill-editor>
-						<button
-							type="submit"
-							class="btn btn-primary float-right"
-							:disabled="loading"
-						>
-							<i v-if="!loading" class="fas fa-paper-plane"></i>
-							<b-spinner v-else small type="grow"></b-spinner>
-						</button>
+						<div class="bg-light mb-3 rounded p-5">
+							<quill-editor
+								ref="bodyEditor"
+								v-model="body"
+								:options="editorOption"
+							></quill-editor>
+						</div>
+						<div class="d-flex align-items-center float-right">
+							<small class="text-muted mr-2"
+								>Shift + Enter ou
+							</small>
+							<button
+								type="submit"
+								class="btn btn-primary"
+								:disabled="loading"
+							>
+								Enviar
+								<i
+									v-if="!loading"
+									class="fas fa-paper-plane"
+								></i>
+								<b-spinner v-else small type="grow"></b-spinner>
+							</button>
+						</div>
 					</form>
 				</div>
-			</div>
-		</div>
-		<div class="col" v-else>
-			<div
-				class="card card-body h-100 align-items-center justify-content-center"
-			>
-				<div class="h1 text-light">Selecione uma conversa</div>
 			</div>
 		</div>
 	</div>
@@ -307,6 +341,7 @@ import OutputPosts from './output-posts';
 import List from './list';
 import Avatar from './avatar';
 import { mapActions, mapGetters } from 'vuex';
+import moment from 'moment';
 
 import hljs from 'highlight.js';
 import 'highlight.js/styles/monokai-sublime.css';
@@ -441,6 +476,12 @@ export default {
 						}
 					);
 				});
+		}
+	},
+
+	filters: {
+		moment: function(date) {
+			return moment(date).format('DD/MM/YYYY HH:mm');
 		}
 	}
 };

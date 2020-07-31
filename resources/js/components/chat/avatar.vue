@@ -11,6 +11,7 @@
 		/>
 		<i v-else class="fas fa-user-circle fa-2x"></i>
 		<i
+			v-if="online"
 			:class="online ? 'text-success' : ''"
 			class="fas fa-circle fa-xs position-absolute online-list-item"
 		></i>

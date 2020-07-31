@@ -5,9 +5,9 @@
 @section('title', 'Conversa com ' . $opposite->name . ' - Help Dev')
 
 @section('content')
-<div class="container-fluid py-5">
-	<div class="row">
-		<div class="col">
+<div class="container-fluid bg-white h-100">
+	<div class="row h-100">
+		<div class="col h-100">
 			@if(session()->get('success'))
 			<div class="alert alert-success">
 				{{ session()->get('success') }}

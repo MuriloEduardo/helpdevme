@@ -1,12 +1,9 @@
 #privateMessageBox {
 	max-height: 300px;
 	overflow-y: auto;
-	.badge {
-		&.default {
-			white-space: initial;
-			overflow: hidden;
-		}
-
+	.default {
+		white-space: initial;
+		overflow: hidden;
 		& > p {
 			margin-bottom: 0;
 		}
@@ -18,4 +15,14 @@
 
 .list-group-item-unread {
 	background-color: $gray-200;
+}
+
+#list-talks {
+	.list-group-item {
+		.post-body {
+			> p {
+				margin: 0;
+			}
+		}
+	}
 }

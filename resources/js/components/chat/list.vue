@@ -1,14 +1,10 @@
 <template>
-	<div class="h-100">
+	<div id="list-talks" class="h-100">
 		<div class="h-100 d-flex flex-column justify-content-between" v-if="talks.length">
 			<div class="list-group list-group-flush h-100" :class="insideChat ? 'card' : ''">
 				<div v-for="talk in talks" :key="talk.id">
 					<item :talk="talk" @itemReceivedPost="onItemReceivedPost"></item>
 				</div>
-			</div>
-			<div class="d-flex justify-content-between align-items-center">
-				<a class="btn btn-link" v-if="!insideChat" href="/talks">Ver Tudo</a>
-				<button class="btn btn-link" @click="markAllAsRead()">Marcar tudo como lido</button>
 			</div>
 		</div>
 		<div class="card card-body" v-else>

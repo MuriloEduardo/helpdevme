@@ -17,7 +17,6 @@ window.Vue = require('vue');
 import store from './store';
 import BootstrapVue from 'bootstrap-vue';
 import VueCurrencyFilter from 'vue-currency-filter';
-import VueChatScroll from 'vue-chat-scroll';
 import VueQuillEditor from 'vue-quill-editor';
 
 // require styles
@@ -37,8 +36,6 @@ Vue.use(VueCurrencyFilter, {
 	symbolPosition: 'front',
 	symbolSpacing: true
 });
-
-Vue.use(VueChatScroll);
 
 Vue.prototype.$userId = window.$userId;
 

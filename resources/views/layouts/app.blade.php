@@ -52,8 +52,8 @@
 	<!-- End Google Tag Manager (noscript) -->
 	@endif
 
-	<div id="app">
-		<nav class="navbar navbar-expand-md navbar-white bg-white fixed-top shadow-sm">
+	<div id="app" class="h-100 d-flex flex-column justify-content-between">
+		<nav class="navbar navbar-expand-md navbar-white bg-white sticky-top shadow-sm">
 			<div class="container-fluid">
 				<a class="navbar-brand d-flex align-items-center" href="{{ auth()->check() ? route('dashboard') : route('index') }}">
 					@svg('logo-helpdev')
@@ -113,7 +113,7 @@
 				</div>
 			</div>
 		</nav>
-		<main role="main">
+		<main role="main" class="h-100">
 			@yield('main')
 		</main>
 		<footer>

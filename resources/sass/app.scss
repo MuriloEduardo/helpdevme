@@ -28,14 +28,6 @@
 @import 'profile';
 @import 'dashboard';
 
-.top-navbar-height {
-	top: $nav-height + 16px;
-}
-
-body {
-	padding-top: $nav-height;
-}
-
 textarea {
 	resize: none;
 }
