@@ -16,7 +16,7 @@
 					<div v-if="notification.data.post.budget" class="badge badge-success">{{ notification.data.post.budget | currency }}</div>
 				</a>
 				<div v-if="notification.type === 'App\\Notifications\\CreditsAdded'">
-					Parabéns! Você recebeu {{ notification.data.budget | currency }} de saldo por se cadastrar!
+					{{ notification.data.message }}
 				</div>
 				<b-button
 					size="sm"

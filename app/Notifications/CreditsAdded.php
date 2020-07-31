@@ -71,7 +71,8 @@ class CreditsAdded extends Notification implements ShouldQueue
 	public function toDatabase($notifiable)
 	{
 		return [
-			'budget' => $this->finance->budget
+			'budget' => $this->finance->budget,
+			'message' => 'Parabéns! Você recebeu R$' . number_format($this->finance->budget, 2) . ' de saldo por se cadastrar!'
 		];
 	}
 }

@@ -24,6 +24,7 @@
 </div>
 @auth
 <div class="row mb-5">
+	<!-- Complete seu perfil -->
 	<div class="col">
 		<div class="card card-body">
 			<h2>Complete seu perfil</h2>
@@ -61,6 +62,17 @@
 			</ul>
 		</div>
 	</div>
+	@foreach (Auth::user()->notifications as $notification)
+		@if($notification->type == 'App\Notifications\CreditsAdded')
+		<!-- Parabéns, você recebeu R$5,00 -->
+		<div id="gift-5-moneys" class="col-lg-3">
+			<div class="card card-body bg-success text-white">
+					<i class="fas fa-gifts fa-6x"></i>
+					<span class="h3">{{ $notification->data['message'] }}</span>
+			</div>
+		</div>
+		@endif
+	@endforeach
 </div>
 @endauth
 @endsection

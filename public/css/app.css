@@ -21281,6 +21281,13 @@ readers do not read off random characters that represent icons */
   height: 100px;
 }
 
+#gift-5-moneys i {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  opacity: 0.2;
+}
+
 .top-navbar-height {
   top: 77px;
 }
