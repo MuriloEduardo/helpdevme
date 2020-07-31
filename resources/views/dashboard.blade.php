@@ -63,8 +63,8 @@
 		</div>
 	</div>
 	@foreach (Auth::user()->notifications as $notification)
-		@if($notification->type == 'App\Notifications\CreditsAdded')
 		<!-- Parabéns, você recebeu R$5,00 -->
+		@if($notification->type == 'App\Notifications\CreditsAdded' && $notification->read_at == NULL)
 		<div id="gift-5-moneys" class="col-lg-3">
 			<div class="card card-body bg-success text-white">
 					<i class="fas fa-gifts fa-6x"></i>
